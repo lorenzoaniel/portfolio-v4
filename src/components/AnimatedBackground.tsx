@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 interface ABProps {
+	disabledState: boolean;
 	variant?: string;
 }
 
@@ -12,6 +13,7 @@ interface _ABProps {
 }
 
 interface _MotionProps {
+	disabledState: boolean;
 	variant: string;
 	numbOfStars?: number;
 	starId?: number;
@@ -31,8 +33,8 @@ interface _MotionVariants {
 //COMPONENT
 
 const AnimatedBackground = (props: ABProps) => {
-	const { variant = "default" } = props;
-	const numbOfStars = 100; //Change here to change value everywhere in component
+	const { disabledState = true, variant = "default" } = props;
+	const numbOfStars = 200; //Change here to change value everywhere in component
 
 	const createStars = () => {
 		const starArray = Array(numbOfStars).fill(0);
@@ -40,12 +42,24 @@ const AnimatedBackground = (props: ABProps) => {
 			return (
 				<>
 					<_AB.Stars.Star
-						{..._MotionProps({ variant, numbOfStars, starId: index, subComp: "Star" })}
+						{..._MotionProps({
+							disabledState,
+							variant,
+							numbOfStars,
+							starId: index,
+							subComp: "Star",
+						})}
 						key={variant + "Star" + index}
 						starId={index}
 					>
 						<_AB.Stars.Tail
-							{..._MotionProps({ variant, numbOfStars, starId: index, subComp: "Tail" })}
+							{..._MotionProps({
+								disabledState,
+								variant,
+								numbOfStars,
+								starId: index,
+								subComp: "Tail",
+							})}
 							key={variant + "Tail" + index}
 						/>
 					</_AB.Stars.Star>
@@ -64,7 +78,7 @@ const AnimatedBackground = (props: ABProps) => {
 	};
 
 	return (
-		<_AB.Main {..._MotionProps({ variant })} variant={variant}>
+		<_AB.Main {..._MotionProps({ disabledState, variant })} variant={variant}>
 			{createVariant(variant)}
 		</_AB.Main>
 	);
@@ -189,16 +203,19 @@ const _MotionProps = (args: _MotionProps): _MotionVariants => {
 					_MotionVariants(args).initial[args.variant as keyof _MotionVariants][
 						args.subComp as keyof _MotionVariants
 					],
-				animate:
-					_MotionVariants(args).animate[args.variant as keyof _MotionVariants][
-						args.subComp as keyof _MotionVariants
-					],
+				animate: args.disabledState
+					? ""
+					: _MotionVariants(args).animate[args.variant as keyof _MotionVariants][
+							args.subComp as keyof _MotionVariants
+					  ],
 			};
 
 		default:
 			return {
 				initial: _MotionVariants(args).initial.default[args.variant as keyof _MotionVariants],
-				animate: _MotionVariants(args).animate.default[args.variant as keyof _MotionVariants],
+				animate: args.disabledState
+					? ""
+					: _MotionVariants(args).animate.default[args.variant as keyof _MotionVariants],
 			};
 	}
 };
