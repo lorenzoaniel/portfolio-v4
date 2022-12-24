@@ -10,6 +10,7 @@ import { device } from "./styles/breakpoints";
 import Heading from "./components/Heading";
 import Button from "./components/Button";
 import Home from "./pages/Home";
+import AnimatedBackground from "./components/AnimatedBackground";
 
 const appLandingTitleContext = "Explore My Portfolio!"; //maybe add feature that lets this switch different languages
 
@@ -28,6 +29,7 @@ const App = () => {
 			<GlobalStyle />
 			<_App.Main>
 				<_App.ToggledOff {..._MotionProps(toggleContext, "ToggledOff")}>
+					<AnimatedBackground variant={"Stars"} />
 					<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
 					<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
 				</_App.ToggledOff>
@@ -57,7 +59,7 @@ const _App = {
 		row-gap: 5rem;
 	`,
 	ToggledOff: styled(motion.section)`
-		background: grey;
+		background: transparent;
 		height: inherit;
 		width: inherit;
 		flex-direction: column;
