@@ -29,7 +29,7 @@ const App = () => {
 			<GlobalStyle />
 			<_App.Main>
 				<_App.ToggledOff {..._MotionProps(toggleContext, "ToggledOff")}>
-					<AnimatedBackground variant={"Stars"} />
+					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
 					<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
 					<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
 				</_App.ToggledOff>
