@@ -39,6 +39,7 @@ const _HeadingVariants: _HeadingVariants = {
 
 const _Heading = {
 	default: styled(motion.h1)<_HeadingProps>`
+		color: #ffffff;
 		${(p) => _HeadingVariants.default[p.variant as keyof _HeadingVariants]}
 	`,
 };
