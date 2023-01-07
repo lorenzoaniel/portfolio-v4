@@ -28,49 +28,73 @@ const App = () => {
 		<>
 			<GlobalStyle />
 			<_App.Main>
-				<_App.ToggledOff {..._MotionProps(toggleContext, "ToggledOff")}>
+				<_App.ToggledOff.Main {..._MotionProps(toggleContext, "ToggledOff")}>
 					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
-					<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
-					<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
-				</_App.ToggledOff>
-				<_App.ToggledOn {..._MotionProps(toggleContext, "ToggledOn")}>
-					<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
-					<Home />
-				</_App.ToggledOn>
+					<_App.ToggledOff.Wrapper>
+						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
+						<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
+					</_App.ToggledOff.Wrapper>
+				</_App.ToggledOff.Main>
+				<_App.ToggledOn.Main {..._MotionProps(toggleContext, "ToggledOn")}>
+					<AnimatedBackground disabledState={toggleContext} variant={"Blackhole"} />
+					<_App.ToggledOn.Routes>
+						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
+						<Home />
+					</_App.ToggledOn.Routes>
+				</_App.ToggledOn.Main>
 			</_App.Main>
 		</>
 	);
 };
 
 //STYLES
+const _AppMixins = {};
+
 const _App = {
 	Main: styled.main`
 		background: black;
 		height: inherit;
 		width: inherit;
 	`,
-	ToggledOn: styled(motion.section)`
-		background: #1b1819;
-		height: inherit;
-		width: inherit;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		row-gap: 5rem;
-	`,
-	ToggledOff: styled(motion.section)`
-		background: transparent;
-		height: inherit;
-		width: inherit;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
+	ToggledOn: {
+		Main: styled(motion.section)`
+			height: inherit;
+			width: inherit;
+		`,
+		Routes: styled(motion.aside)`
+			background-color: transparent;
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			row-gap: 3rem;
+			padding: 3rem;
 
-		@media ${device.tablet} {
-			background: red;
-			align-items: flex-start;
-		}
-	`,
+			@media ${device.tablet} {
+				align-items: flex-start;
+			}
+		`,
+	},
+	ToggledOff: {
+		Main: styled(motion.section)`
+			height: inherit;
+			width: inherit;
+		`,
+		Wrapper: styled(motion.aside)`
+			background-color: transparent;
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 3rem;
+
+			@media ${device.tablet} {
+				align-items: flex-start;
+			}
+		`,
+	},
 };
 
 //MOTION
