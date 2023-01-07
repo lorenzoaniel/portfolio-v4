@@ -70,13 +70,15 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 		},
 		AppToggle: {
 			slider: `
-      background: #383838;
       height: 9rem;
       width: 17rem;
       display: flex;
       flex-direction: column;
-      border: 1.5rem solid #FFFFFF;
-      box-shadow: 0 0 1rem 0.3rem rgba(0,0,0,0.8), 0 0 1.5rem 0.5rem rgba(0,0,0,0.8)inset;
+      box-shadow: ${
+				toggleState
+					? "0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.23)"
+					: "inset -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.23), inset 0.1rem 0.1rem 0.1rem rgba(255, 255, 255, 0.21)"
+			} ;
       border-radius: 14rem;
       justify-content: center;
       
@@ -84,8 +86,8 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
       padding: 0 0.8rem;
 
       @media ${device.tablet}{
+				margin-top: 0rem;
         background: red;
-        margin: 5rem 0 0 5rem;
       }
 
       @media ${device.laptop}{
@@ -97,7 +99,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
       width: 5rem;
       border-radius: 50%;
       border: none;
-      background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%);
+			box-shadow: ${toggleState ? "0.2rem 0.2rem 0.2rem rgba(0,0,0,0.5)" : ""};
       filter: blur(0.1rem);
     `,
 		},
@@ -106,14 +108,14 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 
 const _Button: _ButtonVariants = {
 	default: styled(motion.button)<_ButtonProps>`
-		${(p) => _ButtonVariants().default[p.variant as keyof _ButtonVariants]}
+		${(p) => _ButtonVariants(p.toggleState).default[p.variant as keyof _ButtonVariants]}
 	`,
 	AppToggle: {
 		slider: styled(motion.button)<_ButtonProps>`
-			${(p) => _ButtonVariants().AppToggle.slider}
+			${(p) => _ButtonVariants(p.toggleState).AppToggle.slider}
 		`,
 		button: styled(motion.span)<_ButtonProps>`
-			${(p) => _ButtonVariants().AppToggle.button}
+			${(p) => _ButtonVariants(p.toggleState).AppToggle.button}
 		`,
 	},
 };
@@ -133,9 +135,20 @@ const _MotionVariants: _MotionVariants = {
 	animate: {
 		default: {},
 		AppToggle: {
-			slider: {},
+			slider: {
+				on: {
+					background: "#f1f1f1",
+					border: "1.5rem solid #383838",
+				},
+				off: {
+					background: "#383838",
+					border: "1.5rem solid #FFFFFF",
+				},
+			},
 			button: {
 				on: {
+					background:
+						"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
 					transform: "translateX(7.5rem)",
 					transition: {
 						duration: 0.5,
@@ -143,6 +156,8 @@ const _MotionVariants: _MotionVariants = {
 					},
 				},
 				off: {
+					background:
+						"radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%)",
 					transform: "translateX(0rem)",
 					transition: {
 						duration: 0.5,
