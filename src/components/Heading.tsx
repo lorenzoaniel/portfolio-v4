@@ -31,7 +31,7 @@ const _HeadingVariants: _HeadingVariants = {
       text-align: center;
 
       @media ${device.tablet}{
-        margin-left: 5rem;
+        m
       }
     `,
 	},
