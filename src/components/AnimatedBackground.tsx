@@ -256,7 +256,7 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 			},
 			Blackhole: {
 				Main: {
-					background: `radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(20,20,20,1) 60%, rgba(30,30,30,1) 90%)`,
+					background: `radial-gradient(circle, rgba(0,0,0,0.4) 40%, rgba(10,10,10,0.6) 60%, rgba(20,20,20,0.9) 90%)`,
 				},
 				Planet: {
 					top: `10%`,
@@ -264,8 +264,8 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 					height: `${planetsConfig.randomDimension}vw`,
 					width: `${planetsConfig.randomDimension}vw`,
 					opacity: 0,
-					background: `radial-gradient(circle, rgba(254, 204, 0, 1) 20%, rgba(250, 213, 66, 0.5) 100%)`,
-					boxShadow: `0rem 0rem 0.5rem 1rem rgba(255, 227, 115, 0.8), 0rem 0rem 0.5rem 0rem rgba(255, 227, 115, 0.8) inset`,
+					background: `radial-gradient(circle, rgba(240, 240, 240, 1) 20%, rgba(255, 255, 255, 0.5) 100%)`,
+					boxShadow: `0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
 				},
 			},
 		},
@@ -293,24 +293,24 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 			Blackhole: {
 				Main: {
 					background: [
-						`radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(20,20,20,1) 60%, rgba(30,30,30,1) 90%)`,
-						`radial-gradient(circle, rgba(0,0,0,1) 10%, rgba(20,20,20,1) 30%, rgba(30,30,30,1) 90%)`,
+						`radial-gradient(circle, rgba(0,0,0,0.4) 40%, rgba(10,10,10,0.6) 60%, rgba(20,20,20,0.9) 90%)`,
+						`radial-gradient(circle, rgba(0,0,0,0.4) 5%, rgba(10,10,10,0.6) 30%, rgba(20,20,20,0.9) 90%)`,
 					],
 					transition: planetsConfig.mainTransition,
 				},
 				Planet: {
 					//value group pattern top-3, right-2, opacity-4 ex: top[20,65,35], right[10,80], opacity[1,1,0,0]
-					top: ["20%", "65%", "35%", "30%", "55%", "45%", "35%", "45%", "45%"],
-					right: ["10%", "75%", "20%", "70%", "30%", "60%"],
-					opacity: [1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0],
-					scale: [1, 2, 0.2, 0, 0, 2, 0.2, 0, 0, 2, 0.2, 0],
+					top: ["20%", "65%", "35%", "30%", "55%", "45%", "35%", "65%", "20%"],
+					right: ["10%", "80%", "15%", "75%", "15%", "10%"],
+					opacity: [1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1],
+					scale: [1, 2, 0.2, 0, 0, 2, 0.2, 0, 0, 0.2, 2, 1],
 					background: [
-						`radial-gradient(circle, rgba(254, 204, 0, 1) 20%, rgba(250, 213, 66, 0.5) 100%)`,
-						`radial-gradient(circle, rgba(254, 204, 0, 1) 50%, rgba(250, 213, 66, 0.5) 100%)`,
+						`radial-gradient(circle, rgba(240, 240, 240, 1) 20%, rgba(255, 255, 255, 0.5) 100%)`,
+						`radial-gradient(circle, rgba(240, 240, 240, 1) 50%, rgba(255, 255, 255, 0.5) 100%)`,
 					],
 					boxShadow: [
-						`0rem 0rem 0.5rem 1rem rgba(255, 227, 115, 0.8), 0rem 0rem 0.5rem 0rem rgba(255, 227, 115, 0.8) inset`,
-						`0rem 0rem 0.5rem 2rem rgba(255, 227, 115, 0.8), 0rem 0rem 0.5rem 2rem rgba(255, 227, 115, 0.8) inset`,
+						`0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
+						`0rem 0rem 0.5rem 2rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 2rem rgba(230, 230, 230, 0.8) inset`,
 					],
 					transition: { ...planetsConfig.defaultTransition, ...planetsConfig.glowTransition },
 				},
