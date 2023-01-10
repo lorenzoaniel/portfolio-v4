@@ -69,8 +69,8 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 			default: ``,
 			glassButton: `
 				background: transparent;
-				height: 9.5rem;
-				width: 30rem;
+				height: 6.5rem;
+				width: 20rem;
 				border: 0.5rem solid rgba(255,255,255,0.7);
 				border-bottom: transparent;
 				border-radius: 1.5rem;
@@ -81,6 +81,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 				color: rgba(255,255,255,0.8);
 				font-size: 3rem;
 				text-shadow: 0rem 0.1rem 0.5rem rgba(255,255,255,0.5);
+				flex-shrink: 0;
 			`,
 		},
 		AppToggle: {
