@@ -1,9 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
+import Carousel from "../components/Carousel";
 
 const Home = () => {
-	return <_Home.Main>{<Button nameProp={"Test"} variant={"glassButton"} />}</_Home.Main>;
+	return (
+		<_Home.Main>
+			{
+				<Carousel>
+					<Button nameProp={"Test"} variant={"glassButton"} />
+				</Carousel>
+			}
+		</_Home.Main>
+	);
 };
 
 const _Home = {
