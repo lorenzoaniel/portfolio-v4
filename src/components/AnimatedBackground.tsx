@@ -300,7 +300,7 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 				},
 				Planet: {
 					//value group pattern top-3, right-2, opacity-4 ex: top[20,65,35], right[10,80], opacity[1,1,0,0]
-					top: ["20%", "65%", "35%", "30%", "55%", "45%", "35%", "65%", "20%"],
+					top: ["20%", "55%", "35%", "30%", "55%", "45%", "35%", "55%", "20%"],
 					right: ["10%", "80%", "15%", "75%", "15%", "10%"],
 					opacity: [1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1],
 					scale: [1, 2, 0.2, 0, 0, 2, 0.2, 0, 0, 0.2, 2, 1],
