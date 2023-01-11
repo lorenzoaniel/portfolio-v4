@@ -8,7 +8,12 @@ const Home = () => {
 		<_Home.Main>
 			{
 				<Carousel>
-					<Button nameProp={"Test"} variant={"glassButton"} />
+					{[
+						<Button nameProp={"Home"} variant={"glassButton"} />,
+						<Button nameProp={"About Me"} variant={"glassButton"} />,
+						<Button nameProp={"Works"} variant={"glassButton"} />,
+						<Button nameProp={"Contact Me"} variant={"glassButton"} />,
+					]}
 				</Carousel>
 			}
 		</_Home.Main>
@@ -17,7 +22,6 @@ const Home = () => {
 
 const _Home = {
 	Main: styled.section`
-		/* background-color: white; */
 		width: 100%;
 		height: 100%;
 		color: white;
