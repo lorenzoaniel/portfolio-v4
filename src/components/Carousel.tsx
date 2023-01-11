@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { MdArrowRight, MdArrowLeft } from "react-icons/Md";
 
 interface CProps {
 	variant?: string;
-	children?: React.ReactElement;
+	children: React.ReactNode[]; //multiple children
 }
 
 interface _CProps {
@@ -20,14 +20,42 @@ interface _CVariants {
 
 const Carousel = (props: CProps) => {
 	const { children, variant = "Main" } = props;
+	const [childIndex, useChildIndex] = useState(0);
+	const childLength = children.length - 1;
+
+	const changeChild = (variant: string) => {
+		if (variant === "Right" && childIndex < childLength) {
+			useChildIndex(childIndex + 1);
+		} else if (variant === "Left" && childIndex > 0) {
+			useChildIndex(childIndex - 1);
+		} else {
+			if (variant === "Right") {
+				useChildIndex(0);
+			} else {
+				useChildIndex(childLength);
+			}
+		}
+	};
 
 	return (
 		<_C.Main variant={variant}>
-			<_C.Selector variant={"Selector"} subComp={"Left"}>
+			<_C.Selector
+				onClick={() => {
+					changeChild("Left");
+				}}
+				variant={"Selector"}
+				subComp={"Left"}
+			>
 				<MdArrowLeft />
 			</_C.Selector>
-			{children}
-			<_C.Selector variant={"Selector"} subComp={"Right"}>
+			{children[childIndex]}
+			<_C.Selector
+				onClick={() => {
+					changeChild("Right");
+				}}
+				variant={"Selector"}
+				subComp={"Right"}
+			>
 				<MdArrowRight />
 			</_C.Selector>
 		</_C.Main>
@@ -38,7 +66,7 @@ const Carousel = (props: CProps) => {
 const _CMIXINS = {
 	SelectorDefault: `
     height: 100%;
-    width: 100%;
+    width: clamp(6.5rem, 8rem ,100%);
     display: flex;
     justify-content: center;
     align-items: center;
