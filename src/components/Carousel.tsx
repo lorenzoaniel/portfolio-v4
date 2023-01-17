@@ -127,4 +127,4 @@ const _C = {
 const _MotionVariants = {};
 const _MotionProps = {};
 
-export default Carousel;
+export default React.memo(Carousel);
