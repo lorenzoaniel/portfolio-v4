@@ -7,8 +7,9 @@ import { toggle, selectToggle } from "../store/slices/appToggleSlice";
 import { device } from "../styles/breakpoints";
 
 interface ButtonProps {
-	variant?: string;
 	nameProp: string;
+	variant?: string;
+	disabled?: boolean;
 }
 
 interface _ButtonProps {
@@ -29,7 +30,7 @@ interface _MotionVariants {
 // COMPONENT
 
 const Button = (props: ButtonProps) => {
-	const { nameProp, variant = "default" } = props;
+	const { nameProp, disabled = false, variant = "default" } = props;
 
 	const toggleState = useAppSelector(selectToggle);
 	const dispatch = useAppDispatch();
@@ -51,7 +52,7 @@ const Button = (props: ButtonProps) => {
 				);
 			default:
 				return (
-					<_Button.default toggleState={toggleState} variant={variant}>
+					<_Button.default disabled={disabled} toggleState={toggleState} variant={variant}>
 						{nameProp}
 					</_Button.default>
 				);
@@ -86,8 +87,8 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 		},
 		AppToggle: {
 			slider: `
-      height: 9rem;
-      width: 17rem;
+      min-height: 7rem;
+      min-width: 13rem;
       display: flex;
       flex-direction: column;
       box-shadow: ${
@@ -97,8 +98,6 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 			} ;
       border-radius: 14rem;
       justify-content: center;
-      
-      margin-top: 3rem;
       padding: 0 0.8rem;
 
       @media ${device.tablet}{
@@ -111,8 +110,8 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
       }
     `,
 			button: `
-      height: 5rem;
-      width: 5rem;
+      height: 3rem;
+      width: 3rem;
       border-radius: 50%;
       border: none;
 			box-shadow: ${toggleState ? "0.2rem 0.2rem 0.2rem rgba(0,0,0,0.5)" : ""};
@@ -165,7 +164,7 @@ const _MotionVariants: _MotionVariants = {
 				on: {
 					background:
 						"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
-					transform: "translateX(7.5rem)",
+					transform: "translateX(5.5rem)",
 					transition: {
 						duration: 0.5,
 						ease: "easeInOut",
