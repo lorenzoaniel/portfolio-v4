@@ -354,4 +354,4 @@ const _MotionProps = (args: _MotionProps): _MotionVariants => {
 	}
 };
 
-export default AnimatedBackground;
+export default React.memo(AnimatedBackground);
