@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 import { MdArrowRight, MdArrowLeft } from "react-icons/Md";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { changeItemDisplay, selectCarouselState } from "../store/slices/carouselSlice";
 
 interface CProps {
-	variant?: string;
 	children: React.ReactNode[]; //multiple children
+	variant?: string;
+	navMode?: boolean;
 }
 
 interface _CProps {
@@ -19,39 +23,49 @@ interface _CVariants {
 }
 
 const Carousel = (props: CProps) => {
-	const { children, variant = "Main" } = props;
-	const [childIndex, useChildIndex] = useState(0);
+	const { children, variant = "Main", navMode = false } = props;
 	const childLength = children.length - 1;
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	let carouselContext = useAppSelector(selectCarouselState);
 
-	const changeChild = (variant: string) => {
-		if (variant === "Right" && childIndex < childLength) {
-			useChildIndex(childIndex + 1);
-		} else if (variant === "Left" && childIndex > 0) {
-			useChildIndex(childIndex - 1);
-		} else {
-			if (variant === "Right") {
-				useChildIndex(0);
-			} else {
-				useChildIndex(childLength);
-			}
-		}
+	useEffect(() => {
+		navigate(carouselContext.routeState);
+	}, [carouselContext.routeState]);
+
+	const CarouselConfigs = {
+		changeItemPayload: {
+			Left: {
+				variant: "Left",
+				childLength: childLength,
+				navMode: navMode,
+				routeIndex: carouselContext.childIndex,
+			},
+			Right: {
+				variant: "Right",
+				childLength: childLength,
+				navMode: navMode,
+				routeIndex: carouselContext.childIndex,
+			},
+		},
+		changeRoutePayload: {},
 	};
 
 	return (
 		<_C.Main variant={variant}>
 			<_C.Selector
 				onClick={() => {
-					changeChild("Left");
+					dispatch(changeItemDisplay(CarouselConfigs.changeItemPayload.Left));
 				}}
 				variant={"Selector"}
 				subComp={"Left"}
 			>
 				<MdArrowLeft />
 			</_C.Selector>
-			{children[childIndex]}
+			{children[carouselContext.childIndex]}
 			<_C.Selector
 				onClick={() => {
-					changeChild("Right");
+					dispatch(changeItemDisplay(CarouselConfigs.changeItemPayload.Right));
 				}}
 				variant={"Selector"}
 				subComp={"Right"}
