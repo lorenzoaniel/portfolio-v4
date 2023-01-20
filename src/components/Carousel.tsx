@@ -48,7 +48,6 @@ const Carousel = (props: CProps) => {
 				routeIndex: carouselContext.childIndex,
 			},
 		},
-		changeRoutePayload: {},
 	};
 
 	return (
@@ -85,9 +84,22 @@ const _CMIXINS = {
     justify-content: center;
     align-items: center;
 
-    border: 1rem solid rgba(255,255,255,0.5);
+    border: 1rem solid rgba(255,255,255,0.7);
     border-top-width: 0.5rem;
     border-bottom-width: 0.5rem;
+
+		svg {
+			fill: rgba(255,255,255,0.7);
+			height: 5rem;
+			width: 5rem;
+		}
+
+		&:hover {
+			border-color: rgba(255,255,255,1);
+			svg {
+				fill: rgba(255,255,255,1);
+			}
+		}
   `,
 };
 
@@ -103,6 +115,7 @@ const _CVariants: _CVariants = {
       border-right: none;
       border-top-left-radius: 1rem;
       border-bottom-left-radius: 1rem;
+			// margin-left: 1rem;
     `,
 		Right: `
       border-left: none;
@@ -124,7 +137,23 @@ const _C = {
 
 //MOTION
 
-const _MotionVariants = {};
-const _MotionProps = {};
+const _MotionVariants = {
+	Main: {},
+	Selector: {
+		Left: {},
+		Right: {},
+	},
+};
+
+const _MotionProps = (variant: string) => {
+	switch (variant) {
+		case "Main":
+			break;
+		case "Selector":
+			break;
+		default:
+			break;
+	}
+};
 
 export default React.memo(Carousel);
