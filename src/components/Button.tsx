@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -10,6 +11,7 @@ interface ButtonProps {
 	nameProp: string;
 	variant?: string;
 	disabled?: boolean;
+	clickHandle?: () => void;
 }
 
 interface _ButtonProps {
@@ -30,10 +32,18 @@ interface _MotionVariants {
 // COMPONENT
 
 const Button = (props: ButtonProps) => {
-	const { nameProp, disabled = false, variant = "default" } = props;
+	const {
+		nameProp,
+		clickHandle = () => {
+			console.log("No function");
+		},
+		disabled = false,
+		variant = "default",
+	} = props;
 
 	const toggleState = useAppSelector(selectToggle);
 	const dispatch = useAppDispatch();
+	console.log(clickHandle);
 
 	const createButton = (nameProp: string, variant: string) => {
 		switch (variant) {
@@ -52,13 +62,19 @@ const Button = (props: ButtonProps) => {
 				);
 			default:
 				return (
-					<_Button.default disabled={disabled} toggleState={toggleState} variant={variant}>
+					<_Button.default
+						onClick={clickHandle}
+						disabled={disabled}
+						toggleState={toggleState}
+						variant={variant}
+					>
 						{nameProp}
 					</_Button.default>
 				);
 		}
 	};
 
+	//RENDER
 	return <>{createButton(nameProp, variant)}</>;
 };
 
@@ -102,11 +118,9 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 
       @media ${device.tablet}{
 				margin-top: 0rem;
-        background: red;
       }
 
       @media ${device.laptop}{
-        background: blue;
       }
     `,
 			button: `
