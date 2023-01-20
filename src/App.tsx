@@ -1,10 +1,12 @@
+import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Outlet, Routes, Route, useLocation, Link } from "react-router-dom";
+import { Outlet, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 import { useAppSelector } from "./store/hooks";
 import { selectToggle } from "./store/slices/appToggleSlice";
+import { selectHomeInfo } from "./store/slices/homePageSlice";
 
 import { GlobalStyle } from "./styles/GlobalStyles";
 import { device } from "./styles/breakpoints";
@@ -17,6 +19,8 @@ import Carousel from "./components/Carousel";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
+import useCurrentDimension from "./helpers/useCurrentDimension";
+import Navmenu from "./components/Navmenu";
 
 const appLandingTitleContext = "Explore My Portfolio!"; //maybe add feature that lets this switch different languages
 
@@ -27,25 +31,64 @@ interface _MotionVariants {
 
 const App = () => {
 	//logic
+	const navigate = useNavigate();
 	const toggleContext = useAppSelector(selectToggle);
+	const navMenuContext = useAppSelector(selectHomeInfo);
+	const currDimensionContext = useCurrentDimension();
 	const location = useLocation();
+
+	const createNav = (disabled: boolean = navMenuContext.navmenuconfig.disabled) => {
+		const arrayLength = navMenuContext.navmenuconfig.nameProp.length;
+		const clickNavigate = (index: number) => {
+			navigate(navMenuContext.routeListState[index]);
+		};
+
+		return Array(arrayLength)
+			.fill(0)
+			.map((curr, index) => {
+				return disabled ? (
+					<Button
+						{...navMenuContext.navmenuconfig}
+						key={nanoid()}
+						disabled={disabled}
+						nameProp={navMenuContext.navmenuconfig.nameProp[index]}
+					/>
+				) : (
+					<Button
+						{...navMenuContext.navmenuconfig}
+						clickHandle={() => clickNavigate(index)}
+						key={nanoid()}
+						disabled={disabled}
+						nameProp={navMenuContext.navmenuconfig.nameProp[index]}
+					/>
+				);
+			});
+	};
+
 	const RouteProps = {
 		Nav: {
-			element: (
-				<>
-					<_App.OutletContainer>
-						<Outlet />
-					</_App.OutletContainer>
-					<Carousel navMode={true}>
-						{[
-							<Button nameProp={"Home"} disabled={true} variant={"glassButton"} />,
-							<Button nameProp={"About Me"} disabled={true} variant={"glassButton"} />,
-							<Button nameProp={"Projects"} disabled={true} variant={"glassButton"} />,
-							<Button nameProp={"Contact Me"} disabled={true} variant={"glassButton"} />,
-						]}
-					</Carousel>
-				</>
-			),
+			element:
+				currDimensionContext.width >= 1024 ? (
+					<>
+						<Navmenu>
+							{[
+								<Button key={nanoid()} nameProp={"PORTFOLIO"} variant={"AppToggle"} />,
+								createNav(false),
+							]}
+						</Navmenu>
+						<_App.OutletContainer>
+							<Outlet />
+						</_App.OutletContainer>
+					</>
+				) : (
+					<>
+						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
+						<_App.OutletContainer>
+							<Outlet />
+						</_App.OutletContainer>
+						<Carousel navMode={true}>{createNav()}</Carousel>
+					</>
+				),
 		},
 		Home: {
 			element: <Home />,
@@ -65,7 +108,7 @@ const App = () => {
 		},
 	};
 
-	//style
+	//RENDER
 	return (
 		<>
 			<GlobalStyle />
@@ -83,7 +126,6 @@ const App = () => {
 					<AnimatedBackground disabledState={toggleContext} variant={"Blackhole"} />
 
 					<_App.ToggledOn.Routes>
-						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
 						<Routes key={location.pathname} location={location}>
 							<Route {...RouteProps.Nav}>
 								<Route index {...RouteProps.Home}></Route>
@@ -100,7 +142,17 @@ const App = () => {
 };
 
 //STYLES
-const _AppMixins = {};
+const _AppMixins = {
+	Commons: {
+		flexColCenterW100H100: `
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		`,
+	},
+};
 
 const _App = {
 	Main: styled.main`
@@ -114,12 +166,8 @@ const _App = {
 			width: inherit;
 		`,
 		Routes: styled(motion.aside)`
+			${_AppMixins.Commons.flexColCenterW100H100}
 			background-color: transparent;
-			height: 100%;
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
 			row-gap: 3rem;
 			padding: 3rem;
 
@@ -134,12 +182,8 @@ const _App = {
 			width: inherit;
 		`,
 		Wrapper: styled(motion.aside)`
+			${_AppMixins.Commons.flexColCenterW100H100}
 			background-color: transparent;
-			height: 100%;
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
 			padding: 3rem;
 
 			@media ${device.tablet} {
@@ -148,12 +192,8 @@ const _App = {
 		`,
 	},
 	OutletContainer: styled(motion.section)`
-		height: 100%;
-		width: 100%;
-		/* backdrop-filter: blur(2rem); */
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		${_AppMixins.Commons.flexColCenterW100H100}
+		flex-direction: row;
 		border-radius: 1rem;
 	`,
 };
