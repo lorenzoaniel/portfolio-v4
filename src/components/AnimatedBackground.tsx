@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { nanoid } from "nanoid";
 
 interface ABProps {
 	disabledState: boolean;
@@ -51,7 +52,7 @@ const AnimatedBackground = (props: ABProps) => {
 							materialId: index,
 							subComp: "Star",
 						})}
-						key={variant + index}
+						key={nanoid()}
 						starId={index}
 					>
 						<_AB.Stars.Tail
@@ -62,7 +63,7 @@ const AnimatedBackground = (props: ABProps) => {
 								materialId: index,
 								subComp: "Tail",
 							})}
-							key={variant + index}
+							key={nanoid()}
 						/>
 					</_AB.Stars.Star>
 				</>
@@ -76,7 +77,10 @@ const AnimatedBackground = (props: ABProps) => {
 		return planetArray.map((curr, index) => {
 			return (
 				<>
-					<_AB.Blackhole.Planet {..._MotionProps({ disabledState, variant, subComp: "Planet" })} />
+					<_AB.Blackhole.Planet
+						key={nanoid()}
+						{..._MotionProps({ disabledState, variant, subComp: "Planet" })}
+					/>
 				</>
 			);
 		});
@@ -94,7 +98,7 @@ const AnimatedBackground = (props: ABProps) => {
 	};
 
 	return (
-		<_AB.Main {..._MotionProps({ disabledState, variant })} variant={variant}>
+		<_AB.Main key={nanoid()} {..._MotionProps({ disabledState, variant })} variant={variant}>
 			{createVariant(variant)}
 		</_AB.Main>
 	);
