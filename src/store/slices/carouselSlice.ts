@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { useAppSelector } from "../hooks";
 
 interface carouselState {
 	routeState: string;
@@ -19,8 +20,6 @@ interface displayPayload {
 	childLength: number;
 	navMode?: boolean;
 }
-
-interface changeRoutePayload {}
 
 export const carouselSlice = createSlice({
 	name: "carouselSlice",
