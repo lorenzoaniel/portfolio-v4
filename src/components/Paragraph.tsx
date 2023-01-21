@@ -46,11 +46,15 @@ const _PVariants: _PVariants = {
       width: 100%;
 		  height: 15rem;
 			display: flex;
-			padding: 2rem;
-			font-size: 2rem;
+
 			border-radius: 2rem;
 			box-shadow: 0 0 1rem 0.5rem rgba(255,255,255,0.5), 0 0 1rem 0.5rem rgba(150,150,150,0.7) inset;
-    `,
+			
+			padding: 2rem;
+			font-size: 3rem;
+			font-family: var(--roboticFont);
+			font-weight: 500;
+			`,
 	},
 };
 
