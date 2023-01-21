@@ -9,7 +9,6 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@mui/base": "^5.0.0-alpha.110",
 		"@reduxjs/toolkit": "^1.9.1",
 		"@types/styled-components": "^5.1.26",
 		"framer-motion": "^7.10.2",
