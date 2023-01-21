@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import { device } from "../styles/breakpoints";
 
 interface HeadingProps {
-	variant?: string;
 	titleProp: string;
+	subComp?: string;
+	variant?: string;
 }
 
 interface _HeadingProps {
 	variant: string;
+	subComp: string;
 }
 
 interface _HeadingVariants {
@@ -17,9 +19,15 @@ interface _HeadingVariants {
 }
 
 const Heading = (props: HeadingProps) => {
-	const { titleProp, variant = "default" } = props;
-	return <_Heading.default variant={variant}>{titleProp}</_Heading.default>;
+	const { titleProp, variant = "default", subComp = "default" } = props;
+	return (
+		<_Heading.default variant={variant} subComp={subComp}>
+			{titleProp}
+		</_Heading.default>
+	);
 };
+
+const _HeadingMixins = {};
 
 const _HeadingVariants: _HeadingVariants = {
 	default: {
@@ -29,11 +37,15 @@ const _HeadingVariants: _HeadingVariants = {
       font-weight: 200;
       font-size: 4.7rem;
       text-align: center;
-
-      @media ${device.tablet}{
-        m
-      }
     `,
+		About: {
+			default: `
+				background: red;
+				height: 5rem;
+				width: 10rem;
+				
+			`,
+		},
 	},
 };
 
