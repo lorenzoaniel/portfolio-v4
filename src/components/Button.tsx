@@ -43,7 +43,6 @@ const Button = (props: ButtonProps) => {
 
 	const toggleState = useAppSelector(selectToggle);
 	const dispatch = useAppDispatch();
-	console.log(clickHandle);
 
 	const createButton = (nameProp: string, variant: string) => {
 		switch (variant) {
@@ -117,10 +116,11 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
       padding: 0 0.8rem;
 
       @media ${device.tablet}{
-				margin-top: 0rem;
+				
       }
 
       @media ${device.laptop}{
+				
       }
     `,
 			button: `
