@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Heading from "../components/Heading";
 
@@ -6,16 +6,31 @@ import { useAppSelector } from "../store/hooks";
 import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
+import { AnimatePresence } from "framer-motion";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
+	const [testState, useTestState] = useState(false); //for testing
 
 	return (
 		<_About.Main>
 			<Heading titleProp={infoContext.About.ALittleBitAboutMeHeading.Title} />
-			<Navmenu variant={"AboutPage"}>
-				<Button nameProp={"Test1"} variant={"glassButton"} />
-				<Button nameProp={"Test2"} variant={"glassButton"} />
+			<Navmenu
+				toggleStateTest={testState}
+				clickHandleTest={() => {
+					useTestState((curr) => !curr);
+				}}
+				variant={"AboutPage"}
+			>
+				<AnimatePresence>
+					{testState && (
+						<>
+							<Button nameProp={"Test1"} variant={"AboutPage"} />
+							<Button nameProp={"Test2"} variant={"AboutPage"} />
+							<Button nameProp={"Test3"} variant={"AboutPage"} />
+						</>
+					)}
+				</AnimatePresence>
 			</Navmenu>
 		</_About.Main>
 	);
