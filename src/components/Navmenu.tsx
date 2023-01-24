@@ -1,10 +1,13 @@
-import React, { NamedExoticComponent } from "react";
+import React from "react";
 import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface NavmenuProps {
-	children: React.ReactNode[];
+	children: React.ReactNode[] | React.ReactNode;
+	toggleStateTest?: boolean;
 	variant?: string;
 	subComp?: string;
+	clickHandleTest?: Function;
 }
 
 interface _NavmenuProps {
@@ -17,8 +20,19 @@ interface _NavVariants {
 	AboutPage: any;
 }
 
+interface _MotionVariants {
+	default: any;
+	AboutPage: any;
+}
+
 const Navmenu = (props: NavmenuProps) => {
-	const { children, variant = "default", subComp = "Main" } = props;
+	const {
+		children = null,
+		variant = "default",
+		subComp = "Main",
+		clickHandleTest = () => {},
+		toggleStateTest = false,
+	} = props;
 
 	const createVariant = () => {
 		switch (variant) {
@@ -26,10 +40,18 @@ const Navmenu = (props: NavmenuProps) => {
 				return (
 					<>
 						<_Nav.AboutPage variant={variant} subComp={"Main"}>
-							<_Nav.AboutPage variant={variant} subComp={"DropdownList"}>
+							<_Nav.AboutPage
+								{..._MotionProps(variant, toggleStateTest)}
+								subComp={"DropdownList"}
+								variant={variant}
+							>
 								{children}
 							</_Nav.AboutPage>
-							<_Nav.AboutPage variant={variant} subComp={"DropdownButton"} />
+							<_Nav.AboutPage
+								onClick={() => clickHandleTest()}
+								variant={variant}
+								subComp={"DropdownButton"}
+							/>
 						</_Nav.AboutPage>
 					</>
 				);
@@ -67,26 +89,62 @@ const _NavVariants: _NavVariants = {
 		`,
 		DropdownList: `
 			background: yellow;
-			height: fit-content;
-      width: fit-content;
+			min-height: 6.5rem;
+      min-width: 20rem;
 			display: flex;
 			flex-direction: column;
 		`,
 		DropdownButton: `
 			background: blue;
-			height: 5rem;
+			height: 6.5rem;
 			width: 5rem;
 		`,
 	},
 };
 
 const _Nav = {
-	default: styled.aside<_NavmenuProps>`
+	default: styled(motion.div)<_NavmenuProps>`
 		${(p) => _NavVariants.default[p.subComp as keyof _NavVariants]}
 	`,
-	AboutPage: styled.div<_NavmenuProps>`
+	AboutPage: styled(motion.div)<_NavmenuProps>`
 		${(p) => _NavVariants.AboutPage[p.subComp as keyof _NavVariants]}
 	`,
+};
+
+//Motion
+
+const _MotionVariants = {
+	default: {},
+	AboutPage: {
+		toggleOff: {
+			transition: {
+				staggerChildren: 0.5,
+			},
+		},
+		toggleOn: {
+			transition: {
+				staggerChildren: 0.5,
+			},
+		},
+	},
+};
+
+const _MotionProps = (variant: string, toggleStateTest?: boolean) => {
+	let returnProps: any = {
+		variants: _MotionVariants,
+	};
+
+	switch (variant) {
+		case "AboutPage":
+			returnProps = { ...returnProps, exit: "toggleOff", initial: "initial" };
+			returnProps = { ...returnProps, animate: toggleStateTest ? "toggleOn" : "toggleOff" };
+			returnProps.variants = _MotionVariants.AboutPage;
+			break;
+		default:
+			break;
+	}
+
+	return returnProps;
 };
 
 export default Navmenu;
