@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { nanoid } from "nanoid";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggle, selectToggle } from "../store/slices/appToggleSlice";
@@ -25,8 +26,9 @@ interface _ButtonVariants {
 }
 
 interface _MotionVariants {
-	initial?: any;
-	animate?: any;
+	default: any;
+	AboutPage: any;
+	AppToggle: any;
 }
 
 // COMPONENT
@@ -49,19 +51,35 @@ const Button = (props: ButtonProps) => {
 			case "AppToggle":
 				return (
 					<_Button.AppToggle.slider
+						key={nanoid()}
 						onClick={() => dispatch(toggle())}
 						toggleState={toggleState}
-						{..._MotionProps(toggleState, variant, "slider")}
+						{..._MotionProps(variant, toggleState, "slider")}
 					>
 						<_Button.AppToggle.button
+							key={nanoid()}
 							toggleState={toggleState}
-							{..._MotionProps(toggleState, variant, "button")}
+							{..._MotionProps(variant, toggleState, "button")}
 						></_Button.AppToggle.button>
 					</_Button.AppToggle.slider>
+				);
+			case "AboutPage":
+				return (
+					<_Button.default
+						key={nanoid()}
+						{..._MotionProps(variant)}
+						onClick={clickHandle}
+						disabled={disabled}
+						variant={variant}
+					>
+						{nameProp}
+					</_Button.default>
 				);
 			default:
 				return (
 					<_Button.default
+						key={nanoid()}
+						{..._MotionProps(variant, toggleState)}
 						onClick={clickHandle}
 						disabled={disabled}
 						toggleState={toggleState}
@@ -99,6 +117,11 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 				text-shadow: 0rem 0.1rem 0.5rem rgba(255,255,255,0.5);
 				flex-shrink: 0;
 			`,
+			AboutPage: `
+				background: orange;
+				height: 6.5rem;
+				width: 20rem;
+			`,
 		},
 		AppToggle: {
 			slider: `
@@ -130,6 +153,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
       border: none;
 			box-shadow: ${toggleState ? "0.2rem 0.2rem 0.2rem rgba(0,0,0,0.5)" : ""};
       filter: blur(0.1rem);
+			transform: translateX(0rem);
     `,
 		},
 	};
@@ -152,75 +176,77 @@ const _Button: _ButtonVariants = {
 // MOTION
 
 const _MotionVariants: _MotionVariants = {
-	initial: {
-		default: {},
-		AppToggle: {
-			slider: {},
-			button: {
-				transform: "translateX(0rem)",
+	default: {},
+	AboutPage: {
+		initial: {
+			opacity: 0,
+		},
+		toggleOff: {
+			opacity: [1, 0],
+			transition: {
+				duration: 0.5,
+			},
+		},
+		toggleOn: {
+			opacity: [0, 1],
+			transition: {
+				duration: 0.5,
 			},
 		},
 	},
-	animate: {
-		default: {},
-		AppToggle: {
-			slider: {
-				on: {
-					background: "#f1f1f1",
-					border: "1.5rem solid #383838",
-				},
-				off: {
-					background: "#383838",
-					border: "1.5rem solid #FFFFFF",
+	AppToggle: {
+		slider: {
+			on: {
+				background: "#f1f1f1",
+				border: "1.5rem solid #383838",
+			},
+			off: {
+				background: "#383838",
+				border: "1.5rem solid #FFFFFF",
+			},
+		},
+		button: {
+			on: {
+				background:
+					"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
+				transform: "translateX(5.5rem)",
+				transition: {
+					duration: 0.5,
+					ease: "easeInOut",
 				},
 			},
-			button: {
-				on: {
-					background:
-						"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
-					transform: "translateX(5.5rem)",
-					transition: {
-						duration: 0.5,
-						ease: "easeInOut",
-					},
-				},
-				off: {
-					background:
-						"radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%)",
-					transform: "translateX(0rem)",
-					transition: {
-						duration: 0.5,
-						ease: "easeInOut",
-					},
+			off: {
+				background:
+					"radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%)",
+				transform: "translateX(0rem)",
+				transition: {
+					duration: 0.5,
+					ease: "easeInOut",
 				},
 			},
 		},
 	},
 };
 
-const _MotionProps = (toggleState: boolean, variant: string, subComp?: string) => {
+const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) => {
+	let returnProps: any = {
+		variants: _MotionVariants,
+	};
+
 	switch (variant) {
 		case "AppToggle":
-			return {
-				initial:
-					_MotionVariants.initial[variant as keyof _MotionVariants][
-						subComp as keyof _MotionVariants
-					],
-				animate: toggleState
-					? _MotionVariants.animate[variant as keyof _MotionVariants][
-							subComp as keyof _MotionVariants
-					  ].on
-					: _MotionVariants.animate[variant as keyof _MotionVariants][
-							subComp as keyof _MotionVariants
-					  ].off,
-			};
-
+			returnProps = { ...returnProps, animate: toggleState ? "on" : "off" };
+			returnProps.variants =
+				_MotionVariants[variant as keyof _MotionVariants][subComp as keyof _MotionVariants];
+			break;
+		case "AboutPage":
+			returnProps.variants = _MotionVariants.AboutPage;
+			break;
 		default:
-			return {
-				initial: _MotionVariants.initial[variant as keyof _MotionVariants],
-				animate: _MotionVariants.animate[variant as keyof _MotionVariants],
-			};
+			break;
 	}
+
+	return returnProps;
 };
 
 export default Button;
