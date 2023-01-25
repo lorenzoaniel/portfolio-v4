@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { nanoid } from "nanoid";
 
 interface NavmenuProps {
-	children: React.ReactNode[] | React.ReactNode;
+	children?: React.ReactNode[] | React.ReactNode;
 	toggleStateTest?: boolean;
 	variant?: string;
 	subComp?: string;
@@ -27,7 +28,7 @@ interface _MotionVariants {
 
 const Navmenu = (props: NavmenuProps) => {
 	const {
-		children = null,
+		children = undefined,
 		variant = "default",
 		subComp = "Main",
 		clickHandleTest = () => {},
@@ -38,22 +39,25 @@ const Navmenu = (props: NavmenuProps) => {
 		switch (variant) {
 			case "AboutPage":
 				return (
-					<>
-						<_Nav.AboutPage variant={variant} subComp={"Main"}>
+					<AnimatePresence mode="wait">
+						<_Nav.AboutPage key={nanoid()} variant={variant} subComp={"Main"}>
 							<_Nav.AboutPage
+								key={nanoid()}
 								{..._MotionProps(variant, toggleStateTest)}
 								subComp={"DropdownList"}
 								variant={variant}
 							>
 								{children}
 							</_Nav.AboutPage>
+
 							<_Nav.AboutPage
+								key={nanoid()}
 								onClick={() => clickHandleTest()}
 								variant={variant}
 								subComp={"DropdownButton"}
 							/>
 						</_Nav.AboutPage>
-					</>
+					</AnimatePresence>
 				);
 			default:
 				return (
@@ -82,15 +86,13 @@ const _NavVariants: _NavVariants = {
 	},
 	AboutPage: {
 		Main: `
-			background: red;
 			height: fit-content;
       width: fit-content;
 			display: flex;
 		`,
 		DropdownList: `
-			background: yellow;
-			min-height: 6.5rem;
-      min-width: 20rem;
+			height: fit-content;
+      width: fit-content;
 			display: flex;
 			flex-direction: column;
 		`,
@@ -116,14 +118,18 @@ const _Nav = {
 const _MotionVariants = {
 	default: {},
 	AboutPage: {
+		initial: {},
 		toggleOff: {
 			transition: {
-				staggerChildren: 0.5,
+				duration: 0.5,
+				staggerChildren: 0.3,
+				staggerDirection: -1,
 			},
 		},
 		toggleOn: {
 			transition: {
-				staggerChildren: 0.5,
+				duration: 0.5,
+				staggerChildren: 0.3,
 			},
 		},
 	},
@@ -137,7 +143,7 @@ const _MotionProps = (variant: string, toggleStateTest?: boolean) => {
 	switch (variant) {
 		case "AboutPage":
 			returnProps = { ...returnProps, exit: "toggleOff", initial: "initial" };
-			returnProps = { ...returnProps, animate: toggleStateTest ? "toggleOn" : "toggleOff" };
+			returnProps = { ...returnProps, animate: "toggleOn" };
 			returnProps.variants = _MotionVariants.AboutPage;
 			break;
 		default:
