@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { nanoid } from "nanoid";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -17,7 +17,7 @@ interface ButtonProps {
 
 interface _ButtonProps {
 	variant: string;
-	toggleState: boolean;
+	toggleState?: boolean;
 }
 
 interface _ButtonVariants {
@@ -63,18 +63,6 @@ const Button = (props: ButtonProps) => {
 						></_Button.AppToggle.button>
 					</_Button.AppToggle.slider>
 				);
-			case "AboutPage":
-				return (
-					<_Button.default
-						key={nanoid()}
-						{..._MotionProps(variant)}
-						onClick={clickHandle}
-						disabled={disabled}
-						variant={variant}
-					>
-						{nameProp}
-					</_Button.default>
-				);
 			default:
 				return (
 					<_Button.default
@@ -82,7 +70,6 @@ const Button = (props: ButtonProps) => {
 						{..._MotionProps(variant, toggleState)}
 						onClick={clickHandle}
 						disabled={disabled}
-						toggleState={toggleState}
 						variant={variant}
 					>
 						{nameProp}
@@ -184,13 +171,13 @@ const _MotionVariants: _MotionVariants = {
 		toggleOff: {
 			opacity: [1, 0],
 			transition: {
-				duration: 0.5,
+				duration: 0.3,
 			},
 		},
 		toggleOn: {
 			opacity: [0, 1],
 			transition: {
-				duration: 0.5,
+				duration: 0.3,
 			},
 		},
 	},
