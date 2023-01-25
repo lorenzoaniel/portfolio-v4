@@ -6,7 +6,6 @@ import { useAppSelector } from "../store/hooks";
 import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
-import { AnimatePresence } from "framer-motion";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
@@ -14,15 +13,15 @@ const About = () => {
 
 	return (
 		<_About.Main>
-			<Heading titleProp={infoContext.About.ALittleBitAboutMeHeading.Title} />
-			<Navmenu
-				toggleStateTest={testState}
-				clickHandleTest={() => {
-					useTestState((curr) => !curr);
-				}}
-				variant={"AboutPage"}
-			>
-				<AnimatePresence>
+			<_About.Header>
+				<Heading titleProp={infoContext.About.ALittleBitAboutMeHeading.Title} />
+				<Navmenu
+					toggleStateTest={testState}
+					clickHandleTest={() => {
+						useTestState((curr) => !curr);
+					}}
+					variant={"AboutPage"}
+				>
 					{testState && (
 						<>
 							<Button nameProp={"Test1"} variant={"AboutPage"} />
@@ -30,8 +29,8 @@ const About = () => {
 							<Button nameProp={"Test3"} variant={"AboutPage"} />
 						</>
 					)}
-				</AnimatePresence>
-			</Navmenu>
+				</Navmenu>
+			</_About.Header>
 		</_About.Main>
 	);
 };
@@ -49,16 +48,25 @@ const _About = {
 
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
 		align-self: flex-end;
 		border-radius: 2rem;
+		padding: 1.5rem;
 		box-shadow: 0 0 1rem 0.5rem rgba(70, 255, 255, 0.5),
 			0 0 1rem 0.5rem rgba(70, 150, 150, 0.7) inset;
 		backdrop-filter: blur(1rem);
 
 		color: black;
 		font-size: 3rem;
+	`,
+	Header: styled.aside`
+		background: red;
+		width: 100%;
+		height: fit-content;
+		display: flex;
+		flex-direction: column;
+		border-radius: 1rem;
 	`,
 };
 
