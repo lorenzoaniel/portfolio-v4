@@ -9,15 +9,18 @@ import Button from "../components/Button";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
-	const [testState, useTestState] = useState(false); //for testing
+	const [testState, useTestState] = useState(false); //for testing transfer to store
 
 	return (
 		<_About.Main>
 			<_About.Header>
-				<Heading titleProp={infoContext.About.ALittleBitAboutMeHeading.Title} />
+				<Heading
+					titleProp={infoContext.About.ALittleBitAboutMeHeading.Title}
+					variant={"AboutPage"}
+				/>
 				<Navmenu
-					toggleStateTest={testState}
-					clickHandleTest={() => {
+					toggleState={testState}
+					clickHandle={() => {
 						useTestState((curr) => !curr);
 					}}
 					variant={"AboutPage"}
@@ -39,9 +42,9 @@ const _About = {
 	Main: styled.section`
 		background-image: linear-gradient(
 			to left,
-			rgba(20, 20, 20, 0.5),
-			rgba(10, 80, 80, 0.5),
-			rgba(20, 150, 150, 0.5)
+			var(--About-Cyan-1),
+			var(--About-Cyan-2),
+			var(--About-Cyan-3)
 		);
 		width: 100%;
 		height: 100%;
@@ -53,17 +56,16 @@ const _About = {
 		align-self: flex-end;
 		border-radius: 2rem;
 		padding: 1.5rem;
-		box-shadow: 0 0 1rem 0.5rem rgba(70, 255, 255, 0.5),
-			0 0 1rem 0.5rem rgba(70, 150, 150, 0.7) inset;
+		box-shadow: 0 0 1rem 0.5rem var(--About-Cyan-5), 0 0 1rem 0.5rem var(--About-Cyan-4) inset;
 		backdrop-filter: blur(1rem);
 
 		color: black;
 		font-size: 3rem;
 	`,
 	Header: styled.aside`
-		background: red;
+		/* background: red; */
 		width: 100%;
-		height: fit-content;
+		height: 13.5rem;
 		display: flex;
 		flex-direction: column;
 		border-radius: 1rem;
