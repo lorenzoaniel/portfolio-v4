@@ -109,7 +109,7 @@ const _ABMixins = {
 	Common: {
 		defaultPositioning: `
 			position: absolute;
-      height: 100%;
+      height: clamp(66.7rem, 100%, 100vh);
       width: 100%;
       z-index: -1;
       overflow: hidden;
