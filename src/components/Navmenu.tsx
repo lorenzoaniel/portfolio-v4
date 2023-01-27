@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { nanoid } from "nanoid";
+import Button from "./Button";
 
 interface NavmenuProps {
 	children?: React.ReactNode[] | React.ReactNode;
-	toggleStateTest?: boolean;
+	toggleState?: boolean;
 	variant?: string;
 	subComp?: string;
-	clickHandleTest?: Function;
+	clickHandle?: Function;
 }
 
 interface _NavmenuProps {
@@ -31,8 +32,8 @@ const Navmenu = (props: NavmenuProps) => {
 		children = undefined,
 		variant = "default",
 		subComp = "Main",
-		clickHandleTest = () => {},
-		toggleStateTest = false,
+		toggleState = false,
+		clickHandle = () => {},
 	} = props;
 
 	const createVariant = () => {
@@ -43,18 +44,19 @@ const Navmenu = (props: NavmenuProps) => {
 						<_Nav.AboutPage key={nanoid()} variant={variant} subComp={"Main"}>
 							<_Nav.AboutPage
 								key={nanoid()}
-								{..._MotionProps(variant, toggleStateTest)}
+								{..._MotionProps(variant, toggleState)}
 								subComp={"DropdownList"}
 								variant={variant}
 							>
 								{children}
 							</_Nav.AboutPage>
-
-							<_Nav.AboutPage
-								key={nanoid()}
-								onClick={() => clickHandleTest()}
-								variant={variant}
-								subComp={"DropdownButton"}
+							<Button
+								nameProp={""}
+								variant={"AboutPageNavButton"}
+								toggleState={toggleState}
+								clickHandle={() => {
+									clickHandle();
+								}}
 							/>
 						</_Nav.AboutPage>
 					</AnimatePresence>
@@ -89,17 +91,13 @@ const _NavVariants: _NavVariants = {
 			height: fit-content;
       width: fit-content;
 			display: flex;
+			position: relative;
 		`,
 		DropdownList: `
 			height: fit-content;
       width: fit-content;
 			display: flex;
 			flex-direction: column;
-		`,
-		DropdownButton: `
-			background: blue;
-			height: 6.5rem;
-			width: 5rem;
 		`,
 	},
 };
