@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Outlet, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 
-import { useAppSelector } from "./store/hooks";
-import { selectToggle } from "./store/slices/appToggleSlice";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { selectToggle, toggle } from "./store/slices/appToggleSlice";
 import { selectHomeInfo } from "./store/slices/homePageSlice";
 
 import { GlobalStyle } from "./styles/GlobalStyles";
@@ -31,11 +31,12 @@ interface _MotionVariants {
 
 const App = () => {
 	//logic
-	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const toggleContext = useAppSelector(selectToggle);
 	const navMenuContext = useAppSelector(selectHomeInfo);
 	const currDimensionContext = useCurrentDimension();
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const createNav = (disabled: boolean = navMenuContext.navmenuconfig.disabled) => {
 		const arrayLength = navMenuContext.navmenuconfig.nameProp.length;
@@ -72,7 +73,15 @@ const App = () => {
 					<>
 						<Navmenu>
 							{[
-								<Button key={nanoid()} nameProp={"PORTFOLIO"} variant={"AppToggle"} />,
+								<Button
+									key={nanoid()}
+									nameProp={""}
+									variant={"AppToggle"}
+									toggleState={toggleContext}
+									clickHandle={() => {
+										dispatch(toggle());
+									}}
+								/>,
 								createNav(false),
 							]}
 						</Navmenu>
@@ -82,7 +91,14 @@ const App = () => {
 					</>
 				) : (
 					<>
-						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
+						<Button
+							nameProp={""}
+							variant={"AppToggle"}
+							toggleState={toggleContext}
+							clickHandle={() => {
+								dispatch(toggle());
+							}}
+						/>
 						<_App.OutletContainer>
 							<Outlet />
 						</_App.OutletContainer>
@@ -117,7 +133,14 @@ const App = () => {
 					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
 
 					<_App.ToggledOff.Wrapper>
-						<Button nameProp={"PORTFOLIO"} variant={"AppToggle"} />
+						<Button
+							nameProp={""}
+							variant={"AppToggle"}
+							toggleState={toggleContext}
+							clickHandle={() => {
+								dispatch(toggle());
+							}}
+						/>
 						<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
 					</_App.ToggledOff.Wrapper>
 				</_App.ToggledOff.Main>
