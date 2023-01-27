@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { nanoid } from "nanoid";
-
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { toggle, selectToggle } from "../store/slices/appToggleSlice";
 
 import { device } from "../styles/breakpoints";
 
@@ -12,6 +9,7 @@ interface ButtonProps {
 	nameProp: string;
 	variant?: string;
 	disabled?: boolean;
+	toggleState?: boolean;
 	clickHandle?: () => void;
 }
 
@@ -28,6 +26,7 @@ interface _ButtonVariants {
 interface _MotionVariants {
 	default: any;
 	AboutPage: any;
+	AboutPageNavButton: any;
 	AppToggle: any;
 }
 
@@ -39,12 +38,10 @@ const Button = (props: ButtonProps) => {
 		clickHandle = () => {
 			console.log("No function");
 		},
+		toggleState = false,
 		disabled = false,
 		variant = "default",
 	} = props;
-
-	const toggleState = useAppSelector(selectToggle);
-	const dispatch = useAppDispatch();
 
 	const createButton = (nameProp: string, variant: string) => {
 		switch (variant) {
@@ -52,7 +49,7 @@ const Button = (props: ButtonProps) => {
 				return (
 					<_Button.AppToggle.slider
 						key={nanoid()}
-						onClick={() => dispatch(toggle())}
+						onClick={clickHandle}
 						toggleState={toggleState}
 						{..._MotionProps(variant, toggleState, "slider")}
 					>
@@ -69,6 +66,7 @@ const Button = (props: ButtonProps) => {
 						key={nanoid()}
 						{..._MotionProps(variant, toggleState)}
 						onClick={clickHandle}
+						toggleState={toggleState}
 						disabled={disabled}
 						variant={variant}
 					>
@@ -107,7 +105,11 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 			AboutPage: `
 				background: orange;
 				height: 6.5rem;
-				width: 20rem;
+			`,
+			AboutPageNavButton: `
+				background: blue;
+				height: 6.5rem;
+				width: 5rem;
 			`,
 		},
 		AppToggle: {
@@ -167,15 +169,35 @@ const _MotionVariants: _MotionVariants = {
 	AboutPage: {
 		initial: {
 			opacity: 0,
+			width: "0rem",
 		},
 		toggleOff: {
 			opacity: [1, 0],
+			width: "0rem",
 			transition: {
 				duration: 0.3,
 			},
 		},
 		toggleOn: {
 			opacity: [0, 1],
+			width: "23.5rem",
+			transition: {
+				duration: 0.3,
+			},
+		},
+	},
+	AboutPageNavButton: {
+		initial: {
+			borderRadius: "0rem",
+		},
+		toggleOff: {
+			borderRadius: ["0rem 2rem 2rem 0rem", "0rem 0rem 0rem 0rem"],
+			transition: {
+				duration: 0.3,
+			},
+		},
+		toggleOn: {
+			borderRadius: "0rem 2rem 2rem 0rem",
 			transition: {
 				duration: 0.3,
 			},
@@ -226,10 +248,19 @@ const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) 
 			returnProps.variants =
 				_MotionVariants[variant as keyof _MotionVariants][subComp as keyof _MotionVariants];
 			break;
-		case "AboutPage":
+		case "AboutPage": //orchestrated by Navmenu _MotionProps 'AboutPage' variant
 			returnProps.variants = _MotionVariants.AboutPage;
 			break;
+		case "AboutPageNavButton":
+			returnProps = {
+				...returnProps,
+				animate: toggleState ? "toggleOn" : "toggleOff",
+				initial: "initial",
+			};
+			returnProps.variants = _MotionVariants.AboutPageNavButton;
+			break;
 		default:
+			returnProps = { ...returnProps, animate: "animate", initial: "initial", exit: "exit" };
 			break;
 	}
 
