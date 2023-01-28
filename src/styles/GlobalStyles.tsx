@@ -3,7 +3,7 @@ import { createGlobalStyle, css } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   * {
     //COLORS
-    --About-Cyan-1: rgba(20, 20, 20, 0.5);
+    --About-Cyan-1: rgba(20, 50, 50, 0.5);
     --About-Cyan-2: rgba(10, 80, 80, 0.5);
     --About-Cyan-3: rgba(20, 150, 150, 0.5);
     --About-Cyan-4: rgba(70, 150, 150, 0.7);
@@ -11,6 +11,8 @@ export const GlobalStyle = createGlobalStyle`
     --About-Maroon-1: rgba(80, 10, 10, 1);
     --About-Maroon-2: rgba(70, 20, 20, 1);
     --About-Maroon-3: rgba(255, 70, 70, 0.5);
+    --About-Maroon-4: rgba(150, 70, 70, 0.8);
+    --About-Maroon-5: rgba(100, 40, 40, 0.8);
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
