@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { nanoid } from "nanoid";
+import { RxDropdownMenu } from "react-icons/Rx";
 
 import { device } from "../styles/breakpoints";
 
@@ -60,6 +61,19 @@ const Button = (props: ButtonProps) => {
 						></_Button.AppToggle.button>
 					</_Button.AppToggle.slider>
 				);
+			case "AboutPageNavButton":
+				return (
+					<_Button.default
+						key={nanoid()}
+						{..._MotionProps(variant, toggleState)}
+						onClick={clickHandle}
+						toggleState={toggleState}
+						disabled={disabled}
+						variant={variant}
+					>
+						<RxDropdownMenu style={{ height: "4rem", width: "4rem" }} />
+					</_Button.default>
+				);
 			default:
 				return (
 					<_Button.default
@@ -103,13 +117,54 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 				flex-shrink: 0;
 			`,
 			AboutPage: `
-				background: orange;
-				height: 6.5rem;
+				background: linear-gradient(var(--About-Maroon-3), var(--About-Maroon-2));
+				height: fit-content;
+				border: 0.1rem solid var(--About-Maroon-2);
+				
+				color: var(--About-Maroon-Text-1);
+				text-shadow: 0 0.2rem 0.8rem var(--About-Maroon-2);
+				font-size: 2.5rem;
+				
+				// separate animation since adding motion props will decouple orchestration for this child component
+				&:hover { 
+					background: var(--About-Maroon-1);
+					animation: hoverButton 0.3s forwards;
+
+					@keyframes hoverButton {
+						from {
+							transform: translateY(0rem);
+						}
+						to {
+							transform: translateY(-0.5rem);
+							box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1);
+							text-shadow: 0 0.2rem 0.8rem var(--About-Maroon-4);
+						}
+					}
+				}
+				// separate animation since adding motion props will decouple orchestration for this child component
+				&: active {
+					animation: clickButton 0.3s forwards;
+
+					@keyframes clickButton {
+						from {
+							transform: translateY(0rem);
+							box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1);
+						}
+						to {
+							transform: translateY(0rem);
+							box-shadow: none;
+						}
+					}
+				}
 			`,
 			AboutPageNavButton: `
-				background: blue;
+				background: var(--About-Maroon-3);
 				height: 6.5rem;
 				width: 5rem;
+				border: none;
+				svg {
+					color: var(--About-Maroon-2);
+				}
 			`,
 		},
 		AppToggle: {
@@ -170,6 +225,7 @@ const _MotionVariants: _MotionVariants = {
 		initial: {
 			opacity: 0,
 			width: "0rem",
+			boxShadow: "0 0 0rem 0rem var(--About-Maroon-2) inset",
 		},
 		toggleOff: {
 			opacity: [1, 0],
@@ -188,10 +244,30 @@ const _MotionVariants: _MotionVariants = {
 	},
 	AboutPageNavButton: {
 		initial: {
-			borderRadius: "0rem",
+			borderRadius: "0.1rem",
+			boxShadow:
+				"0 0.3rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
+			transform: "translateY(0rem)",
+		},
+		whileHover: {
+			boxShadow: [
+				"0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
+				"0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
+			],
+			transform: "translateY(-0.1rem)",
+			transition: {
+				duration: 0.1,
+				ease: "easeInOut",
+			},
+		},
+		whileTap: {
+			boxShadow: [
+				"0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
+				"0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
+			],
 		},
 		toggleOff: {
-			borderRadius: ["0rem 2rem 2rem 0rem", "0rem 0rem 0rem 0rem"],
+			borderRadius: ["1rem", "0.3rem"],
 			transition: {
 				duration: 0.3,
 			},
@@ -254,8 +330,10 @@ const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) 
 		case "AboutPageNavButton":
 			returnProps = {
 				...returnProps,
-				animate: toggleState ? "toggleOn" : "toggleOff",
 				initial: "initial",
+				animate: toggleState ? "toggleOn" : "toggleOff",
+				whileHover: "whileHover",
+				whileTap: "whileTap",
 			};
 			returnProps.variants = _MotionVariants.AboutPageNavButton;
 			break;
