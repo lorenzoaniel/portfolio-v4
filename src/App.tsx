@@ -16,7 +16,7 @@ import Button from "./components/Button";
 import Home from "./pages/Home";
 import AnimatedBackground from "./components/AnimatedBackground";
 import Carousel from "./components/Carousel";
-import About from "./pages/About";
+import About from "./pages/About/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import useCurrentDimension from "./helpers/useCurrentDimension";
