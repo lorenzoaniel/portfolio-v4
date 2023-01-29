@@ -44,14 +44,16 @@ const _HeadingVariants: _HeadingVariants = {
 		AboutPage: {
 			default: `
 				background: linear-gradient(var(--About-Maroon-1), var(--About-Maroon-2));
+				position: absolute;
 				height: fit-content;
-				width: fit-content;
+				width: 22.5rem;
 				align-self: center;
 				font-size: 2.85rem;
 				text-align: center;
 				-webkit-background-clip: text;
   			-webkit-text-fill-color: transparent;
 				text-shadow: 0 0.3rem 0.5rem var(--About-Maroon-3);
+				margin-left: 5.5rem;
 			`,
 		},
 	},
