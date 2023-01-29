@@ -92,6 +92,7 @@ const _NavVariants: _NavVariants = {
       width: fit-content;
 			display: flex;
 			position: relative;
+			padding: 0.3rem; // to prevent heading from pushing down
 		`,
 		DropdownList: `
 			height: fit-content;
@@ -140,8 +141,13 @@ const _MotionProps = (variant: string, toggleStateTest?: boolean) => {
 
 	switch (variant) {
 		case "AboutPage":
-			returnProps = { ...returnProps, exit: "toggleOff", initial: "initial" };
-			returnProps = { ...returnProps, animate: "toggleOn" };
+			returnProps = { ...returnProps };
+			returnProps = {
+				...returnProps,
+				initial: "initial",
+				animate: "toggleOn",
+				exit: "toggleOff",
+			};
 			returnProps.variants = _MotionVariants.AboutPage;
 			break;
 		default:
