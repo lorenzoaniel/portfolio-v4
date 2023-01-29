@@ -120,6 +120,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 				background: linear-gradient(var(--About-Maroon-3), var(--About-Maroon-2));
 				height: fit-content;
 				border: 0.1rem solid var(--About-Maroon-2);
+				backdrop-filter: blur(1rem);
 				
 				color: var(--About-Maroon-Text-1);
 				text-shadow: 0 0.2rem 0.8rem var(--About-Maroon-2);
