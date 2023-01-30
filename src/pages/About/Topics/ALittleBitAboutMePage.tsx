@@ -6,13 +6,14 @@ interface PageProps {
 }
 
 const ALittleBitAboutMePage = (props: PageProps) => {
-	return <_Page.Main></_Page.Main>;
+	return <_Page.Main>TestMe</_Page.Main>;
 };
 
 const _PageVariants = {};
 
 const _Page = {
 	Main: styled.section`
+		background: purple;
 		height: 100%;
 		width: 100%;
 	`,
