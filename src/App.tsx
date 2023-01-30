@@ -1,24 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Outlet, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { selectToggle, toggle } from "./store/slices/appToggleSlice";
 import { selectHomeInfo } from "./store/slices/homePageSlice";
+import { selectPagesInfo } from "./store/slices/pagesInfoSlice";
 
 import { GlobalStyle } from "./styles/GlobalStyles";
 import { device } from "./styles/breakpoints";
 
-import Heading from "./components/Heading";
-import Button from "./components/Button";
 import Home from "./pages/Home";
-import AnimatedBackground from "./components/AnimatedBackground";
-import Carousel from "./components/Carousel";
 import About from "./pages/About/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
+import ALittleBitAboutMePage from "./pages/About/Topics/ALittleBitAboutMePage";
+import ALittleBitAboutTheSite from "./pages/About/Topics/ALittleBitAboutTheSite";
+import ALittleBitAboutTheSourcesAndInspirations from "./pages/About/Topics/ALittleBitAboutTheSourcesAndInspirations";
+import Heading from "./components/Heading";
+import Button from "./components/Button";
+import AnimatedBackground from "./components/AnimatedBackground";
+import Carousel from "./components/Carousel";
 import useCurrentDimension from "./helpers/useCurrentDimension";
 import Navmenu from "./components/Navmenu";
 
@@ -34,6 +38,7 @@ const App = () => {
 	const dispatch = useAppDispatch();
 	const toggleContext = useAppSelector(selectToggle);
 	const navMenuContext = useAppSelector(selectHomeInfo);
+	const infoContext = useAppSelector(selectPagesInfo);
 	const currDimensionContext = useCurrentDimension();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -68,6 +73,7 @@ const App = () => {
 
 	const RouteProps = {
 		Nav: {
+			path: "/",
 			element:
 				currDimensionContext.width >= 1024 ? (
 					<>
@@ -114,6 +120,20 @@ const App = () => {
 			element: <About />,
 			path: "/about",
 		},
+		AboutTopics: {
+			ALittleBitAboutMePage: {
+				element: <ALittleBitAboutMePage dataProp={{}} />,
+				path: infoContext.About.ALittleBitAboutMePage.Path,
+			},
+			ALittleBitAboutTheSite: {
+				element: <ALittleBitAboutTheSite dataProp={{}} />,
+				path: infoContext.About.ALittleBitAboutTheSite.Path,
+			},
+			ALittleBitAboutTheSourcesAndInspirations: {
+				element: <ALittleBitAboutTheSourcesAndInspirations dataProp={{}} />,
+				path: infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path,
+			},
+		},
 		Projects: {
 			element: <Projects />,
 			path: "/projects",
@@ -149,12 +169,18 @@ const App = () => {
 					<AnimatedBackground disabledState={toggleContext} variant={"Blackhole"} />
 
 					<_App.ToggledOn.Routes>
-						<Routes key={location.pathname} location={location}>
+						<Routes>
 							<Route {...RouteProps.Nav}>
-								<Route index {...RouteProps.Home}></Route>
-								<Route {...RouteProps.About}></Route>
-								<Route {...RouteProps.Projects}></Route>
-								<Route {...RouteProps.Contact}></Route>
+								<Route index element={RouteProps.Home.element} />
+								<Route {...RouteProps.Home} />
+								<Route {...RouteProps.About}>
+									<Route index element={RouteProps.AboutTopics.ALittleBitAboutMePage.element} />
+									<Route {...RouteProps.AboutTopics.ALittleBitAboutMePage} />
+									<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSite} />
+									<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSourcesAndInspirations} />
+								</Route>
+								<Route {...RouteProps.Projects} />
+								<Route {...RouteProps.Contact} />
 							</Route>
 						</Routes>
 					</_App.ToggledOn.Routes>
