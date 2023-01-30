@@ -134,7 +134,7 @@ const _MotionVariants = {
 	},
 };
 
-const _MotionProps = (variant: string, toggleStateTest?: boolean) => {
+const _MotionProps = (variant: string, toggleState?: boolean) => {
 	let returnProps: any = {
 		variants: _MotionVariants,
 	};
@@ -145,7 +145,7 @@ const _MotionProps = (variant: string, toggleStateTest?: boolean) => {
 			returnProps = {
 				...returnProps,
 				initial: "initial",
-				animate: "toggleOn",
+				animate: toggleState ? "toggleOn" : "",
 				exit: "toggleOff",
 			};
 			returnProps.variants = _MotionVariants.AboutPage;
