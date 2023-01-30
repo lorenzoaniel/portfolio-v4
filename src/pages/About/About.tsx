@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Heading from "../../components/Heading";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../store/hooks";
 import { selectPagesInfo } from "../../store/slices/pagesInfoSlice";
+
 import Navmenu from "../../components/Navmenu";
 import Button from "../../components/Button";
+import Heading from "../../components/Heading";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
+	const navigate = useNavigate();
 	const [testState, useTestState] = useState(false); //for testing transfer to store
 
 	return (
@@ -25,14 +28,28 @@ const About = () => {
 					{testState && (
 						<>
 							<Button
+								clickHandle={() => {
+									useTestState((curr) => !curr);
+									navigate(infoContext.About.ALittleBitAboutMePage.Path);
+								}}
 								nameProp={infoContext.About.ALittleBitAboutMePage.Title}
 								variant={"AboutPage"}
 							/>
+
 							<Button
+								clickHandle={() => {
+									useTestState((curr) => !curr);
+									navigate(infoContext.About.ALittleBitAboutTheSite.Path);
+								}}
 								nameProp={infoContext.About.ALittleBitAboutTheSite.Title}
 								variant={"AboutPage"}
 							/>
+
 							<Button
+								clickHandle={() => {
+									useTestState((curr) => !curr);
+									navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
+								}}
 								nameProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
 								variant={"AboutPage"}
 							/>
@@ -40,7 +57,9 @@ const About = () => {
 					)}
 				</Navmenu>
 			</_About.Header>
-			<_About.Content></_About.Content>
+			<_About.Content>
+				<Outlet />
+			</_About.Content>
 		</_About.Main>
 	);
 };
@@ -80,7 +99,7 @@ const _About = {
 		position: relative;
 	`,
 	Content: styled.aside`
-		background: red;
+		background: orange;
 		height: 100%;
 		width: 100%;
 	`,
