@@ -6,7 +6,8 @@ interface PageProps {
 }
 
 const ALittleBitAboutTheSourcesAndInspirations = (props: PageProps) => {
-	return <_Page.Main>TestSource</_Page.Main>;
+	const { dataProp } = props;
+	return <_Page.Main>{JSON.stringify(dataProp)}</_Page.Main>;
 };
 
 const _PageVariants = {};
@@ -16,6 +17,7 @@ const _Page = {
 		background: green;
 		height: 100%;
 		width: 100%;
+		overflow-x: scroll;
 	`,
 };
 
