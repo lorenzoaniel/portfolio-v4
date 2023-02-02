@@ -142,6 +142,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 						}
 					}
 				}
+
 				// separate animation since adding motion props will decouple orchestration for this child component
 				&: active {
 					animation: clickButton 0.3s forwards;
