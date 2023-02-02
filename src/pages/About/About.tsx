@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import { useAppSelector } from "../../store/hooks";
-import { selectPagesInfo } from "../../store/slices/pagesInfoSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { aboutTopicNavToggle, selectPagesInfo } from "../../store/slices/pagesInfoSlice";
 
 import Navmenu from "../../components/Navmenu";
 import Button from "../../components/Button";
@@ -12,24 +12,30 @@ import Heading from "../../components/Heading";
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
-	const [testState, useTestState] = useState(false); //for testing transfer to store
+	const dispatch = useAppDispatch();
+
+	const NavmenuToggleState = infoContext.About.NavmenuToggleState;
 
 	return (
 		<_About.Main>
 			<_About.Header>
-				<Heading titleProp={infoContext.About.ALittleBitAboutMePage.Title} variant={"AboutPage"} />
+				<Heading
+					titleProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
+					variant={"AboutPage"}
+					subComp={"defaultMaroon"}
+				/>
 				<Navmenu
-					toggleState={testState}
+					toggleState={NavmenuToggleState}
 					clickHandle={() => {
-						useTestState((curr) => !curr);
+						dispatch(aboutTopicNavToggle());
 					}}
 					variant={"AboutPage"}
 				>
-					{testState && (
+					{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
 						<>
 							<Button
 								clickHandle={() => {
-									useTestState((curr) => !curr);
+									dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
 									navigate(infoContext.About.ALittleBitAboutMePage.Path);
 								}}
 								nameProp={infoContext.About.ALittleBitAboutMePage.Title}
@@ -38,7 +44,7 @@ const About = () => {
 
 							<Button
 								clickHandle={() => {
-									useTestState((curr) => !curr);
+									dispatch(aboutTopicNavToggle());
 									navigate(infoContext.About.ALittleBitAboutTheSite.Path);
 								}}
 								nameProp={infoContext.About.ALittleBitAboutTheSite.Title}
@@ -47,7 +53,7 @@ const About = () => {
 
 							<Button
 								clickHandle={() => {
-									useTestState((curr) => !curr);
+									dispatch(aboutTopicNavToggle());
 									navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
 								}}
 								nameProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
@@ -91,17 +97,18 @@ const _About = {
 	Header: styled.aside`
 		/* background: red; */
 		width: 100%;
-		max-height: 7rem;
+		height: 20%;
 		display: flex;
-		/* flex-direction: column; */
 		border-radius: 1rem;
 		margin-bottom: 0.5rem;
 		position: relative;
 	`,
 	Content: styled.aside`
-		background: orange;
-		height: 100%;
+		/* background: orange; */
+		height: 75%;
 		width: 100%;
+		display: flex;
+		word-wrap: break-word;
 	`,
 };
 
