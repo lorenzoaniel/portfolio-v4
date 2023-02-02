@@ -13,19 +13,32 @@ interface _PProps {
 }
 
 interface _PVariants {
-	Main: any;
+	default: any;
 }
 
 const Paragraph = (props: PProps) => {
 	const { data, subComp = "default", variant = "default" } = props;
 	const ParagraphConfigs = {
-		Main: {
-			variant: "Main",
+		default: {
+			variant: variant,
 			subComp: subComp,
 		},
 	};
 
-	return <_P.Main {...ParagraphConfigs.Main}>{data}</_P.Main>;
+	const createVariant = (variant: string) => {
+		switch (variant) {
+			case "filler":
+				return <></>;
+			default:
+				return (
+					<>
+						<_P.default {...ParagraphConfigs.default}>{data}</_P.default>
+					</>
+				);
+		}
+	};
+
+	return <>{createVariant(variant)}</>;
 };
 
 //STYLE
@@ -39,28 +52,39 @@ const _PMixins = {
 };
 
 const _PVariants: _PVariants = {
-	Main: {
-		HomePage: `
-			${_PMixins.FontStyle.c10txsh0}
-      background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2), rgba(230, 230, 230, 0.5));
-      width: 100%;
-		  height: 15rem;
-			display: flex;
+	default: {
+		default: ``,
+		HomePage: {
+			default: `
+				${_PMixins.FontStyle.c10txsh0}
+				background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2), rgba(230, 230, 230, 0.5));
+				width: 100%;
+				height: 15rem;
+				display: flex;
 
-			border-radius: 2rem;
-			box-shadow: 0 0 1rem 0.5rem rgba(255,255,255,0.5), 0 0 1rem 0.5rem rgba(150,150,150,0.7) inset;
-			
-			padding: 2rem;
-			font-size: 3rem;
-			font-family: var(--roboticFont);
-			font-weight: 500;
+				border-radius: 2rem;
+				box-shadow: 0 0 1rem 0.5rem rgba(255,255,255,0.5), 0 0 1rem 0.5rem rgba(150,150,150,0.7) inset;
+				
+				padding: 2rem;
+				font-size: 3rem;
+				font-family: var(--roboticFont);
+				font-weight: 500;
 			`,
+		},
+		AboutPage: {
+			default: `
+				background: green;
+				width: 30.5rem;
+				height: 28rem;
+				font-size: 30%; //clamp(5%, 2rem, 10%)
+			`,
+		},
 	},
 };
 
 const _P: _PVariants = {
-	Main: styled.div<_PProps>`
-		${(p) => _PVariants[p.variant as keyof _PVariants][p.subComp as keyof _PVariants]}
+	default: styled.div<_PProps>`
+		${(p) => _PVariants.default[p.variant as keyof _PVariants][p.subComp as keyof _PVariants]}
 	`,
 };
 
