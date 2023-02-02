@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Outlet, Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
+import { Outlet, Routes, Route, useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 import { useAppDispatch, useAppSelector } from "./store/hooks";
@@ -39,9 +39,8 @@ const App = () => {
 	const toggleContext = useAppSelector(selectToggle);
 	const navMenuContext = useAppSelector(selectHomeInfo);
 	const infoContext = useAppSelector(selectPagesInfo);
-	const currDimensionContext = useCurrentDimension();
-	const location = useLocation();
 	const navigate = useNavigate();
+	const currDimensionContext = useCurrentDimension();
 
 	const createNav = (disabled: boolean = navMenuContext.navmenuconfig.disabled) => {
 		const arrayLength = navMenuContext.navmenuconfig.nameProp.length;
@@ -71,6 +70,7 @@ const App = () => {
 			});
 	};
 
+	//Route PROPS OBJECT Destructured during render
 	const RouteProps = {
 		Nav: {
 			path: "/",
@@ -122,15 +122,19 @@ const App = () => {
 		},
 		AboutTopics: {
 			ALittleBitAboutMePage: {
-				element: <ALittleBitAboutMePage dataProp={{}} />,
+				element: <ALittleBitAboutMePage dataProp={infoContext.About.ALittleBitAboutMePage} />,
 				path: infoContext.About.ALittleBitAboutMePage.Path,
 			},
 			ALittleBitAboutTheSite: {
-				element: <ALittleBitAboutTheSite dataProp={{}} />,
+				element: <ALittleBitAboutTheSite dataProp={infoContext.About.ALittleBitAboutTheSite} />,
 				path: infoContext.About.ALittleBitAboutTheSite.Path,
 			},
 			ALittleBitAboutTheSourcesAndInspirations: {
-				element: <ALittleBitAboutTheSourcesAndInspirations dataProp={{}} />,
+				element: (
+					<ALittleBitAboutTheSourcesAndInspirations
+						dataProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations}
+					/>
+				),
 				path: infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path,
 			},
 		},
@@ -208,6 +212,7 @@ const _App = {
 		background: black;
 		height: inherit;
 		width: inherit;
+		display: flex;
 	`,
 	ToggledOn: {
 		Main: styled(motion.section)`
@@ -217,8 +222,11 @@ const _App = {
 		Routes: styled(motion.aside)`
 			${_AppMixins.Commons.flexColCenterW100H100}
 			background-color: transparent;
-			row-gap: 3rem;
-			padding: 3rem;
+			justify-content: space-between;
+			row-gap: 5%;
+			padding: 2rem;
+			height: 100%;
+			overflow: scroll;
 
 			@media ${device.tablet} {
 				align-items: flex-start;
@@ -244,6 +252,7 @@ const _App = {
 		${_AppMixins.Commons.flexColCenterW100H100}
 		flex-direction: row;
 		border-radius: 1rem;
+		height: 65%;
 	`,
 };
 
