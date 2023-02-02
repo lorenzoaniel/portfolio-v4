@@ -8,7 +8,7 @@ const Home = () => {
 	const porfolioInfo = useAppSelector(selectHomeInfo);
 	return (
 		<_Home.Main>
-			<Paragraph data={porfolioInfo.porfolioInfo} subComp="HomePage" />
+			<Paragraph data={porfolioInfo.porfolioInfo} variant="HomePage" />
 		</_Home.Main>
 	);
 };
