@@ -84,15 +84,17 @@ const _NavVariants: _NavVariants = {
       justify-content: space-between;
       padding-right: 10%;
       column-gap: 2%;
+			margin-bottom: 10rem;
     `,
 	},
 	AboutPage: {
 		Main: `
 			height: fit-content;
-      width: fit-content;
+      width: 100%;
 			display: flex;
 			position: relative;
 			padding: 0.3rem; // to prevent heading from pushing down
+			margin: auto 0;
 		`,
 		DropdownList: `
 			height: fit-content;
