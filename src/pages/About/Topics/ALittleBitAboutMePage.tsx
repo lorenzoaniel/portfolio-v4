@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Paragraph from "../../../components/Paragraph";
 
 interface PageProps {
-	dataProp: any;
+	dataProp: {
+		Main: string;
+	};
 }
 
 const ALittleBitAboutMePage = (props: PageProps) => {
