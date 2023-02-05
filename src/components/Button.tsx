@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 import { motion } from "framer-motion";
 import { nanoid } from "nanoid";
 import { RxDropdownMenu } from "react-icons/Rx";
@@ -32,6 +32,12 @@ interface _MotionVariants {
 }
 
 // COMPONENT
+const motionDefaultTheme = {
+	background: "",
+	color: "",
+	shadow: "",
+	shadow2: "",
+};
 
 const Button = (props: ButtonProps) => {
 	const {
@@ -44,7 +50,9 @@ const Button = (props: ButtonProps) => {
 		variant = "default",
 	} = props;
 
-	const createButton = (nameProp: string, variant: string) => {
+	const motionTheme = useTheme() === undefined ? motionDefaultTheme : useTheme();
+
+	const createVariant = (nameProp: string, variant: string) => {
 		switch (variant) {
 			case "AppToggle":
 				return (
@@ -65,7 +73,7 @@ const Button = (props: ButtonProps) => {
 				return (
 					<_Button.default
 						key={nanoid()}
-						{..._MotionProps(variant, toggleState)}
+						{..._MotionProps(variant, toggleState, "", motionTheme)}
 						onClick={clickHandle}
 						toggleState={toggleState}
 						disabled={disabled}
@@ -78,7 +86,7 @@ const Button = (props: ButtonProps) => {
 				return (
 					<_Button.default
 						key={nanoid()}
-						{..._MotionProps(variant, toggleState)}
+						{..._MotionProps(variant, toggleState, "")}
 						onClick={clickHandle}
 						toggleState={toggleState}
 						disabled={disabled}
@@ -91,12 +99,16 @@ const Button = (props: ButtonProps) => {
 	};
 
 	//RENDER
-	return <>{createButton(nameProp, variant)}</>;
+	const Render = useMemo(() => createVariant(nameProp, variant), [toggleState]);
+	return <>{Render}</>;
 };
 
 // STYLES
 
-const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
+const _ButtonVariants = (
+	toggleState?: boolean,
+	theme: any = motionDefaultTheme
+): _ButtonVariants => {
 	return {
 		default: {
 			default: ``,
@@ -160,12 +172,12 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 				}
 			`,
 			AboutPageNavButton: `
-				background: var(--About-Maroon-3);
+				background: ${theme.background};
 				height: 6.5rem;
 				width: 5rem;
 				border: none;
 				svg {
-					color: var(--About-Maroon-2);
+					color: ${theme.color};
 				}
 			`,
 		},
@@ -207,7 +219,7 @@ const _ButtonVariants = (toggleState?: boolean): _ButtonVariants => {
 
 const _Button: _ButtonVariants = {
 	default: styled(motion.button)<_ButtonProps>`
-		${(p) => _ButtonVariants(p.toggleState).default[p.variant as keyof _ButtonVariants]}
+		${(p) => _ButtonVariants(p.toggleState, p.theme).default[p.variant as keyof _ButtonVariants]}
 	`,
 	AppToggle: {
 		slider: styled(motion.button)<_ButtonProps>`
@@ -221,101 +233,110 @@ const _Button: _ButtonVariants = {
 
 // MOTION
 
-const _MotionVariants: _MotionVariants = {
-	default: {},
-	AboutPage: {
-		initial: {
-			opacity: 0,
-			width: "0rem",
-			boxShadow: "0 0 0rem 0rem var(--About-Maroon-2) inset",
-		},
-		toggleOff: {
-			opacity: [1, 0],
-			width: "0rem",
-			transition: {
-				duration: 0.3,
+const _MotionVariants = (
+	variant: string,
+	subComp: string = "",
+	theme: any = motionDefaultTheme
+): _MotionVariants => {
+	const motionObj: _MotionVariants = {
+		default: {},
+		AboutPage: {
+			initial: {
+				opacity: 0,
+				width: "0rem",
+				boxShadow: "0 0 0rem 0rem var(--About-Maroon-2) inset",
 			},
-		},
-		toggleOn: {
-			opacity: [0, 1],
-			width: "23.5rem",
-			transition: {
-				duration: 0.3,
-			},
-		},
-	},
-	AboutPageNavButton: {
-		initial: {
-			borderRadius: "0.1rem",
-			boxShadow:
-				"0 0.3rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
-			transform: "translateY(0rem)",
-		},
-		whileHover: {
-			boxShadow: [
-				"0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
-				"0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
-			],
-			transform: "translateY(-0.1rem)",
-			transition: {
-				duration: 0.1,
-				ease: "easeInOut",
-			},
-		},
-		whileTap: {
-			boxShadow: [
-				"0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
-				"0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem var(--About-Maroon-3), 0 0 1rem 0.5rem var(--About-Maroon-2) inset",
-			],
-		},
-		toggleOff: {
-			borderRadius: ["1rem", "0.3rem"],
-			transition: {
-				duration: 0.3,
-			},
-		},
-		toggleOn: {
-			borderRadius: "0rem 2rem 2rem 0rem",
-			transition: {
-				duration: 0.3,
-			},
-		},
-	},
-	AppToggle: {
-		slider: {
-			on: {
-				background: "#f1f1f1",
-				border: "1.5rem solid #383838",
-			},
-			off: {
-				background: "#383838",
-				border: "1.5rem solid #FFFFFF",
-			},
-		},
-		button: {
-			on: {
-				background:
-					"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
-				transform: "translateX(5.5rem)",
+			toggleOff: {
+				opacity: [1, 0],
+				width: "0rem",
 				transition: {
-					duration: 0.5,
-					ease: "easeInOut",
+					duration: 0.3,
 				},
 			},
-			off: {
-				background:
-					"radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%)",
-				transform: "translateX(0rem)",
+			toggleOn: {
+				opacity: [0, 1],
+				width: "23.5rem",
 				transition: {
-					duration: 0.5,
-					ease: "easeInOut",
+					duration: 0.3,
 				},
 			},
 		},
-	},
+		AboutPageNavButton: {
+			initial: {
+				borderRadius: "0.1rem",
+				boxShadow: `0 0.3rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+				transform: "translateY(0rem)",
+			},
+			whileHover: {
+				boxShadow: [
+					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+				],
+				transform: "translateY(-0.1rem)",
+				transition: {
+					duration: 0.1,
+					ease: "easeInOut",
+				},
+			},
+			whileTap: {
+				boxShadow: [
+					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+				],
+			},
+			toggleOff: {
+				borderRadius: ["1rem", "0.3rem"],
+				transition: {
+					duration: 0.3,
+				},
+			},
+			toggleOn: {
+				borderRadius: "0rem 2rem 2rem 0rem",
+				transition: {
+					duration: 0.3,
+				},
+			},
+		},
+		AppToggle: {
+			slider: {
+				on: {
+					background: "#f1f1f1",
+					border: "1.5rem solid #383838",
+				},
+				off: {
+					background: "#383838",
+					border: "1.5rem solid #FFFFFF",
+				},
+			},
+			button: {
+				on: {
+					background:
+						"radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.8) 50%)",
+					transform: "translateX(5.5rem)",
+					transition: {
+						duration: 0.5,
+						ease: "easeInOut",
+					},
+				},
+				off: {
+					background:
+						"radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.8) 50%)",
+					transform: "translateX(0rem)",
+					transition: {
+						duration: 0.5,
+						ease: "easeInOut",
+					},
+				},
+			},
+		},
+	};
+
+	return subComp === ""
+		? motionObj[variant as keyof _MotionVariants]
+		: motionObj[variant as keyof _MotionVariants][subComp as keyof _MotionVariants];
 };
 
-const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) => {
+const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string, theme?: any) => {
 	let returnProps: any = {
 		variants: _MotionVariants,
 	};
@@ -323,11 +344,10 @@ const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) 
 	switch (variant) {
 		case "AppToggle":
 			returnProps = { ...returnProps, animate: toggleState ? "on" : "off" };
-			returnProps.variants =
-				_MotionVariants[variant as keyof _MotionVariants][subComp as keyof _MotionVariants];
+			returnProps.variants = _MotionVariants(variant, subComp);
 			break;
 		case "AboutPage": //orchestrated by Navmenu _MotionProps 'AboutPage' variant
-			returnProps.variants = _MotionVariants.AboutPage;
+			returnProps.variants = _MotionVariants("AboutPage");
 			break;
 		case "AboutPageNavButton":
 			returnProps = {
@@ -337,7 +357,7 @@ const _MotionProps = (variant: string, toggleState?: boolean, subComp?: string) 
 				whileHover: "whileHover",
 				whileTap: "whileTap",
 			};
-			returnProps.variants = _MotionVariants.AboutPageNavButton;
+			returnProps.variants = _MotionVariants("AboutPageNavButton", "", theme);
 			break;
 		default:
 			returnProps = { ...returnProps, animate: "animate", initial: "initial", exit: "exit" };
