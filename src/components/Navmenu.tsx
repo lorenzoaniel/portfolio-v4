@@ -48,8 +48,9 @@ const Navmenu = (props: NavmenuProps) => {
 		switch (variant) {
 			case "AboutPage":
 				return (
-					<AnimatePresence mode="wait">
-						<ThemeProvider theme={_PageTheme(locationTheme.slice(7))}>
+					//ThemeProvider must wrap around AnimatePresence or some animations will not work
+					<ThemeProvider theme={_PageTheme(locationTheme.slice(7))}>
+						<AnimatePresence mode="wait">
 							<_Nav.AboutPage key={nanoid()} variant={variant} subComp={"Main"}>
 								<_Nav.AboutPage
 									key={nanoid()}
@@ -68,8 +69,8 @@ const Navmenu = (props: NavmenuProps) => {
 									}}
 								/>
 							</_Nav.AboutPage>
-						</ThemeProvider>
-					</AnimatePresence>
+						</AnimatePresence>
+					</ThemeProvider>
 				);
 			default:
 				return (
@@ -109,7 +110,7 @@ const _PageTheme = (variant: string = "ALittleBitAboutMePage") => {
 			background: "linear-gradient(var(--About-SwampGreen-1), var(--About-SwampGreen-2))",
 			color: "var(--About-SwampGreen-1)",
 			shadow3: "var(--About-SwampGreen-3)",
-			shadow2: "var(--About-SwampGreen-3)",
+			shadow2: "var(--About-SwampGreen-2)",
 		},
 	};
 
