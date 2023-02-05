@@ -17,7 +17,10 @@ export const GlobalStyle = createGlobalStyle`
     --About-Maroon-Text-1: rgb(172, 97, 97);
     --About-Purple-1: rgba(35, 20, 50, 0.8);
     --About-Purple-2: rgba(70, 36, 105, 0.8);
-    --About-SwampGreen-1: rgba(35, 50, 20, 1);
+     --About-Purple-3: rgba(104, 49, 158, 0.5);
+    --About-SwampGreen-1: rgba(35, 50, 20, 0.8);
+    --About-SwampGreen-2: rgba(58, 92, 24, 0.8);
+    --About-SwampGreen-3: rgba(98, 156, 39, 0.5);
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
