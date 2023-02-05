@@ -13,18 +13,16 @@ import { GlobalStyle } from "./styles/GlobalStyles";
 import { device } from "./styles/breakpoints";
 
 import Home from "./pages/Home";
-import About from "./pages/About/About";
+import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
-import ALittleBitAboutMePage from "./pages/About/Topics/ALittleBitAboutMePage";
-import ALittleBitAboutTheSite from "./pages/About/Topics/ALittleBitAboutTheSite";
-import ALittleBitAboutTheSourcesAndInspirations from "./pages/About/Topics/ALittleBitAboutTheSourcesAndInspirations";
 import Heading from "./components/Heading";
 import Button from "./components/Button";
 import AnimatedBackground from "./components/AnimatedBackground";
 import Carousel from "./components/Carousel";
 import useCurrentDimension from "./helpers/useCurrentDimension";
 import Navmenu from "./components/Navmenu";
+import TopicSubPage from "./components/TopicSubPage";
 
 const appLandingTitleContext = "Explore My Portfolio!"; //maybe add feature that lets this switch different languages
 
@@ -122,17 +120,22 @@ const App = () => {
 		},
 		AboutTopics: {
 			ALittleBitAboutMePage: {
-				element: <ALittleBitAboutMePage dataProp={infoContext.About.ALittleBitAboutMePage} />,
+				element: (
+					<TopicSubPage dataProp={infoContext.About.ALittleBitAboutMePage} variant={"AboutMe"} />
+				),
 				path: infoContext.About.ALittleBitAboutMePage.Path,
 			},
 			ALittleBitAboutTheSite: {
-				element: <ALittleBitAboutTheSite dataProp={infoContext.About.ALittleBitAboutTheSite} />,
+				element: (
+					<TopicSubPage dataProp={infoContext.About.ALittleBitAboutTheSite} variant={"AboutSite"} />
+				),
 				path: infoContext.About.ALittleBitAboutTheSite.Path,
 			},
 			ALittleBitAboutTheSourcesAndInspirations: {
 				element: (
-					<ALittleBitAboutTheSourcesAndInspirations
+					<TopicSubPage
 						dataProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations}
+						variant={"AboutSource"}
 					/>
 				),
 				path: infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path,
