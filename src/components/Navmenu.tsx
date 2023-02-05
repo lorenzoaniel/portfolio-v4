@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { nanoid } from "nanoid";
 import Button from "./Button";
+import { AboutPageTheme } from "../styles/themes/AboutPageThemes";
 
 interface NavmenuProps {
 	children?: React.ReactNode[] | React.ReactNode;
@@ -10,7 +11,6 @@ interface NavmenuProps {
 	variant?: string;
 	subComp?: string;
 	clickHandle?: Function;
-	locationTheme?: string;
 }
 
 interface _NavmenuProps {
@@ -21,12 +21,6 @@ interface _NavmenuProps {
 interface _NavVariants {
 	default: any;
 	AboutPage: any;
-}
-
-interface _PageTheme {
-	AboutMe: any;
-	AboutSite: any;
-	AboutSource: any;
 }
 
 interface _MotionVariants {
@@ -41,36 +35,32 @@ const Navmenu = (props: NavmenuProps) => {
 		subComp = "Main",
 		toggleState = false,
 		clickHandle = () => {},
-		locationTheme = "", //This needs a value if component is being used as 'AboutPage' variant
 	} = props;
 
 	const createVariant = () => {
 		switch (variant) {
 			case "AboutPage":
 				return (
-					//ThemeProvider must wrap around AnimatePresence or some animations will not work
-					<ThemeProvider theme={_PageTheme(locationTheme.slice(7))}>
-						<AnimatePresence mode="wait">
-							<_Nav.AboutPage key={nanoid()} variant={variant} subComp={"Main"}>
-								<_Nav.AboutPage
-									key={nanoid()}
-									{..._MotionProps(variant, toggleState)}
-									subComp={"DropdownList"}
-									variant={variant}
-								>
-									{children}
-								</_Nav.AboutPage>
-								<Button
-									nameProp={""}
-									variant={"AboutPageNavButton"}
-									toggleState={toggleState}
-									clickHandle={() => {
-										clickHandle();
-									}}
-								/>
+					<AnimatePresence mode="wait">
+						<_Nav.AboutPage key={nanoid()} variant={variant} subComp={"Main"}>
+							<_Nav.AboutPage
+								key={nanoid()}
+								{..._MotionProps(variant, toggleState)}
+								subComp={"DropdownList"}
+								variant={variant}
+							>
+								{children}
 							</_Nav.AboutPage>
-						</AnimatePresence>
-					</ThemeProvider>
+							<Button
+								nameProp={""}
+								variant={"AboutPageNavButton"}
+								toggleState={toggleState}
+								clickHandle={() => {
+									clickHandle();
+								}}
+							/>
+						</_Nav.AboutPage>
+					</AnimatePresence>
 				);
 			default:
 				return (
@@ -85,46 +75,6 @@ const Navmenu = (props: NavmenuProps) => {
 };
 
 //STYLE
-
-const _PageTheme = (variant: string = "ALittleBitAboutMePage") => {
-	interface styleObj {
-		ALittleBitAboutMePage: any;
-		ALittleBitAboutTheSite: any;
-		ALittleBitAboutTheSourcesAndInspirations: any;
-	}
-
-	const styleObj: styleObj = {
-		ALittleBitAboutMePage: {
-			background: "linear-gradient(var(--About-Maroon-4), var(--About-Maroon-5))",
-			color: "var(--About-Maroon-4)",
-			shadow3: "var(--About-Maroon-3)",
-			shadow2: "var(--About-Maroon-2)",
-		},
-		ALittleBitAboutTheSite: {
-			background: "linear-gradient(var(--About-Purple-1), var(--About-Purple-2))",
-			color: "var(--About-Purple-1)",
-			shadow3: "var(--About-Purple-3)",
-			shadow2: "var(--About-Purple-2)",
-		},
-		ALittleBitAboutTheSourcesAndInspirations: {
-			background: "linear-gradient(var(--About-SwampGreen-1), var(--About-SwampGreen-2))",
-			color: "var(--About-SwampGreen-1)",
-			shadow3: "var(--About-SwampGreen-3)",
-			shadow2: "var(--About-SwampGreen-2)",
-		},
-	};
-
-	switch (variant) {
-		case "ALittleBitAboutMePage":
-			return styleObj.ALittleBitAboutMePage;
-		case "ALittleBitAboutTheSite":
-			return styleObj.ALittleBitAboutTheSite;
-		case "ALittleBitAboutTheSourcesAndInspirations":
-			return styleObj.ALittleBitAboutTheSourcesAndInspirations;
-		default:
-			return styleObj.ALittleBitAboutMePage;
-	}
-};
 
 const _NavVariants: _NavVariants = {
 	default: {
