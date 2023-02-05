@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -8,6 +8,7 @@ import { aboutTopicNavToggle, selectPagesInfo } from "../store/slices/pagesInfoS
 import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
+import { AboutPageTheme } from "../styles/themes/AboutPageThemes";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
@@ -18,57 +19,58 @@ const About = () => {
 	const NavmenuToggleState = infoContext.About.NavmenuToggleState;
 
 	return (
-		<_About.Main>
-			<_About.Header>
-				<Heading
-					titleProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
-					variant={"AboutPage"}
-					subComp={"defaultMaroon"}
-				/>
-				<Navmenu
-					toggleState={NavmenuToggleState}
-					clickHandle={() => {
-						dispatch(aboutTopicNavToggle());
-					}}
-					variant={"AboutPage"}
-					locationTheme={location.pathname} //needed to theme navbar according to which topic choosen on this submenu
-				>
-					{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
-						<>
-							<Button
-								clickHandle={() => {
-									dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
-									navigate(infoContext.About.ALittleBitAboutMePage.Path);
-								}}
-								nameProp={infoContext.About.ALittleBitAboutMePage.Title}
-								variant={"AboutPage"}
-							/>
+		<ThemeProvider theme={AboutPageTheme(location.pathname.slice(7))}>
+			<_About.Main>
+				<_About.Header>
+					<Heading
+						titleProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
+						variant={"AboutPage"}
+						subComp={"defaultMaroon"}
+					/>
+					<Navmenu
+						toggleState={NavmenuToggleState}
+						clickHandle={() => {
+							dispatch(aboutTopicNavToggle());
+						}}
+						variant={"AboutPage"}
+					>
+						{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
+							<>
+								<Button
+									clickHandle={() => {
+										dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
+										navigate(infoContext.About.ALittleBitAboutMePage.Path);
+									}}
+									nameProp={infoContext.About.ALittleBitAboutMePage.Title}
+									variant={"AboutPage"}
+								/>
 
-							<Button
-								clickHandle={() => {
-									dispatch(aboutTopicNavToggle());
-									navigate(infoContext.About.ALittleBitAboutTheSite.Path);
-								}}
-								nameProp={infoContext.About.ALittleBitAboutTheSite.Title}
-								variant={"AboutPage"}
-							/>
+								<Button
+									clickHandle={() => {
+										dispatch(aboutTopicNavToggle());
+										navigate(infoContext.About.ALittleBitAboutTheSite.Path);
+									}}
+									nameProp={infoContext.About.ALittleBitAboutTheSite.Title}
+									variant={"AboutPage"}
+								/>
 
-							<Button
-								clickHandle={() => {
-									dispatch(aboutTopicNavToggle());
-									navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
-								}}
-								nameProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
-								variant={"AboutPage"}
-							/>
-						</>
-					)}
-				</Navmenu>
-			</_About.Header>
-			<_About.Content>
-				<Outlet />
-			</_About.Content>
-		</_About.Main>
+								<Button
+									clickHandle={() => {
+										dispatch(aboutTopicNavToggle());
+										navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
+									}}
+									nameProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
+									variant={"AboutPage"}
+								/>
+							</>
+						)}
+					</Navmenu>
+				</_About.Header>
+				<_About.Content>
+					<Outlet />
+				</_About.Content>
+			</_About.Main>
+		</ThemeProvider>
 	);
 };
 
