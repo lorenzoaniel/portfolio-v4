@@ -55,19 +55,22 @@ const Button = (props: ButtonProps) => {
 	const createVariant = (nameProp: string, variant: string) => {
 		switch (variant) {
 			case "AppToggle":
-				return (
-					<_Button.AppToggle.slider
-						key={nanoid()}
-						onClick={clickHandle}
-						toggleState={toggleState}
-						{..._MotionProps(variant, toggleState, "slider")}
-					>
-						<_Button.AppToggle.button
+				return useMemo(
+					() => (
+						<_Button.AppToggle.slider
 							key={nanoid()}
+							onClick={clickHandle}
 							toggleState={toggleState}
-							{..._MotionProps(variant, toggleState, "button")}
-						></_Button.AppToggle.button>
-					</_Button.AppToggle.slider>
+							{..._MotionProps(variant, toggleState, "slider")}
+						>
+							<_Button.AppToggle.button
+								key={nanoid()}
+								toggleState={toggleState}
+								{..._MotionProps(variant, toggleState, "button")}
+							></_Button.AppToggle.button>
+						</_Button.AppToggle.slider>
+					),
+					[toggleState]
 				);
 			case "AboutPageNavButton":
 				return (
@@ -99,8 +102,7 @@ const Button = (props: ButtonProps) => {
 	};
 
 	//RENDER
-	const Render = useMemo(() => createVariant(nameProp, variant), [toggleState]);
-	return <>{Render}</>;
+	return <>{createVariant(nameProp, variant)}</>;
 };
 
 // STYLES
@@ -248,7 +250,7 @@ const _MotionVariants = (
 			},
 			toggleOff: {
 				opacity: [1, 0],
-				width: "0rem",
+				width: ["23.5rem", "0rem"],
 				transition: {
 					duration: 0.3,
 				},
