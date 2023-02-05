@@ -48,6 +48,7 @@ export const pagesInfoSlice = createSlice({
 	name: "pagesInfo",
 	initialState,
 	reducers: {
+		//for the about page topics submenu
 		aboutTopicNavToggle: (state) => {
 			state.About.NavmenuToggleState = !state.About.NavmenuToggleState;
 		},
