@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 
 interface PProps {
@@ -38,7 +38,9 @@ const Paragraph = (props: PProps) => {
 		}
 	};
 
-	return <>{createVariant(variant)}</>;
+	//RENDER
+	const Render = useMemo(() => createVariant(variant), [data, variant]);
+	return <>{Render}</>;
 };
 
 //STYLE
@@ -73,7 +75,6 @@ const _PVariants: _PVariants = {
 		},
 		AboutPage: {
 			default: `
-				background: green;
 				width: fit-content;
 				height: fit-content;
 				font-size: 30%; //clamp(5%, 2rem, 10%)
