@@ -79,61 +79,51 @@ const _HeadingMixins = {
 	},
 };
 
-const _HeadingVariants: _HeadingVariants = {
-	default: {
-		default: ``,
-		Landing: {
-			default: `
+const _HeadingVariants = (theme: any): _HeadingVariants => {
+	return {
+		default: {
+			default: ``,
+			Landing: {
+				default: `
 				margin-top: 5rem;
 				font-weight: 200;
 				font-size: 4.7rem;
 				text-align: center;
 				color: #ffffff;
     	`,
+			},
 		},
-	},
-	AboutPage: {
-		Main: {
-			default: ``,
-			defaultMaroon: `
-				background: linear-gradient(var(--About-Maroon-4), var(--About-Maroon-5));
-				${_HeadingMixins.AboutPage.Main.default}	
-			`,
-			defaultPurple: `
-			`,
-			defaultGreen: `
-			`,
+		AboutPage: {
+			Main: {
+				default: `
+					background: linear-gradient(${theme.color4}, ${theme.color5});
+					${_HeadingMixins.AboutPage.Main.default}
+				`,
+			},
+			Content: {
+				default: `
+					background: linear-gradient(${theme.color1}, ${theme.color2});
+					text-shadow: 0 0.3rem 0.4rem rgba(0,0,0,0.4);
+					${_HeadingMixins.AboutPage.Content.default}		
+				`,
+			},
 		},
-		Content: {
-			default: ``,
-			defaultMaroon: `
-				background: linear-gradient(var(--About-Maroon-1), var(--About-Maroon-2));
-				text-shadow: 0 0.3rem 0.5rem var(--About-Maroon-3);
-				${_HeadingMixins.AboutPage.Content.default}			
-			`,
-			defaultPurple: `
-				${_HeadingMixins.AboutPage.Content.default}		
-			`,
-			defaultGreen: `
-				${_HeadingMixins.AboutPage.Content.default}		
-			`,
-		},
-	},
+	};
 };
 
 const _Heading = {
 	default: styled(motion.h1)<_HeadingProps>`
 		${(p) =>
-			_HeadingVariants.default[p.variant as keyof _HeadingVariants][
+			_HeadingVariants(p.theme).default[p.variant as keyof _HeadingVariants][
 				p.subComp as keyof _HeadingVariants
 			]}
 	`,
 	aboutPage: {
 		Main: styled(motion.div)<_HeadingProps>`
-			${(p) => _HeadingVariants.AboutPage.Main[p.subComp as keyof _HeadingVariants]}
+			${(p) => _HeadingVariants(p.theme).AboutPage.Main[p.subComp as keyof _HeadingVariants]}
 		`,
 		Content: styled(motion.h1)<_HeadingProps>`
-			${(p) => _HeadingVariants.AboutPage.Content[p.subComp as keyof _HeadingVariants]}
+			${(p) => _HeadingVariants(p.theme).AboutPage.Content[p.subComp as keyof _HeadingVariants]}
 		`,
 	},
 };
