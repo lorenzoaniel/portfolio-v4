@@ -10,10 +10,12 @@ interface CProps {
 	children: React.ReactNode[]; //multiple children
 	variant?: string;
 	navMode?: boolean;
+	mainTheme?: {};
 }
 
 interface _CProps {
 	variant: string;
+	mainTheme: {};
 	subComp?: string;
 }
 
@@ -23,7 +25,7 @@ interface _CVariants {
 }
 
 const Carousel = (props: CProps) => {
-	const { children, variant = "Main", navMode = false } = props;
+	const { children, variant = "Main", navMode = false, mainTheme = {} } = props;
 	const childLength = children.length - 1;
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -51,13 +53,14 @@ const Carousel = (props: CProps) => {
 	};
 
 	return (
-		<_C.Main variant={variant}>
+		<_C.Main mainTheme={mainTheme} variant={variant}>
 			<_C.Selector
 				onClick={() => {
 					dispatch(changeItemDisplay(CarouselConfigs.changeItemPayload.Left));
 				}}
 				variant={"Selector"}
 				subComp={"Left"}
+				mainTheme={mainTheme}
 			>
 				<MdArrowLeft />
 			</_C.Selector>
@@ -68,6 +71,7 @@ const Carousel = (props: CProps) => {
 				}}
 				variant={"Selector"}
 				subComp={"Right"}
+				mainTheme={mainTheme}
 			>
 				<MdArrowRight />
 			</_C.Selector>
