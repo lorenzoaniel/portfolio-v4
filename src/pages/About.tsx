@@ -25,7 +25,6 @@ const About = () => {
 					<Heading
 						titleProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
 						variant={"AboutPage"}
-						subComp={"defaultMaroon"}
 					/>
 					<Navmenu
 						toggleState={NavmenuToggleState}
