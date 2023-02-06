@@ -3,6 +3,9 @@ import { createGlobalStyle, css } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   * {
     //COLORS
+    --Home-Grey-1: rgba(33, 33, 33, 1);
+    --Home-Grey-2: rgba(56,56,56,1);
+    --Home-Grey-3: rgba(241,241,241,1);
     --About-Cyan-1: rgba(20, 50, 50, 0.5);
     --About-Cyan-2: rgba(10, 80, 80, 0.5);
     --About-Cyan-3: rgba(20, 150, 150, 0.5);
@@ -14,13 +17,28 @@ export const GlobalStyle = createGlobalStyle`
     --About-Maroon-3: rgba(255, 70, 70, 0.5);
     --About-Maroon-4: rgba(150, 70, 70, 0.8);
     --About-Maroon-5: rgba(100, 40, 40, 0.8);
-    --About-Maroon-Text-1: rgb(172, 97, 97);
-    --About-Purple-1: rgba(35, 20, 50, 0.8);
-    --About-Purple-2: rgba(70, 36, 105, 0.8);
-     --About-Purple-3: rgba(104, 49, 158, 0.5);
-    --About-SwampGreen-1: rgba(35, 50, 20, 0.8);
-    --About-SwampGreen-2: rgba(58, 92, 24, 0.8);
+    --About-Maroon-Text-1: rgba(172, 97, 97, 1);
+    --About-Purple-1: rgba(51, 30, 71, 1);
+    --About-Purple-2: rgba(21, 12, 29, 1);
+    --About-Purple-3: rgba(104, 49, 158, 0.5);
+    --About-Purple-4: rgba(99, 44, 154, 0.8);
+    --About-Purple-5: rgba(73, 6, 100, 0.8);
+    --About-Purple-Text-1: rgba(143, 88, 164, 1);
+    --About-SwampGreen-1: rgba(35, 50, 20, 1);
+    --About-SwampGreen-2: rgba(32, 44, 19, 1);
     --About-SwampGreen-3: rgba(98, 156, 39, 0.5);
+    --About-SwampGreen-4: rgba(95, 157, 32, 0.8);
+    --About-SwampGreen-5: rgba(49, 89, 10, 0.8);
+    --About-SwampGreen-Text-1: rgba(123, 159, 87, 0.8);
+    --Projects-Orange-1: rgba(112, 58, 14, 1);
+    --Projects-Orange-2: rgba(130, 77, 34, 1);
+    --Projects-Orange-3: rgba(255, 149, 62, 1);
+    --Home-Grey-1: rgba(33, 33, 33, 1);
+    --Home-Grey-2: rgba(56,56,56,1);
+    --Home-Grey-3: rgba(241,241,241,1);
+    --Home-Grey-1: rgba(33, 33, 33, 1);
+    --Home-Grey-2: rgba(56,56,56,1);
+    --Home-Grey-3: rgba(241,241,241,1);
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
