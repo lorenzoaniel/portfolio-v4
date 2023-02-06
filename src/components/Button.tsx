@@ -12,10 +12,12 @@ interface ButtonProps {
 	disabled?: boolean;
 	toggleState?: boolean;
 	clickHandle?: () => void;
+	mainTheme?: {};
 }
 
 interface _ButtonProps {
 	variant: string;
+	mainTheme: {};
 	toggleState?: boolean;
 }
 
@@ -48,6 +50,7 @@ const Button = (props: ButtonProps) => {
 		toggleState = false,
 		disabled = false,
 		variant = "default",
+		mainTheme = {},
 	} = props;
 
 	const motionTheme = useTheme() === undefined ? motionDefaultTheme : useTheme();
@@ -58,15 +61,17 @@ const Button = (props: ButtonProps) => {
 				return useMemo(
 					() => (
 						<_Button.AppToggle.slider
+							{..._MotionProps(variant, toggleState, "slider")}
 							key={nanoid()}
 							onClick={clickHandle}
 							toggleState={toggleState}
-							{..._MotionProps(variant, toggleState, "slider")}
+							mainTheme={mainTheme}
 						>
 							<_Button.AppToggle.button
+								{..._MotionProps(variant, toggleState, "button")}
 								key={nanoid()}
 								toggleState={toggleState}
-								{..._MotionProps(variant, toggleState, "button")}
+								mainTheme={mainTheme}
 							></_Button.AppToggle.button>
 						</_Button.AppToggle.slider>
 					),
@@ -94,6 +99,7 @@ const Button = (props: ButtonProps) => {
 						toggleState={toggleState}
 						disabled={disabled}
 						variant={variant}
+						mainTheme={mainTheme}
 					>
 						{nameProp}
 					</_Button.default>
@@ -131,18 +137,18 @@ const _ButtonVariants = (
 				flex-shrink: 0;
 			`,
 			AboutPage: `
-				background: linear-gradient(var(--About-Maroon-3), var(--About-Maroon-2));
+				background: linear-gradient(${theme.color3}, ${theme.color2});
 				height: fit-content;
-				border: 0.1rem solid var(--About-Maroon-2);
+				border: 0.1rem solid ${theme.color2};
 				backdrop-filter: blur(1rem);
 				
-				color: var(--About-Maroon-Text-1);
-				text-shadow: 0 0.2rem 0.8rem var(--About-Maroon-2);
+				color: ${theme.textColor1};
+				text-shadow: 0 0.2rem 0.8rem ${theme.color2};
 				font-size: 2.5rem;
 				
 				// separate animation since adding motion props will decouple orchestration for this child component
 				&:hover { 
-					background: var(--About-Maroon-1);
+					background: ${theme.color1};
 					animation: hoverButton 0.3s forwards;
 
 					@keyframes hoverButton {
@@ -152,7 +158,7 @@ const _ButtonVariants = (
 						to {
 							transform: translateY(-0.5rem);
 							box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1);
-							text-shadow: 0 0.2rem 0.8rem var(--About-Maroon-4);
+							text-shadow: 0 0.2rem 0.8rem ${theme.color4};
 						}
 					}
 				}
@@ -174,12 +180,12 @@ const _ButtonVariants = (
 				}
 			`,
 			AboutPageNavButton: `
-				background: ${theme.background};
+				background: linear-gradient(${theme.color4}, ${theme.color5});
 				height: 6.5rem;
 				width: 5rem;
 				border: none;
 				svg {
-					color: ${theme.color};
+					color: ${theme.color4};
 				}
 			`,
 		},
@@ -246,7 +252,7 @@ const _MotionVariants = (
 			initial: {
 				opacity: 0,
 				width: "0rem",
-				boxShadow: "0 0 0rem 0rem var(--About-Maroon-2) inset",
+				boxShadow: `0 0 0rem 0rem ${theme.color2} inset`,
 			},
 			toggleOff: {
 				opacity: [1, 0],
@@ -266,13 +272,13 @@ const _MotionVariants = (
 		AboutPageNavButton: {
 			initial: {
 				borderRadius: "0.1rem",
-				boxShadow: `0 0.3rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+				boxShadow: `0 0.3rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.color3}, 0 0 1rem 0.5rem ${theme.color2} inset`,
 				transform: "translateY(0rem)",
 			},
 			whileHover: {
 				boxShadow: [
-					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
-					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.color3}, 0 0 1rem 0.5rem ${theme.color2} inset`,
+					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.color3}, 0 0 1rem 0.5rem ${theme.color2} inset`,
 				],
 				transform: "translateY(-0.1rem)",
 				transition: {
@@ -282,8 +288,8 @@ const _MotionVariants = (
 			},
 			whileTap: {
 				boxShadow: [
-					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
-					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.shadow3}, 0 0 1rem 0.5rem ${theme.shadow2} inset`,
+					`0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.color3}, 0 0 1rem 0.5rem ${theme.color2} inset`,
+					`0 1rem 0.3rem 0.1rem rgba(10, 10, 10, 1), 0 0.3rem 0.5rem 0.1rem ${theme.color3}, 0 0 1rem 0.5rem ${theme.color2} inset`,
 				],
 			},
 			toggleOff: {
