@@ -99,6 +99,7 @@ const App = () => {
 							nameProp={""}
 							variant={"AppToggle"}
 							toggleState={toggleContext}
+							mainTheme={{}} //FILL WITH APPPAGETHEMES
 							clickHandle={() => {
 								dispatch(toggle());
 							}}
@@ -106,7 +107,9 @@ const App = () => {
 						<_App.OutletContainer>
 							<Outlet />
 						</_App.OutletContainer>
-						<Carousel navMode={true}>{createNav()}</Carousel>
+						<Carousel mainTheme={{}} navMode={true}>
+							{createNav()}
+						</Carousel>
 					</>
 				),
 		},
