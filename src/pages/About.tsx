@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider, useTheme } from "styled-components";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -8,31 +8,28 @@ import { aboutTopicNavToggle, selectPagesInfo } from "../store/slices/pagesInfoS
 import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
-import { AboutPageTheme } from "../styles/themes/AboutPageThemes";
+import { AppPageThemes } from "../styles/themes/AppPageThemes";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const location = useLocation();
 
 	const NavmenuToggleState = infoContext.About.NavmenuToggleState;
 
+	let currentURL = useLocation().pathname.slice(7);
+	let aboutThemeKey = currentURL ? currentURL : "ALittleBitAboutMePage";
+	const aboutTheme = AppPageThemes().about.topics[aboutThemeKey];
+
 	return (
-		<ThemeProvider theme={AboutPageTheme(location.pathname.slice(7))}>
+		<ThemeProvider theme={aboutTheme}>
 			<_About.Main>
 				<_About.Header>
 					<Heading
 						titleProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
 						variant={"AboutPage"}
 					/>
-					<Navmenu
-						toggleState={NavmenuToggleState}
-						clickHandle={() => {
-							dispatch(aboutTopicNavToggle());
-						}}
-						variant={"AboutPage"}
-					>
+					<Navmenu variant={"AboutPage"}>
 						{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
 							<>
 								<Button
@@ -40,27 +37,30 @@ const About = () => {
 										dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
 										navigate(infoContext.About.ALittleBitAboutMePage.Path);
 									}}
-									nameProp={infoContext.About.ALittleBitAboutMePage.Title}
 									variant={"AboutPage"}
-								/>
+								>
+									{infoContext.About.ALittleBitAboutMePage.Title}
+								</Button>
 
 								<Button
 									clickHandle={() => {
 										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSite.Path);
 									}}
-									nameProp={infoContext.About.ALittleBitAboutTheSite.Title}
 									variant={"AboutPage"}
-								/>
+								>
+									{infoContext.About.ALittleBitAboutTheSite.Title}
+								</Button>
 
 								<Button
 									clickHandle={() => {
 										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
 									}}
-									nameProp={infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
 									variant={"AboutPage"}
-								/>
+								>
+									{infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
+								</Button>
 							</>
 						)}
 					</Navmenu>
