@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../store/hooks";
-import { selectHomeInfo } from "../store/slices/homePageSlice";
 import Paragraph from "../components/Paragraph";
+import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 
 const Home = () => {
-	const porfolioInfo = useAppSelector(selectHomeInfo);
+	const infoContext = useAppSelector(selectPagesInfo);
+
 	return (
 		<_Home.Main>
-			<Paragraph data={porfolioInfo.porfolioInfo} variant="HomePage" />
+			<Paragraph data={infoContext.Home.Main} variant="HomePage" />
 		</_Home.Main>
 	);
 };
