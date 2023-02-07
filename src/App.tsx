@@ -1,16 +1,17 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { motion } from "framer-motion";
-import { Outlet, Routes, Route, useNavigate } from "react-router-dom";
+import { Outlet, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { selectToggle, toggle } from "./store/slices/appToggleSlice";
-import { selectHomeInfo } from "./store/slices/homePageSlice";
 import { selectPagesInfo } from "./store/slices/pagesInfoSlice";
 
+//STYLE IMPORTS
 import { GlobalStyle } from "./styles/GlobalStyles";
 import { device } from "./styles/breakpoints";
+import { AppPageThemes } from "./styles/themes/AppPageThemes";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,8 +25,6 @@ import useCurrentDimension from "./helpers/useCurrentDimension";
 import Navmenu from "./components/Navmenu";
 import TopicSubPage from "./components/TopicSubPage";
 
-const appLandingTitleContext = "Explore My Portfolio!"; //maybe add feature that lets this switch different languages
-
 interface _MotionVariants {
 	initial: any;
 	animate: any;
@@ -33,40 +32,15 @@ interface _MotionVariants {
 
 const App = () => {
 	//logic
-	const dispatch = useAppDispatch();
 	const toggleContext = useAppSelector(selectToggle);
-	const navMenuContext = useAppSelector(selectHomeInfo);
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
+	const location = useLocation();
 	const currDimensionContext = useCurrentDimension();
 
-	const createNav = (disabled: boolean = navMenuContext.navmenuconfig.disabled) => {
-		const arrayLength = navMenuContext.navmenuconfig.nameProp.length;
-		const clickNavigate = (index: number) => {
-			navigate(navMenuContext.routeListState[index]);
-		};
-
-		return Array(arrayLength)
-			.fill(0)
-			.map((curr, index) => {
-				return disabled ? (
-					<Button
-						{...navMenuContext.navmenuconfig}
-						key={nanoid()}
-						disabled={disabled}
-						nameProp={navMenuContext.navmenuconfig.nameProp[index]}
-					/>
-				) : (
-					<Button
-						{...navMenuContext.navmenuconfig}
-						clickHandle={() => clickNavigate(index)}
-						key={nanoid()}
-						disabled={disabled}
-						nameProp={navMenuContext.navmenuconfig.nameProp[index]}
-					/>
-				);
-			});
-	};
+	let currentURL = location.pathname.match(/([^\/]+)/);
+	let appThemeKey = currentURL ? currentURL[0] : "home";
+	let appTheme = AppPageThemes()[appThemeKey];
 
 	//Route PROPS OBJECT Destructured during render
 	const RouteProps = {
@@ -77,16 +51,19 @@ const App = () => {
 					<>
 						<Navmenu>
 							{[
-								<Button
-									key={nanoid()}
-									nameProp={""}
-									variant={"AppToggle"}
-									toggleState={toggleContext}
-									clickHandle={() => {
-										dispatch(toggle());
-									}}
-								/>,
-								createNav(false),
+								<Button variant={"AppToggle"} />,
+								<Button variant={"GlassButton"} clickHandle={() => navigate("/")}>
+									{"Home"}
+								</Button>,
+								<Button variant={"GlassButton"} clickHandle={() => navigate("/about")}>
+									{"About"}
+								</Button>,
+								<Button variant={"GlassButton"} clickHandle={() => navigate("/projects")}>
+									{"Projects"}
+								</Button>,
+								<Button variant={"GlassButton"} clickHandle={() => navigate("/contact")}>
+									{"Contact"}
+								</Button>,
 							]}
 						</Navmenu>
 						<_App.OutletContainer>
@@ -95,20 +72,26 @@ const App = () => {
 					</>
 				) : (
 					<>
-						<Button
-							nameProp={""}
-							variant={"AppToggle"}
-							toggleState={toggleContext}
-							mainTheme={{}} //FILL WITH APPPAGETHEMES
-							clickHandle={() => {
-								dispatch(toggle());
-							}}
-						/>
+						<Button variant={"AppToggle"} />
 						<_App.OutletContainer>
 							<Outlet />
 						</_App.OutletContainer>
-						<Carousel mainTheme={{}} navMode={true}>
-							{createNav()}
+						<Carousel mainTheme={appTheme} navMode={true}>
+							<Button variant={"NavButton"} clickHandle={() => navigate("/")}>
+								{"Home"}
+							</Button>
+
+							<Button variant={"NavButton"} clickHandle={() => navigate("/about")}>
+								{"About"}
+							</Button>
+
+							<Button variant={"NavButton"} clickHandle={() => navigate("/projects")}>
+								{"Projects"}
+							</Button>
+
+							<Button variant={"NavButton"} clickHandle={() => navigate("/contact")}>
+								{"Contact"}
+							</Button>
 						</Carousel>
 					</>
 				),
@@ -156,22 +139,15 @@ const App = () => {
 
 	//RENDER
 	return (
-		<>
+		<ThemeProvider theme={appTheme}>
 			<GlobalStyle />
 			<_App.Main>
 				<_App.ToggledOff.Main {..._MotionProps(toggleContext, "ToggledOff")}>
 					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
 
 					<_App.ToggledOff.Wrapper>
-						<Button
-							nameProp={""}
-							variant={"AppToggle"}
-							toggleState={toggleContext}
-							clickHandle={() => {
-								dispatch(toggle());
-							}}
-						/>
-						<Heading titleProp={appLandingTitleContext} variant={"Landing"} />
+						<Button variant={"AppToggle"} />
+						<Heading titleProp={infoContext.Landing.Main} variant={"Landing"} />
 					</_App.ToggledOff.Wrapper>
 				</_App.ToggledOff.Main>
 
@@ -196,7 +172,7 @@ const App = () => {
 					</_App.ToggledOn.Routes>
 				</_App.ToggledOn.Main>
 			</_App.Main>
-		</>
+		</ThemeProvider>
 	);
 };
 
@@ -212,6 +188,8 @@ const _AppMixins = {
 		`,
 	},
 };
+
+const _AppVariants = (theme?: any) => {};
 
 const _App = {
 	Main: styled.main`
