@@ -1,9 +1,11 @@
-export const AppPageThemes = (variant: string = "home") => {
-	interface styleObj {}
+export const AppPageThemes = () => {
+	interface styleObj {
+		[key: string]: any;
+	}
 
 	const styleObj: styleObj = {
 		home: {
-			color1: "",
+			color1: "var(--Home-Grey-1)",
 			color2: "var(--Home-Grey-2)",
 			color3: "var(--Home-Grey-3)",
 		},
@@ -14,23 +16,44 @@ export const AppPageThemes = (variant: string = "home") => {
 			color4: "var(--About-Cyan-4)",
 			color5: "var(--About-Cyan-5)",
 			textColor1: "var(--About-Cyan-Text-1)",
+			topics: {
+				ALittleBitAboutMePage: {
+					color1: "var(--About-Maroon-1)",
+					color2: "var(--About-Maroon-2)",
+					color3: "var(--About-Maroon-3)",
+					color4: "var(--About-Maroon-4)",
+					color5: "var(--About-Maroon-5)",
+					textColor1: "var(--About-Maroon-Text-1)",
+				},
+				ALittleBitAboutTheSite: {
+					color1: "var(--About-Purple-1)",
+					color2: "var(--About-Purple-2)",
+					color3: "var(--About-Purple-3)",
+					color4: "var(--About-Purple-4)",
+					color5: "var(--About-Purple-5)",
+					textColor1: "var(--About-Purple-Text-1)",
+				},
+				ALittleBitAboutTheSourcesAndInspirations: {
+					color1: "var(--About-SwampGreen-1)",
+					color2: "var(--About-SwampGreen-2)",
+					color3: "var(--About-SwampGreen-3)",
+					color4: "var(--About-SwampGreen-4)",
+					color5: "var(--About-SwampGreen-5)",
+					textColor1: "var(--About-SwampGreen-Text-1)",
+				},
+			},
 		},
 		projects: {
-			//Orange
+			color1: "var(--Projects-Orange-1)",
+			color2: "var(--Projects-Orange-2)",
+			color3: "var(--Projects-Orange-3)",
 		},
 		contact: {
-			//Yellow
+			color1: "var(--Contact-Yellow-1)",
+			color2: "var(--Contact-Yellow-2)",
+			color3: "var(--Contact-Yellow-3)",
 		},
 	};
 
-	switch (variant) {
-		case "about":
-			break;
-		case "projects":
-			break;
-		case "contact":
-			break;
-		default:
-			break;
-	}
+	return styleObj;
 };
