@@ -2,10 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 interface infoState {
+	Landing: any;
+	Home: any;
 	About: any;
 }
 
 const initialState = {
+	Landing: {
+		Main: "Explore My Portfolio!",
+	},
+	Home: {
+		Main: "Hi my name is Lorenzo, feel free to explore my portfolio!",
+	},
 	About: {
 		NavmenuToggleState: false,
 		ALittleBitAboutMePage: {
