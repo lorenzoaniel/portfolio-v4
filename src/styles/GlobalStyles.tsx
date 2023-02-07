@@ -33,12 +33,9 @@ export const GlobalStyle = createGlobalStyle`
     --Projects-Orange-1: rgba(112, 58, 14, 1);
     --Projects-Orange-2: rgba(130, 77, 34, 1);
     --Projects-Orange-3: rgba(255, 149, 62, 1);
-    --Home-Grey-1: rgba(33, 33, 33, 1);
-    --Home-Grey-2: rgba(56,56,56,1);
-    --Home-Grey-3: rgba(241,241,241,1);
-    --Home-Grey-1: rgba(33, 33, 33, 1);
-    --Home-Grey-2: rgba(56,56,56,1);
-    --Home-Grey-3: rgba(241,241,241,1);
+    --Contact-Yellow-1: rgba(108, 105, 14, 1);
+    --Contact-Yellow-2: rgb(152, 149, 40, 1);
+    --Contact-Yellow-3: rgb(255, 249, 68, 1);
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
