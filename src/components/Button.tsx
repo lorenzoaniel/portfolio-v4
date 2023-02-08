@@ -115,8 +115,9 @@ const Button = (props: ButtonProps) => {
 			case "NavButton":
 				return (
 					<GlassThemed
-						key={nanoid()}
 						{...motionProps}
+						key={nanoid()}
+						variants={_MotionVariants(theme).NavButton}
 						onClick={clickHandle}
 						toggleState={toggleStateAbout}
 						disabled={true} //replace using context value
@@ -167,7 +168,6 @@ const GlassThemed = styled(Glass)<_ButtonProps>`
 		background: linear-gradient(${theme.color1}, ${theme.color5});
 		-webkit-background-clip: text;
   	-webkit-text-fill-color: transparent;
-		text-shadow: 0rem 0.2rem 1rem ${theme.color3};
 		font-weight: 900;
 	`}
 `;
@@ -303,6 +303,19 @@ const _MotionVariants = (theme?: any): _MotionVariants => {
 				borderRadius: "0rem 2rem 2rem 0rem",
 				transition: {
 					duration: 0.3,
+				},
+			},
+		},
+		NavButton: {
+			initial: {
+				textShadow: `0rem 0.1rem 0.2rem ${theme.color5}`,
+			},
+			animate: {
+				textShadow: `0rem 0.1rem 1rem ${theme.color5}`,
+				transition: {
+					duration: 2,
+					repeat: Infinity,
+					repeatType: "reverse",
 				},
 			},
 		},
