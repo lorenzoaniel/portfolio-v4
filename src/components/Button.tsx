@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled, { useTheme } from "styled-components";
 import { motion } from "framer-motion";
 import { nanoid } from "nanoid";
@@ -94,28 +94,17 @@ const Button = (props: ButtonProps) => {
 						<RxDropdownMenu style={{ height: "4rem", width: "4rem" }} />
 					</AboutPageNavButton>
 				);
-			case "NavButton":
-				return (
-					<GlassButton
-						key={nanoid()}
-						{...motionProps}
-						onClick={clickHandle}
-						toggleState={toggleStateAbout}
-						disabled={true} //replace using context value
-						variant={variant}
-					>
-						{children}
-					</GlassButton>
-				);
-			case "GlassButton":
-				return (
-					<GlassButton key={nanoid()} {...motionProps} onClick={clickHandle}>
-						{children}
-					</GlassButton>
-				);
-			case "AboutPage":
+			case "AboutPageDropDownList":
+				//Orchestrated by Navmenu 'AboutPage' variant
+				motionProps = {
+					//cannot use strings to refer to property since it will break orchestration, will need to pull object of properties out instead of refering by variant name
+					whileHover: _MotionVariants(theme).AboutPage.whileHover,
+					whileTap: _MotionVariants(theme).AboutPage.whileTap,
+				};
+
 				return (
 					<AboutPage
+						{...motionProps}
 						key={nanoid()}
 						variants={_MotionVariants(theme).AboutPage}
 						onClick={clickHandle}
@@ -123,6 +112,25 @@ const Button = (props: ButtonProps) => {
 						{children}
 					</AboutPage>
 				);
+			case "NavButton":
+				return (
+					<GlassThemed
+						key={nanoid()}
+						{...motionProps}
+						onClick={clickHandle}
+						toggleState={toggleStateAbout}
+						disabled={true} //replace using context value
+					>
+						{children}
+					</GlassThemed>
+				);
+			case "GlassButton":
+				return (
+					<Glass key={nanoid()} {...motionProps} onClick={clickHandle}>
+						{children}
+					</Glass>
+				);
+
 			default:
 				return <></>;
 		}
@@ -133,7 +141,7 @@ const Button = (props: ButtonProps) => {
 };
 
 // STYLES
-const GlassButton = styled(motion.button)<_ButtonProps>`
+const Glass = styled(motion.button)<_ButtonProps>`
 	background: transparent;
 	height: 6.5rem;
 	width: 20rem;
@@ -150,49 +158,31 @@ const GlassButton = styled(motion.button)<_ButtonProps>`
 	flex-shrink: 0;
 `;
 
+const GlassThemed = styled(Glass)<_ButtonProps>`
+	${({ theme }) => `
+		border: 0.5rem solid ${theme.color3};
+		box-shadow: 0rem 0rem 0.6rem 0.4rem ${theme.color5};
+
+		// color: ${theme.color5};
+		background: linear-gradient(${theme.color1}, ${theme.color5});
+		-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+		text-shadow: 0rem 0.2rem 1rem ${theme.color3};
+		font-weight: 900;
+	`}
+`;
+
 const AboutPage = styled(motion.button)<_ButtonProps>`
 	${({ theme }) => `
-		background: linear-gradient(${theme.color3}, ${theme.color2});
+		background: linear-gradient(${theme.color4}, ${theme.color5});
 		height: fit-content;
 		border: 0.1rem solid ${theme.color2};
 		backdrop-filter: blur(1rem);
+		box-shadow: 0 0 1rem 1rem ${theme.color4} inset;
 
-		color: ${theme.textColor1};
+		color: ${theme.color1};
 		text-shadow: 0 0.2rem 0.8rem ${theme.color2};
 		font-size: 2.5rem;
-
-		// separate animation since adding motion props will decouple orchestration for this child component
-		&:hover {
-			background: ${theme.color1};
-			animation: hoverButton 0.3s forwards;
-
-			@keyframes hoverButton {
-				from {
-					transform: translateY(0rem);
-				}
-				to {
-					transform: translateY(-0.5rem);
-					box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1);
-					text-shadow: 0 0.2rem 0.8rem ${theme.color4};
-				}
-			}
-		}
-
-		// separate animation since adding motion props will decouple orchestration for this child component
-		&: active {
-			animation: clickButton 0.3s forwards;
-
-			@keyframes clickButton {
-				from {
-					transform: translateY(0rem);
-					box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1);
-				}
-				to {
-					transform: translateY(0rem);
-					box-shadow: none;
-				}
-			}
-		}
 	`}
 `;
 
@@ -203,7 +193,7 @@ const AboutPageNavButton = styled(motion.button)<_ButtonProps>`
 		width: 5rem;
 		border: none;
 		svg {
-			color: ${theme.color4};
+			color: ${theme.color5};
 		}
 	`}
 `;
@@ -240,6 +230,26 @@ const AppToggleButton = styled(motion.span)<_ButtonProps>`
 const _MotionVariants = (theme?: any): _MotionVariants => {
 	return {
 		AboutPage: {
+			whileHover: {
+				background: `linear-gradient(${theme.color1}, ${theme.color3})`,
+				color: `${theme.color5}`,
+				transform: ["translateY(0rem)", "translateY(-0.5rem)"],
+				boxShadow: "0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1)",
+				textShadow: `0 0.2rem 0.8rem ${theme.color1}`,
+				transition: {
+					duration: 0.3,
+				},
+			},
+			whileTap: {
+				transform: ["translateY(0rem)", "translateY(0rem)"],
+				boxShadow: [
+					"box-shadow: 0 1rem 0.5rem 0.1rem rgba(10, 10, 10, 1)",
+					"box-shadow: 0 0 0 0 rgba(10, 10, 10, 1)",
+				],
+				transition: {
+					duration: 0.1,
+				},
+			},
 			initial: {
 				opacity: 0,
 				width: "0rem",
@@ -299,7 +309,7 @@ const _MotionVariants = (theme?: any): _MotionVariants => {
 		AppToggle: {
 			slider: {
 				on: {
-					background: `${theme.color1}`,
+					background: `${theme.color2}`,
 					border: `1.5rem solid ${theme.color3}`,
 				},
 				off: {
@@ -309,7 +319,7 @@ const _MotionVariants = (theme?: any): _MotionVariants => {
 			},
 			button: {
 				on: {
-					background: `radial-gradient(circle at 30% 40%, ${theme.color3} 0%, ${theme.color1} 50%)`,
+					background: `radial-gradient(circle at 30% 40%, ${theme.color5} 0%, ${theme.color3} 50%)`,
 					transform: "translateX(5.5rem)",
 					transition: {
 						duration: 0.5,
