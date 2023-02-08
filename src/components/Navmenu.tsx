@@ -77,7 +77,6 @@ const AboutPageMain = styled(motion.div)`
 	width: 100%;
 	display: flex;
 	position: relative;
-	padding: 0.3rem; // to prevent heading from pushing down
 	margin: auto 0;
 	z-index: 4;
 `;
@@ -92,6 +91,7 @@ const AboutPageDropdownList = styled(motion.div)`
 //MOTION
 const _MotionVariants = (theme?: any): _MotionVariants => {
 	return {
+		//VARIANT ORCHESTRATING CHILD COMPS
 		AboutPage: {
 			initial: {},
 			toggleOff: {
