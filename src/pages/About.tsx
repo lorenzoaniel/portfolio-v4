@@ -37,7 +37,7 @@ const About = () => {
 										dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
 										navigate(infoContext.About.ALittleBitAboutMePage.Path);
 									}}
-									variant={"AboutPage"}
+									variant={"AboutPageDropDownList"}
 								>
 									{infoContext.About.ALittleBitAboutMePage.Title}
 								</Button>
@@ -47,7 +47,7 @@ const About = () => {
 										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSite.Path);
 									}}
-									variant={"AboutPage"}
+									variant={"AboutPageDropDownList"}
 								>
 									{infoContext.About.ALittleBitAboutTheSite.Title}
 								</Button>
@@ -57,7 +57,7 @@ const About = () => {
 										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
 									}}
-									variant={"AboutPage"}
+									variant={"AboutPageDropDownList"}
 								>
 									{infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
 								</Button>
