@@ -76,7 +76,7 @@ const App = () => {
 						<_App.OutletContainer>
 							<Outlet />
 						</_App.OutletContainer>
-						<Carousel mainTheme={appTheme} navMode={true}>
+						<Carousel variant={"MainNav"}>
 							<Button variant={"NavButton"} clickHandle={() => navigate("/")}>
 								{"Home"}
 							</Button>
