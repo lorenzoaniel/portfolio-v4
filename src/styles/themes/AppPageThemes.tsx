@@ -8,6 +8,8 @@ export const AppPageThemes = () => {
 			color1: "var(--Home-Grey-1)",
 			color2: "var(--Home-Grey-2)",
 			color3: "var(--Home-Grey-3)",
+			color4: "var(--Home-Grey-4)",
+			color5: "var(--Home-Grey-5)",
 		},
 		about: {
 			color1: "var(--About-Cyan-1)",
@@ -47,11 +49,15 @@ export const AppPageThemes = () => {
 			color1: "var(--Projects-Orange-1)",
 			color2: "var(--Projects-Orange-2)",
 			color3: "var(--Projects-Orange-3)",
+			color4: "var(--Projects-Orange-4)",
+			color5: "var(--Projects-Orange-5)",
 		},
 		contact: {
 			color1: "var(--Contact-Yellow-1)",
 			color2: "var(--Contact-Yellow-2)",
 			color3: "var(--Contact-Yellow-3)",
+			color4: "var(--Contact-Yellow-4)",
+			color5: "var(--Contact-Yellow-5)",
 		},
 	};
 
