@@ -42,6 +42,11 @@ export const GlobalStyle = createGlobalStyle`
     --Contact-Yellow-3: rgba(175, 170, 32, 0.8);
     --Contact-Yellow-4: rgba(155, 152, 69, 0.8);
     --Contact-Yellow-5: rgba(255, 249, 65, 0.8);
+    --Contact-DarkBlue-1: rgba(12, 14, 67, 1);
+    --Contact-DarkBlue-2: rgba(20, 22, 88, 0.8);
+    --Contact-DarkBlue-3: rgba(31, 36, 170, 0.8);
+    --Contact-DarkBlue-4: rgba(72, 75, 164, 0.8);
+    --Contact-DarkBlue-5: rgba(66, 73, 255, 1); 
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
