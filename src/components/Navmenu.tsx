@@ -38,6 +38,7 @@ const Navmenu = (props: NavmenuProps) => {
 					exit: "toggleOff",
 				};
 
+				//Orchestrating some child/properties
 				return (
 					<AnimatePresence mode="wait">
 						<AboutPageMain key={nanoid()}>
