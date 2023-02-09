@@ -128,10 +128,10 @@ const _PageTheme = (variant: string): _PageTheme => {
 			background: "linear-gradient(var(--About-Maroon-4), var(--About-Maroon-5))",
 		},
 		AboutSite: {
-			background: "linear-gradient(var(--About-Purple-1), var(--About-Purple-2))",
+			background: "linear-gradient(var(--About-Purple-4), var(--About-Purple-5))",
 		},
 		AboutSource: {
-			background: "linear-gradient(var(--About-SwampGreen-1), var(--About-SwampGreen-2))",
+			background: "linear-gradient(var(--About-SwampGreen-4), var(--About-SwampGreen-5))",
 		},
 	};
 
