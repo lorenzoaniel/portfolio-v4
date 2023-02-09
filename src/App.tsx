@@ -207,7 +207,7 @@ const _App = {
 			${_AppMixins.Commons.flexColCenterW100H100}
 			background-color: transparent;
 			justify-content: space-between;
-			row-gap: 5%;
+			row-gap: 3%;
 			padding: 2rem;
 			height: 100%;
 			overflow: scroll;
@@ -236,7 +236,7 @@ const _App = {
 		${_AppMixins.Commons.flexColCenterW100H100}
 		flex-direction: row;
 		border-radius: 1rem;
-		height: 65%;
+		height: 70%;
 	`,
 };
 
