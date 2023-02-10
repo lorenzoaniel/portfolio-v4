@@ -21,7 +21,8 @@ const Contact = () => {
 				</IconContainer>
 				<Paragraph
 					variant={"ContactPageLink"}
-					data={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
+					data={"Github"}
+					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
 				/>
 			</LinkContainer>
 			<LinkContainer>
@@ -30,7 +31,8 @@ const Contact = () => {
 				</IconContainer>
 				<Paragraph
 					variant={"ContactPageLink"}
-					data={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
+					data={"LinkedIn"}
+					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
 				/>
 			</LinkContainer>
 			<LinkContainer>
@@ -39,7 +41,8 @@ const Contact = () => {
 				</IconContainer>
 				<Paragraph
 					variant={"ContactPageLink"}
-					data={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
+					data={"Credly"}
+					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
 				/>
 			</LinkContainer>
 		</Main>
@@ -50,31 +53,34 @@ const Main = styled(motion.section)`
 	background: linear-gradient(
 		to left,
 		var(--Contact-Yellow-1),
-		var(--Contact-Yellow-2),
-		var(--Contact-Yellow-3)
+		var(--Contact-Yellow-5),
+		var(--Contact-Yellow-2)
 	);
 	width: 100%;
 	height: 100%;
-
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
 	align-self: flex-end;
-	border-radius: 2rem;
-	padding: 1.5rem;
+
+	border-radius: 1rem;
+	/* border-width: 1.5rem;
+	border-style: solid;
+	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
+
+	padding: 2rem;
 	box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-4) inset;
 	backdrop-filter: blur(1rem);
 	overflow-y: scroll; //since it is flex row
 	scrollbar-width: thin;
-	row-gap: 1rem;
+	row-gap: 5rem;
 
 	color: black;
 	font-size: 3rem;
 `;
 
 const LinkContainer = styled(motion.div)`
-	/* background: yellow; */
 	width: 100%;
 	height: fit-content;
 	display: flex;
@@ -87,12 +93,14 @@ const LinkContainer = styled(motion.div)`
 		to left,
 		var(--Contact-DarkBlue-5),
 		var(--Contact-DarkBlue-3),
-		var(--Contact-DarkBlue-1)
+		var(--Contact-DarkBlue-2)
 	);
 	box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
 		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
-
 	border-radius: 1rem;
+	/* border-width: 1rem;
+	border-style: solid;
+	border-image: linear-gradient(var(--Contact-DarkBlue-1), var(--Contact-DarkBlue-2)); */
 	padding: 2rem;
 `;
 
@@ -100,11 +108,11 @@ const IconContainer = styled(motion.div)`
 	background: linear-gradient(var(--Contact-Yellow-3), var(--Contact-Yellow-5));
 	height: clamp(10rem, 50%, 30rem);
 	width: clamp(10rem, 50%, 30rem);
-	box-shadow: 0 0 1rem 0.3rem var(--Contact-Yellow-5), 0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
+	box-shadow: 0 0 1rem 0.3rem var(--Contact-Yellow-5), 0 0 1rem 0.8rem var(--Contact-Yellow-1) inset;
 	border-radius: 1rem;
-	border-width: 1rem;
+	/* border-width: 1rem;
 	border-style: solid;
-	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2));
+	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
 	padding: 1rem;
 `;
 
