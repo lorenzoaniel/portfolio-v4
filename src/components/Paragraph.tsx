@@ -5,10 +5,11 @@ import styled from "styled-components";
 interface Props {
 	variant: string;
 	data: string;
+	href?: string;
 }
 
 const Paragraph = (props: Props) => {
-	const { data, variant = "default" } = props;
+	const { data, variant = "default", href } = props;
 
 	const createVariant = (variant: string) => {
 		let motionProps: any = {
@@ -27,6 +28,7 @@ const Paragraph = (props: Props) => {
 					...motionProps,
 					initial: "initial",
 					whileHover: "whileHover",
+					whileTap: "whileTap",
 				};
 
 				return (
@@ -34,8 +36,16 @@ const Paragraph = (props: Props) => {
 					<ContactPageLinksMain {...motionProps}>
 						<ContactPageLinksCover
 							variants={_MotionVariants().ContactPageLink.ContactPageLinksCover}
-						/>
-						<ContactPageLinks>{data}</ContactPageLinks>
+						>
+							{"View Link"}
+						</ContactPageLinksCover>
+						<ContactPageLinks
+							// href={href}
+							target={"_blank"}
+							variants={_MotionVariants().ContactPageLink.ContactPageLinks}
+						>
+							{data}
+						</ContactPageLinks>
 					</ContactPageLinksMain>
 				);
 			default:
@@ -85,7 +95,7 @@ const ContactPageLinksMain = styled(motion.div)`
 
 const ContactPageLinksCover = styled(motion.div)`
 	background: linear-gradient(rgb(12, 14, 67), rgb(66, 73, 255));
-	height: 100%;
+	height: 7rem;
 	width: 100%;
 	border-width: 1rem;
 	border-style: solid;
@@ -94,24 +104,35 @@ const ContactPageLinksCover = styled(motion.div)`
 	box-shadow: 0 0 0.5rem 0.5rem var(--Contact-DarkBlue-1),
 		0 0 1rem 1rem var(--Contact-DarkBlue-3) inset;
 	z-index: 2;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	font-size: 100%;
+	font-weight: 700;
+	text-shadow: 0 0.2rem 0.3rem var(--Contact-DarkBlue-2);
+	color: var(--Contact-DarkBlue-1);
 `;
 
 const ContactPageLinks = styled(motion.a)`
-	background: linear-gradient(var(--Contact-DarkBlue-4), var(--Contact-DarkBlue-3));
+	background: linear-gradient(var(--Contact-Yellow-3), var(--Contact-Yellow-5));
 	height: fit-content;
 	width: 90%;
 	border-radius: 0.5rem;
 	border-width: 0.6rem;
 	border-style: solid;
-	border-image: linear-gradient(var(--Contact-DarkBlue-3), var(--Contact-DarkBlue-5));
-	box-shadow: 0 0 0.5rem 0.8rem var(--Contact-DarkBlue-2),
-		0 0 1rem 1rem var(--Contact-DarkBlue-5) inset;
-
-	font-size: 1.5rem;
-	font-weight: 700;
-	font-family: var(--roboticFont);
+	border-image: linear-gradient(var(--Contact-Yellow-3), var(--Contact-Yellow-5));
+	box-shadow: 0 0 0.5rem 0.8rem var(--Contact-Yellow-2), 0 0 1rem 1rem var(--Contact-Yellow-5) inset;
 	position: absolute;
 	z-index: 1;
+
+	font-size: 3rem;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.8);
+	text-shadow: 0 0.3rem 0.4rem rgba(0, 0, 0, 0.8);
+	font-weight: 900;
+	text-align: center;
 `;
 
 const _MotionVariants = (theme?: any) => {
@@ -120,6 +141,7 @@ const _MotionVariants = (theme?: any) => {
 			ContactPageLinksMain: {
 				initial: {},
 				whileHover: {},
+				whileTap: {},
 			},
 			ContactPageLinksCover: {
 				initial: {
@@ -133,7 +155,27 @@ const _MotionVariants = (theme?: any) => {
 					},
 				},
 			},
-			ContactPageLinks: {},
+			ContactPageLinks: {
+				initial: {
+					boxShadow: "0 0 0rem 0rem rgba(0,0,0,1)",
+					transform: "translateY(0rem)",
+				},
+				whileHover: {
+					boxShadow: "0 0 0.8rem 0.5rem rgba(0,0,0,0.7)",
+					transform: "translateY(-0.2rem)",
+					transition: {
+						duration: 0.5,
+						delay: 0.1,
+					},
+				},
+				whileTap: {
+					transform: ["translateY(-0.2rem)", "translateY(0rem)"],
+					boxShadow: ["0 0 0.8rem 0.5rem rgba(0,0,0,0.7)", "0 0 0rem 0rem rgba(0,0,0,1)"],
+					transition: {
+						duration: 0.1,
+					},
+				},
+			},
 		},
 	};
 };
