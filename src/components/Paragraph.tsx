@@ -48,6 +48,12 @@ const Paragraph = (props: Props) => {
 						</ContactPageLinks>
 					</ContactPageLinksMain>
 				);
+			case "ProjectCover":
+				return (
+					<ProjectMain>
+						<ProjectParagraph>{data}</ProjectParagraph>
+					</ProjectMain>
+				);
 			default:
 				return <></>;
 		}
@@ -133,6 +139,23 @@ const ContactPageLinks = styled(motion.a)`
 	text-shadow: 0 0.3rem 0.4rem rgba(0, 0, 0, 0.8);
 	font-weight: 900;
 	text-align: center;
+`;
+
+const ProjectMain = styled(motion.div)`
+	height: 90%;
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const ProjectParagraph = styled(motion.p)`
+	background: var(--Projects-Indigo-5);
+	text-shadow: 0 0.1rem 0.3rem var(--Projects-Indigo-1);
+	font-size: 5rem;
+	font-weight: 900;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 `;
 
 const _MotionVariants = (theme?: any) => {
