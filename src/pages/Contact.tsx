@@ -70,7 +70,7 @@ const Main = styled(motion.section)`
 	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
 
 	padding: 2rem;
-	box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-4) inset;
+	box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-5) inset;
 	backdrop-filter: blur(1rem);
 	overflow-y: scroll; //since it is flex row
 	scrollbar-width: thin;
