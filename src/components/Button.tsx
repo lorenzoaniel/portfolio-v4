@@ -131,7 +131,12 @@ const Button = (props: ButtonProps) => {
 						{children}
 					</Glass>
 				);
-
+			case "ProjectSlideDownButton":
+				return (
+					<ProjectSlideDownButtonMain>
+						<ProjectSlideDownButtonTitle>{children}</ProjectSlideDownButtonTitle>
+					</ProjectSlideDownButtonMain>
+				);
 			default:
 				return <></>;
 		}
@@ -225,6 +230,21 @@ const AppToggleButton = styled(motion.span)<_ButtonProps>`
 		filter: blur(0.1rem);
 		transform: translateX(0rem);
 	`}
+`;
+
+const ProjectSlideDownButtonMain = styled(motion.button)`
+	background: pink;
+	height: fit-content;
+	width: fit-content;
+`;
+
+const ProjectSlideDownButtonTitle = styled(motion.p)`
+	background: var(--Projects-Orange-5);
+	text-shadow: 0 0.1rem 0.3rem var(--Projects-Orange-1);
+	font-size: 100%;
+	font-weight: 900;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 `;
 
 const _MotionVariants = (theme?: any): _MotionVariants => {
