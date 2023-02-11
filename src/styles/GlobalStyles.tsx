@@ -37,6 +37,11 @@ export const GlobalStyle = createGlobalStyle`
     --Projects-Orange-3: rgba(170, 93, 30, 0.8);
     --Projects-Orange-4: rgba(144, 99, 63, 0.8);
     --Projects-Orange-5: rgba(255, 147, 59, 0.8);
+    --Projects-Indigo-1: rgba(11, 42, 68, 1);
+    --Projects-Indigo-2: rgba(21, 47, 68, 1);
+    --Projects-Indigo-3: rgba(27, 109, 176, 1);
+    --Projects-Indigo-4: rgba(65, 113, 151, 1);
+    --Projects-Indigo-5: rgba(66, 170, 255, 1);
     --Contact-Yellow-1: rgba(67, 65, 12, 0.8);
     --Contact-Yellow-2: rgba(78, 76, 19, 0.8);
     --Contact-Yellow-3: rgba(175, 170, 32, 0.8);
@@ -46,7 +51,7 @@ export const GlobalStyle = createGlobalStyle`
     --Contact-DarkBlue-2: rgba(20, 22, 88, 0.8);
     --Contact-DarkBlue-3: rgba(31, 36, 170, 0.8);
     --Contact-DarkBlue-4: rgba(72, 75, 164, 0.8);
-    --Contact-DarkBlue-5: rgba(66, 73, 255, 0.8); 
+    --Contact-DarkBlue-5: rgba(66, 73, 255, 0.8);
 
     //FONTS
     --defaultFont: 'Inter', sans-serif;
