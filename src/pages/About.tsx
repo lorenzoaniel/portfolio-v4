@@ -97,7 +97,7 @@ const Main = styled(motion.section)`
 	align-self: flex-end;
 	border-radius: 2rem;
 	padding: 1.5rem;
-	box-shadow: 0 0 1rem 0.5rem var(--About-Cyan-5), 0 0 1rem 0.5rem var(--About-Cyan-4) inset;
+	box-shadow: 0 0 1rem 0.5rem var(--About-Cyan-5), 0 0 1rem 0.5rem var(--About-Cyan-5) inset;
 	backdrop-filter: blur(1rem);
 
 	color: black;
