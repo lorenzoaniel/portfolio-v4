@@ -41,6 +41,8 @@ const Image = (props: Props) => {
 		}
 	};
 
+	console.log("Image rerendered!");
+	//RENDER
 	return <>{createVariant(variant, subComp)}</>;
 };
 
