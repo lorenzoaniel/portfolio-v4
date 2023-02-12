@@ -97,6 +97,8 @@ const AnimatedBackground = (props: ABProps) => {
 		}
 	};
 
+	console.log("AnimateBackground rerendered!");
+	//RENDER
 	return (
 		<_AB.Main key={nanoid()} {..._MotionProps({ disabledState, variant })} variant={variant}>
 			{createVariant(variant)}
@@ -176,7 +178,7 @@ const _AB = {
 // MOTION
 
 const _MotionVariants = (args: _MotionProps): _MotionVariants => {
-	const { variant, numbOfMaterial = 0, materialId = 0, subComp = "Main" } = args;
+	const { numbOfMaterial = 0, materialId = 0 } = args;
 
 	const createStarsConfig = () => {
 		const rangeOfValues = 100; // in relation to x and y percentage of screen you want to use
