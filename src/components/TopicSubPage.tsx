@@ -73,11 +73,6 @@ const TopicSubPage = (props: PageProps) => {
 				return (
 					<>
 						<_Page.Main>
-							<Image
-								source={"https://giphy.com/embed/14ugaLf70hQvo4"}
-								variant={"Gif"}
-								subComp={"AboutPage"}
-							/>
 							<_Page.Generic variant={"default"}>{dataProp.Main.sectionOne}</_Page.Generic>
 							<RiReactjsFill style={createReactIconStyles("default")} />
 							<_Page.Generic variant={"default"}>{dataProp.Main.sectionTwo}</_Page.Generic>
@@ -110,6 +105,7 @@ const TopicSubPage = (props: PageProps) => {
 		}
 	};
 
+	console.log("TopicSubPage rerendered!");
 	//RENDER
 	return <ThemeProvider theme={_PageTheme(variant)}>{createVariant(variant)}</ThemeProvider>;
 };
@@ -180,6 +176,9 @@ const _Page: _PageVariants = {
 		text-shadow: 0 0.1rem 0.3rem rgba(255, 255, 255, 0.5);
 		line-height: 1.5;
 		color: rgba(200, 200, 200, 1);
+
+		text-indent: 5%;
+		text-align: justify;
 	`,
 
 	Generic: styled.div<_PageProps>`
