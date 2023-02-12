@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
+//STATIC DATA ONLY
 interface infoState {
 	Landing: any;
 	Home: any;
@@ -15,7 +16,6 @@ const initialState = {
 		Main: "Hi my name is Lorenzo, feel free to explore my portfolio!",
 	},
 	About: {
-		NavmenuToggleState: false,
 		ALittleBitAboutMePage: {
 			Title: "A Little Bit About Me",
 			Main: "I've always loved learning what interests me. I started out with basic IT technician skills learned through Google's professional development programs as well as COMPTIA A+/N+ and pursued my CCNA to focus more on the network side; all the while continuing to pickup little bits of programming knowledge here and there. Now I have finally committed to jumping into the wonderful world of programming through the 'Front door' (since I like learning through visuals) and made this portfolio to showcase my Front-end skills. Slowly trying my hand at backend, but as a Python-as-my-first-language kind of guy the nuances of JS is a little tricky for me. Thanks for visiting and for more techy info about my site feel free to read the other topics!",
@@ -55,15 +55,8 @@ const initialState = {
 export const pagesInfoSlice = createSlice({
 	name: "pagesInfo",
 	initialState,
-	reducers: {
-		//for the about page topics submenu
-		aboutTopicNavToggle: (state) => {
-			state.About.NavmenuToggleState = !state.About.NavmenuToggleState;
-		},
-	},
+	reducers: {},
 });
-
-export const { aboutTopicNavToggle } = pagesInfoSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPagesInfo = (state: RootState) => state.pagesInfo;
