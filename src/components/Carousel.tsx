@@ -19,6 +19,7 @@ const Carousel = (props: CProps) => {
 	let carouselContext = useAppSelector(selectCarouselState);
 
 	useEffect(() => {
+		//navigates upon routeState change
 		navigate(carouselContext.routeState);
 	}, [carouselContext.routeState]);
 
@@ -74,6 +75,7 @@ const Carousel = (props: CProps) => {
 		}
 	};
 
+	console.log("Carousel rerendered!");
 	//RENDER
 	return <>{createVariant(variant)}</>;
 };
