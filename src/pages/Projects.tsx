@@ -3,11 +3,14 @@ import React from "react";
 import styled from "styled-components";
 import Paragraph from "../components/Paragraph";
 import Button from "../components/Button";
+import useCurrentDimension from "../helpers/useCurrentDimension";
 
 const Projects = () => {
+	const currentWidth = useCurrentDimension().width;
+
 	const motionProps = {
 		initial: "initial",
-		animate: "animate",
+		animate: currentWidth >= 1024 ? "animate" : "whileHover",
 		whileHover: "whileHover",
 		exit: "exit",
 	};
@@ -15,23 +18,13 @@ const Projects = () => {
 	return (
 		<Main>
 			<ProjectMain {...motionProps} variants={_MotionVariants().ProjectMain}>
-				<ProjectSlideUp variants={_MotionVariants().ProjectSlideUp}>Test1</ProjectSlideUp>
+				<ProjectSlideUp variants={_MotionVariants().ProjectSlideUp}></ProjectSlideUp>
 				<ProjectCover>
 					<Paragraph data={"TENZIES"} variant={"ProjectCover"} />
 				</ProjectCover>
 				<ProjectSlideDown variants={_MotionVariants().ProjectSlideDown}>
 					<Button variant={"ProjectSlideDownButton"}>{"Github Code"}</Button>
 				</ProjectSlideDown>
-			</ProjectMain>
-			<ProjectMain {...motionProps} variants={_MotionVariants().ProjectMain}>
-				<ProjectSlideUp variants={_MotionVariants().ProjectSlideUp}>Test1</ProjectSlideUp>
-				<ProjectCover />
-				<ProjectSlideDown variants={_MotionVariants().ProjectSlideDown} />
-			</ProjectMain>
-			<ProjectMain {...motionProps} variants={_MotionVariants().ProjectMain}>
-				<ProjectSlideUp variants={_MotionVariants().ProjectSlideUp}>Test1</ProjectSlideUp>
-				<ProjectCover />
-				<ProjectSlideDown variants={_MotionVariants().ProjectSlideDown} />
 			</ProjectMain>
 		</Main>
 	);
@@ -52,7 +45,7 @@ const Main = styled(motion.section)`
 	align-items: center;
 	align-self: flex-end;
 	border-radius: 2rem;
-	padding: 10% 10%;
+	padding: 5%;
 	row-gap: 5rem;
 	box-shadow: 0 0 1rem 0.5rem var(--Projects-Orange-5),
 		0 0 1rem 0.5rem var(--Projects-Orange-5) inset;
@@ -65,7 +58,7 @@ const Main = styled(motion.section)`
 `;
 
 const ProjectMain = styled(motion.div)`
-	width: 100%;
+	width: clamp(30rem, 50%, 50rem);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -112,6 +105,9 @@ const ProjectSlideDown = styled(motion.div)`
 	width: 90%;
 	border-radius: 1rem;
 	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const _MotionVariants = (theme?: any) => {
@@ -130,6 +126,7 @@ const _MotionVariants = (theme?: any) => {
 			},
 			whileHover: {
 				transform: "translateY(0%) scaleY(1)",
+				background: "none",
 			},
 		},
 		ProjectSlideDown: {
@@ -138,6 +135,7 @@ const _MotionVariants = (theme?: any) => {
 			},
 			whileHover: {
 				transform: "translateY(0%)",
+				background: "none",
 			},
 		},
 	};
