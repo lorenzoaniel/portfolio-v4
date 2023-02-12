@@ -78,6 +78,8 @@ const Decorations = (props: DProps) => {
 				break;
 		}
 	};
+
+	console.log("Decoration rerendered!");
 	return <_D.Main {...DecorationConfigs.Main}>{createDecoration()}</_D.Main>;
 };
 
