@@ -1,6 +1,7 @@
 import { motion, transform } from "framer-motion";
 import React, { useMemo } from "react";
 import styled from "styled-components";
+import useCurrentDimension from "../helpers/useCurrentDimension";
 
 interface Props {
 	variant: string;
@@ -10,6 +11,8 @@ interface Props {
 
 const Paragraph = (props: Props) => {
 	const { data, variant = "default", href } = props;
+
+	let currentWidth = useCurrentDimension().width;
 
 	const createVariant = (variant: string) => {
 		let motionProps: any = {
@@ -27,6 +30,7 @@ const Paragraph = (props: Props) => {
 				motionProps = {
 					...motionProps,
 					initial: "initial",
+					animate: currentWidth >= 820 ? "animate" : "whileHover",
 					whileHover: "whileHover",
 					whileTap: "whileTap",
 				};
@@ -59,6 +63,7 @@ const Paragraph = (props: Props) => {
 		}
 	};
 
+	console.log("Paragraph rerendered!");
 	//RENDER
 	return <>{createVariant(variant)}</>;
 };
@@ -71,15 +76,14 @@ const HomePage = styled(motion.div)`
 	display: flex;
 
 	border-radius: 2rem;
-	box-shadow: 0 0 1rem 0.5rem rgba(255, 255, 255, 0.5),
-		0 0 1rem 0.5rem rgba(150, 150, 150, 0.7) inset;
+	box-shadow: 0 0 1rem 0.5rem var(--Home-Grey-5), 0 0 1rem 0.5rem var(--Home-Grey-5) inset;
 
 	padding: 2rem;
 	font-size: 3rem;
 	font-family: var(--roboticFont);
 	font-weight: 500;
-	color: rgba(10, 10, 10, 1);
-	text-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.7);
+	color: var(--Home-Grey-1);
+	text-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 1);
 `;
 
 const AboutPage = styled(motion.div)`
