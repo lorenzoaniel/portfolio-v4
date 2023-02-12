@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { nanoid } from "nanoid";
 import Button from "./Button";
 import { useAppSelector } from "../store/hooks";
-import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
+import { selectAboutToggle } from "../store/slices/aboutToggleSlice";
 
 interface NavmenuProps {
 	children: React.ReactNode[] | React.ReactNode;
@@ -18,7 +18,7 @@ interface _MotionVariants {
 const Navmenu = (props: NavmenuProps) => {
 	const { children, variant = "default" } = props;
 
-	const toggleStateAbout = useAppSelector(selectPagesInfo).About.NavmenuToggleState;
+	const toggleStateAbout = useAppSelector(selectAboutToggle);
 	const theme = useTheme();
 
 	const createVariant = (variant: string) => {
@@ -58,6 +58,8 @@ const Navmenu = (props: NavmenuProps) => {
 		}
 	};
 
+	console.log("Navmenu rerendered!");
+	//RENDER
 	return <>{createVariant(variant)}</>;
 };
 
