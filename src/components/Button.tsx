@@ -7,7 +7,7 @@ import { RxDropdownMenu } from "react-icons/Rx";
 import { device } from "../styles/breakpoints";
 import { selectToggle, toggle } from "../store/slices/appToggleSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { selectPagesInfo, aboutTopicNavToggle } from "../store/slices/pagesInfoSlice";
+import { aboutTopicNavToggle, selectAboutToggle } from "../store/slices/aboutToggleSlice";
 
 interface ButtonProps {
 	variant: string;
@@ -36,15 +36,17 @@ const Button = (props: ButtonProps) => {
 
 	//REDUX
 	const toggleStateApp = useAppSelector(selectToggle);
-	const toggleStateAbout = useAppSelector(selectPagesInfo).About.NavmenuToggleState;
+	const toggleStateAbout = useAppSelector(selectAboutToggle);
 	const dispatch = useAppDispatch();
 	const theme = useTheme();
 
 	// STYLING LOGIC
 	const createVariant = (variant: string) => {
 		let motionProps: any = {
-			animate: "animate",
 			initial: "initial",
+			animate: "animate",
+			whileHover: "whileHover",
+			whileTap: "whileTap",
 			exit: "exit",
 		};
 
@@ -75,10 +77,7 @@ const Button = (props: ButtonProps) => {
 			case "AboutPageNavButton":
 				motionProps = {
 					...motionProps,
-					initial: "initial",
 					animate: toggleStateAbout ? "toggleOn" : "toggleOff",
-					whileHover: "whileHover",
-					whileTap: "whileTap",
 				};
 
 				return (
@@ -120,7 +119,19 @@ const Button = (props: ButtonProps) => {
 						variants={_MotionVariants(theme).NavButton}
 						onClick={clickHandle}
 						toggleState={toggleStateAbout}
-						disabled={true} //replace using context value
+						disabled={true}
+					>
+						{children}
+					</GlassThemed>
+				);
+			case "NavButtonEnabled":
+				return (
+					<GlassThemed
+						{...motionProps}
+						key={nanoid()}
+						variants={_MotionVariants(theme).NavButtonEnabled}
+						onClick={clickHandle}
+						toggleState={toggleStateAbout}
 					>
 						{children}
 					</GlassThemed>
@@ -133,8 +144,12 @@ const Button = (props: ButtonProps) => {
 				);
 			case "ProjectSlideDownButton":
 				return (
-					<ProjectSlideDownButtonMain>
-						<ProjectSlideDownButtonTitle>{children}</ProjectSlideDownButtonTitle>
+					<ProjectSlideDownButtonMain
+						key={nanoid()}
+						{...motionProps}
+						variants={_MotionVariants(theme).ProjectSlideDownButtonMain}
+					>
+						<ProjectSlideDownButtonTitle key={nanoid()}>{children}</ProjectSlideDownButtonTitle>
 					</ProjectSlideDownButtonMain>
 				);
 			default:
@@ -142,6 +157,7 @@ const Button = (props: ButtonProps) => {
 		}
 	};
 
+	console.log("Button rerendered!");
 	//RENDER
 	return <>{createVariant(variant)}</>;
 };
@@ -169,7 +185,6 @@ const GlassThemed = styled(Glass)<_ButtonProps>`
 		border: 0.5rem solid ${theme.color3};
 		box-shadow: 0rem 0rem 0.6rem 0.4rem ${theme.color5};
 
-		// color: ${theme.color5};
 		background: linear-gradient(${theme.color1}, ${theme.color5});
 		-webkit-background-clip: text;
   	-webkit-text-fill-color: transparent;
@@ -233,21 +248,25 @@ const AppToggleButton = styled(motion.span)<_ButtonProps>`
 `;
 
 const ProjectSlideDownButtonMain = styled(motion.button)`
-	background: pink;
+	background: linear-gradient(var(--Projects-Orange-3), var(--Projects-Orange-5));
+	box-shadow: 0 0 1rem 0.4rem var(--Projects-Orange-1),
+		0 0 0.5rem 0.4rem var(--Projects-Orange-4) inset,
+		0 0 2.5rem 0.2rem var(--Projects-Orange-1) inset;
+	border-radius: 1rem;
 	height: fit-content;
 	width: fit-content;
+	padding: 0.5rem;
 `;
 
 const ProjectSlideDownButtonTitle = styled(motion.p)`
-	background: var(--Projects-Orange-5);
-	text-shadow: 0 0.1rem 0.3rem var(--Projects-Orange-1);
-	font-size: 100%;
+	background: linear-gradient(var(--Projects-Orange-3), var(--Projects-Orange-5));
+	font-size: clamp(3rem, 50%, 5rem);
 	font-weight: 900;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 `;
 
-const _MotionVariants = (theme?: any): _MotionVariants => {
+const _MotionVariants = (theme: any): _MotionVariants => {
 	return {
 		AboutPage: {
 			whileHover: {
@@ -339,6 +358,23 @@ const _MotionVariants = (theme?: any): _MotionVariants => {
 				},
 			},
 		},
+		NavButtonEnabled: {
+			initial: {
+				textShadow: `0rem 0.1rem 0.2rem ${theme.color5}`,
+				filter: `drop-shadow(0 0 0 ${theme.color5})`,
+			},
+			animate: {
+				textShadow: `0rem 0.1rem 1rem ${theme.color5}`,
+				transition: {
+					duration: 2,
+					repeat: Infinity,
+					repeatType: "reverse",
+				},
+			},
+			whileHover: {
+				filter: `drop-shadow(0 0 1rem ${theme.color5})`,
+			},
+		},
 		AppToggle: {
 			slider: {
 				on: {
@@ -367,6 +403,23 @@ const _MotionVariants = (theme?: any): _MotionVariants => {
 						duration: 0.5,
 						ease: "easeInOut",
 					},
+				},
+			},
+		},
+		ProjectSlideDownButtonMain: {
+			initial: {
+				textShadow: "0 0.2rem 0.1rem var(--Projects-Orange-2)",
+				border: "0.5rem groove var(--Projects-Orange-5)",
+			},
+			whileHover: {
+				textShadow: "0 0.1rem 0.8rem var(--Projects-Orange-2)",
+				border: "0.5rem groove var(--Projects-Orange-3)",
+			},
+			whileTap: {
+				textShadow: "0 0.3rem 0.3rem var(--Projects-Orange-1)",
+				border: "0.5rem groove var(--Projects-Orange-5)",
+				transition: {
+					delay: 0.1,
 				},
 			},
 		},
