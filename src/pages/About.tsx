@@ -1,22 +1,24 @@
 import React from "react";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { aboutTopicNavToggle, selectPagesInfo } from "../store/slices/pagesInfoSlice";
+import { useAppSelector } from "../store/hooks";
+import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
+
+import { AppPageThemes } from "../styles/themes/AppPageThemes";
+import { device } from "../styles/breakpoints";
 
 import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
-import { AppPageThemes } from "../styles/themes/AppPageThemes";
 import { motion } from "framer-motion";
+import { selectAboutToggle } from "../store/slices/aboutToggleSlice";
 
 const About = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
 
-	const NavmenuToggleState = infoContext.About.NavmenuToggleState;
+	const NavmenuToggleState = useAppSelector(selectAboutToggle);
 	let currentURL = useLocation().pathname.slice(7);
 
 	const createAboutTheme = (currUrl: string) => {
@@ -25,6 +27,8 @@ const About = () => {
 
 		return aboutTheme;
 	};
+
+	console.log("About rerendered!");
 
 	return (
 		//Overides outer ThemeProvider for a provider using the same theme obj but nested property
@@ -41,7 +45,6 @@ const About = () => {
 							<>
 								<Button
 									clickHandle={() => {
-										dispatch(aboutTopicNavToggle()); //switches toggle state so Navmenu dropdown goes into compact mode when you switch topics
 										navigate(infoContext.About.ALittleBitAboutMePage.Path); //onClick navigates to appropriate topic page
 									}}
 									variant={"AboutPageDropDownList"}
@@ -51,7 +54,6 @@ const About = () => {
 
 								<Button
 									clickHandle={() => {
-										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSite.Path);
 									}}
 									variant={"AboutPageDropDownList"}
@@ -61,7 +63,6 @@ const About = () => {
 
 								<Button
 									clickHandle={() => {
-										dispatch(aboutTopicNavToggle());
 										navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
 									}}
 									variant={"AboutPageDropDownList"}
@@ -102,6 +103,10 @@ const Main = styled(motion.section)`
 
 	color: black;
 	font-size: 3rem;
+
+	@media ${device.tablet} {
+		padding: 2.5%;
+	}
 `;
 const Header = styled(motion.aside)`
 	width: 100%;
@@ -110,6 +115,10 @@ const Header = styled(motion.aside)`
 	border-radius: 1rem;
 	margin-bottom: 0.5rem;
 	position: relative;
+
+	@media ${device.tablet} {
+		justify-content: center;
+	}
 `;
 
 const Content = styled(motion.aside)`
@@ -117,6 +126,9 @@ const Content = styled(motion.aside)`
 	width: 100%;
 	display: flex;
 	word-wrap: break-word;
+
+	@media ${device.tablet} {
+	}
 `;
 
 export default About;
