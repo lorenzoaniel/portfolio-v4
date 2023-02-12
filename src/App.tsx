@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { motion } from "framer-motion";
 import { Outlet, Routes, Route, useNavigate, useLocation } from "react-router-dom";
@@ -52,30 +52,30 @@ const App = () => {
 						<Navmenu>
 							{[
 								<Button variant={"AppToggle"} />,
-								<Button variant={"GlassButton"} clickHandle={() => navigate("/")}>
+								<Button variant={"NavButtonEnabled"} clickHandle={() => navigate("/")}>
 									{"Home"}
 								</Button>,
-								<Button variant={"GlassButton"} clickHandle={() => navigate("/about")}>
+								<Button variant={"NavButtonEnabled"} clickHandle={() => navigate("/about")}>
 									{"About"}
 								</Button>,
-								<Button variant={"GlassButton"} clickHandle={() => navigate("/projects")}>
+								<Button variant={"NavButtonEnabled"} clickHandle={() => navigate("/projects")}>
 									{"Projects"}
 								</Button>,
-								<Button variant={"GlassButton"} clickHandle={() => navigate("/contact")}>
+								<Button variant={"NavButtonEnabled"} clickHandle={() => navigate("/contact")}>
 									{"Contact"}
 								</Button>,
 							]}
 						</Navmenu>
-						<_App.OutletContainer>
+						<OutletContainer>
 							<Outlet />
-						</_App.OutletContainer>
+						</OutletContainer>
 					</>
 				) : (
 					<>
 						<Button variant={"AppToggle"} />
-						<_App.OutletContainer>
+						<OutletContainer>
 							<Outlet />
-						</_App.OutletContainer>
+						</OutletContainer>
 						<Carousel variant={"MainNav"}>
 							<Button variant={"NavButton"} clickHandle={() => navigate("/")}>
 								{"Home"}
@@ -137,24 +137,26 @@ const App = () => {
 		},
 	};
 
+	console.log("app rerendered!");
+
 	//RENDER
 	return (
 		<ThemeProvider theme={appTheme}>
 			<GlobalStyle />
-			<_App.Main>
-				<_App.ToggledOff.Main {..._MotionProps(toggleContext, "ToggledOff")}>
+			<Main>
+				<ToggledOffMain {..._MotionProps(toggleContext, "ToggledOff")}>
 					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
 
-					<_App.ToggledOff.Wrapper>
+					<ToggledOffLanding>
 						<Button variant={"AppToggle"} />
 						<Heading titleProp={infoContext.Landing.Main} variant={"Landing"} />
-					</_App.ToggledOff.Wrapper>
-				</_App.ToggledOff.Main>
+					</ToggledOffLanding>
+				</ToggledOffMain>
 
-				<_App.ToggledOn.Main {..._MotionProps(toggleContext, "ToggledOn")}>
+				<ToggledOnMain {..._MotionProps(toggleContext, "ToggledOn")}>
 					<AnimatedBackground disabledState={toggleContext} variant={"Blackhole"} />
 
-					<_App.ToggledOn.Routes>
+					<ToggledOnRoutes>
 						<Routes>
 							<Route {...RouteProps.Nav}>
 								<Route index element={RouteProps.Home.element} />
@@ -169,9 +171,9 @@ const App = () => {
 								<Route {...RouteProps.Contact} />
 							</Route>
 						</Routes>
-					</_App.ToggledOn.Routes>
-				</_App.ToggledOn.Main>
-			</_App.Main>
+					</ToggledOnRoutes>
+				</ToggledOnMain>
+			</Main>
 		</ThemeProvider>
 	);
 };
@@ -191,54 +193,53 @@ const _AppMixins = {
 
 const _AppVariants = (theme?: any) => {};
 
-const _App = {
-	Main: styled.main`
-		background: black;
-		height: inherit;
-		width: inherit;
-		display: flex;
-	`,
-	ToggledOn: {
-		Main: styled(motion.section)`
-			height: inherit;
-			width: inherit;
-		`,
-		Routes: styled(motion.aside)`
-			${_AppMixins.Commons.flexColCenterW100H100}
-			background-color: transparent;
-			justify-content: space-between;
-			row-gap: 3%;
-			padding: 2rem;
-			height: 100%;
-			overflow: scroll;
+const Main = styled(motion.main)`
+	background: black;
+	height: inherit;
+	width: inherit;
+	display: flex;
+`;
 
-			@media ${device.tablet} {
-				align-items: flex-start;
-			}
-		`,
-	},
-	ToggledOff: {
-		Main: styled(motion.section)`
-			height: inherit;
-			width: inherit;
-		`,
-		Wrapper: styled(motion.aside)`
-			${_AppMixins.Commons.flexColCenterW100H100}
-			background-color: transparent;
-			padding: 3rem;
+const ToggledOnMain = styled(motion.section)`
+	height: inherit;
+	width: inherit;
+`;
 
-			@media ${device.tablet} {
-				align-items: flex-start;
-			}
-		`,
-	},
-	OutletContainer: styled(motion.section)`
-		${_AppMixins.Commons.flexColCenterW100H100}
-		flex-direction: row;
-		border-radius: 1rem;
-		height: 70%;
-	`,
-};
+const ToggledOnRoutes = styled(motion.aside)`
+	${_AppMixins.Commons.flexColCenterW100H100}
+	background-color: transparent;
+	justify-content: space-between;
+	row-gap: 3%;
+	padding: 2rem;
+	height: 100%;
+	overflow: scroll;
+
+	@media ${device.tablet} {
+		align-items: flex-start;
+	}
+`;
+
+const ToggledOffMain = styled(motion.section)`
+	height: inherit;
+	width: inherit;
+`;
+
+const ToggledOffLanding = styled(motion.aside)`
+	${_AppMixins.Commons.flexColCenterW100H100}
+	background-color: transparent;
+	padding: 3rem;
+
+	@media ${device.tablet} {
+		align-items: flex-start;
+	}
+`;
+
+const OutletContainer = styled(motion.section)`
+	${_AppMixins.Commons.flexColCenterW100H100}
+	flex-direction: row;
+	border-radius: 1rem;
+	height: 70%;
+`;
 
 //MOTION
 const _MotionVariants = (toggleContext: boolean): _MotionVariants => {
