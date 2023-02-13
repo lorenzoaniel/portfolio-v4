@@ -13,7 +13,7 @@ const initialState = {
 		Main: "Explore My Portfolio!",
 	},
 	Home: {
-		Main: "Hi my name is Lorenzo, feel free to explore my portfolio!",
+		Main: "Hi my name is Lorenzo and welcome to my space-themed portfolio, feel free to explore around!",
 	},
 	About: {
 		ALittleBitAboutMePage: {
