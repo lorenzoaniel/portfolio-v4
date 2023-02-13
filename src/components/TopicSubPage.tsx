@@ -1,31 +1,13 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import Image from "./Image";
-import { RiReactjsFill } from "react-icons/Ri";
-import {
-	SiStyledcomponents,
-	SiReactrouter,
-	SiRedux,
-	SiVite,
-	SiTypescript,
-	SiGithub,
-} from "react-icons/Si";
-import { CgFramer } from "react-icons/Cg";
+import { motion } from "framer-motion";
+import Decorations from "./Decorations";
 
 interface PageProps {
 	variant?: string;
 	dataProp: {
 		Main: any;
 	};
-}
-
-interface _PageProps {
-	variant?: string;
-}
-
-interface _PageVariants {
-	Main: any;
-	Generic: any;
 }
 
 interface _PageTheme {
@@ -39,65 +21,39 @@ interface _PageTheme {
 const TopicSubPage = (props: PageProps) => {
 	const { dataProp, variant = "default" } = props;
 
-	const createReactIconStyles = (variant: string, iconGroupAmount: number = 0) => {
-		interface styleType {
-			default: any;
-			multiple: any;
-		}
-
-		const dynamicWidthHeight = 50 / iconGroupAmount + "vw";
-
-		const reactIconStyles: styleType = {
-			default: {
-				minHeight: "50%",
-				minWidth: "50%",
-			},
-			multiple: {
-				height: dynamicWidthHeight,
-				width: dynamicWidthHeight,
-			},
-		};
-
-		return reactIconStyles[variant as keyof styleType];
-	};
-
 	const createVariant = (variant: string) => {
 		switch (variant) {
 			case "AboutMe":
 				return (
 					<>
-						<_Page.Main>{dataProp.Main}</_Page.Main>
+						<Main>
+							<Decorations variant={"Spaceship"} />
+							<Generic>{dataProp.Main}</Generic>
+						</Main>
 					</>
 				);
 			case "AboutSite":
 				return (
 					<>
-						<_Page.Main>
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionOne}</_Page.Generic>
-							<RiReactjsFill style={createReactIconStyles("default")} />
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionTwo}</_Page.Generic>
-							<SiStyledcomponents style={createReactIconStyles("default")} />
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionThree}</_Page.Generic>
-							<CgFramer style={createReactIconStyles("default")} />
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionFour}</_Page.Generic>
-							<_Page.Generic variant={"iconContainer"}>
-								<SiReactrouter style={createReactIconStyles("multiple", 2)} />
-								<SiRedux style={createReactIconStyles("multiple", 2)} />
-							</_Page.Generic>
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionFive}</_Page.Generic>
-							<_Page.Generic variant={"iconContainer"}>
-								<SiVite style={createReactIconStyles("multiple", 3)} />
-								<SiTypescript style={createReactIconStyles("multiple", 3)} />
-								<SiGithub style={createReactIconStyles("multiple", 3)} />
-							</_Page.Generic>
-							<_Page.Generic variant={"default"}>{dataProp.Main.sectionSix}</_Page.Generic>
-						</_Page.Main>
+						<Main>
+							<Generic>{dataProp.Main.sectionOne}</Generic>
+							<Decorations variant={"ReactIcon"} />
+							<Generic>{dataProp.Main.sectionTwo}</Generic>
+							<Decorations variant={"StyledComponentIcon"} />
+							<Generic>{dataProp.Main.sectionThree}</Generic>
+							<Decorations variant={"FramerMotionIcon"} />
+							<Generic>{dataProp.Main.sectionFour}</Generic>
+							<Decorations variant={"ReactRouterReduxIcons"} />
+							<Generic>{dataProp.Main.sectionFive}</Generic>
+							<Decorations variant={"ViteTsGithubIcons"} />
+							<Generic>{dataProp.Main.sectionSix}</Generic>
+						</Main>
 					</>
 				);
 			case "AboutSource":
 				return (
 					<>
-						<_Page.Main>{dataProp.Main}</_Page.Main>
+						<Main>{dataProp.Main}</Main>
 					</>
 				);
 			default:
@@ -134,56 +90,41 @@ const _PageTheme = (variant: string): _PageTheme => {
 	return styleObj[variant as keyof styleObj];
 };
 
-const _PageVariants: _PageVariants = {
-	Main: {
-		default: ``,
-	},
-	Generic: {
-		default: `
-			height: fit-content;
-			width: fit-content
-		`,
-		iconContainer: `
-			display: flex; 
-			width: 100%;
-			height: fit-content;
-			justify-content: center;
-			align-items: center;
-			column-gap: 4rem;
-		`,
-	},
-};
+const Main = styled(motion.section)`
+	height: 100%;
+	width: 100%;
 
-const _Page: _PageVariants = {
-	Main: styled.section<_PageProps>`
-		height: 100%;
-		width: 100%;
+	overflow-y: scroll; //reversed since it is flex row overflows x
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	margin-top: 1rem;
+	border-radius: 1rem;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5rem;
+	align-items: center;
 
-		overflow-y: scroll; //since it is flex row
-		scrollbar-width: thin;
-		margin-top: 1rem;
-		border-radius: 1rem;
-		padding: 2rem;
-		display: flex;
-		flex-direction: column;
-		row-gap: 1.5rem;
-		align-items: center;
+	background: ${(p) => p.theme.background};
+	box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
+		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
 
-		background: ${(p) => p.theme.background};
-		box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
-			0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
+	text-shadow: 0 0.1rem 0.1rem ${(p) => p.theme.color5};
+	line-height: 1.5;
+	color: rgba(0, 0, 0, 0.8);
+	font-weight: 700;
 
-		text-shadow: 0 0.1rem 0.3rem rgba(255, 255, 255, 0.5);
-		line-height: 1.5;
-		color: rgba(200, 200, 200, 1);
+	text-indent: 5%;
+	filter: blur(0.06rem);
+`;
 
-		text-indent: 5%;
-		text-align: justify;
-	`,
+const Generic = styled(motion.div)`
+	height: fit-content;
+	width: fit-content;
+`;
 
-	Generic: styled.div<_PageProps>`
-		${(p) => _PageVariants.Generic[p.variant as keyof _PageVariants]}
-	`,
+const _MotionVariants = () => {
+	return {};
 };
 
 export default TopicSubPage;
