@@ -30,7 +30,6 @@ const Navmenu = (props: NavmenuProps) => {
 
 		switch (variant) {
 			case "AboutPage":
-				motionProps = { ...motionProps };
 				motionProps = {
 					...motionProps,
 					initial: "initial",
