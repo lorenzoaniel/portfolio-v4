@@ -67,12 +67,12 @@ const Projects = () => {
 };
 
 const Main = styled(motion.section)`
-	background: linear-gradient(
+	/* background: linear-gradient(
 		to left,
 		var(--Projects-Orange-1),
 		var(--Projects-Orange-2),
 		var(--Projects-Orange-3)
-	);
+	); */
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -83,7 +83,7 @@ const Main = styled(motion.section)`
 	padding: 3rem;
 
 	box-shadow: 0 0 1rem 0.5rem var(--Projects-Orange-5),
-		0 0 1rem 0.5rem var(--Projects-Orange-5) inset;
+		0 0 4rem 0.5rem var(--Projects-Orange-5) inset;
 	backdrop-filter: blur(1rem);
 `;
 
@@ -130,11 +130,11 @@ const ProjectMain = styled(motion.div)`
 `;
 
 const ProjectCover = styled(motion.div)`
-	background: linear-gradient(var(--Projects-Indigo-1), var(--Projects-Indigo-3));
+	/* background: linear-gradient(var(--Projects-Indigo-1), var(--Projects-Indigo-3)); */
 	box-shadow: 0 0 1rem 0.4rem var(--Projects-Indigo-1),
-		0 0 1rem 0.4rem var(--Projects-Indigo-4) inset, 0 0 5rem 0.2rem var(--Projects-Indigo-1) inset;
+		0 0 1rem 0.4rem var(--Projects-Indigo-5) inset, 0 0 5rem 0.2rem var(--Projects-Indigo-3) inset;
 	border: 1rem groove var(--Projects-Indigo-5);
-	backdrop-filter: opacity(1) blur(2rem);
+	backdrop-filter: opacity(1) blur(99rem);
 
 	min-height: 10rem;
 	width: 100%;
