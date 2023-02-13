@@ -217,6 +217,10 @@ const ToggledOnRoutes = styled(motion.aside)`
 	@media ${device.tablet} {
 		align-items: flex-start;
 	}
+
+	@media ${device.laptop} {
+		padding: 5rem;
+	}
 `;
 
 const ToggledOffMain = styled(motion.section)`
