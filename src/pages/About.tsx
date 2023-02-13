@@ -2,7 +2,7 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 
 import { AppPageThemes } from "../styles/themes/AppPageThemes";
@@ -12,76 +12,112 @@ import Navmenu from "../components/Navmenu";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { motion } from "framer-motion";
-import { selectAboutToggle } from "../store/slices/aboutToggleSlice";
+import { aboutTopicNavToggle, selectAboutToggle } from "../store/slices/aboutToggleSlice";
 
-const About = () => {
+interface Props {
+	variant?: string;
+}
+
+interface _MotionVariants {
+	[key: string]: any;
+}
+
+const About = (props: Props) => {
+	const { variant = "default" } = props;
+
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
 
 	const NavmenuToggleState = useAppSelector(selectAboutToggle);
+	const dispatch = useAppDispatch();
 	let currentURL = useLocation().pathname.slice(7);
 
+	//used to create a new theme that takes data from a nested portion of AppPageThemes, specifically the topics section
 	const createAboutTheme = (currUrl: string) => {
 		let aboutThemeKey = currUrl ? currUrl : "ALittleBitAboutMePage";
-		const aboutTheme = AppPageThemes().about.topics[aboutThemeKey]; //
+		const aboutTheme = AppPageThemes().about.topics[aboutThemeKey];
 
 		return aboutTheme;
 	};
 
+	// for testing and debug comment out
 	console.log("About rerendered!");
 
-	return (
-		//Overides outer ThemeProvider for a provider using the same theme obj but nested property
-		<ThemeProvider theme={createAboutTheme(currentURL)}>
-			<Main>
-				<Header>
-					<Heading
-						//checks for undefined currentUrl initially and defaults to route index
-						titleProp={infoContext.About[currentURL ? currentURL : "ALittleBitAboutMePage"].Title}
-						variant={"AboutPage"}
-					/>
-					<Navmenu variant={"AboutPage"}>
-						{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
-							<>
-								<Button
-									clickHandle={() => {
-										navigate(infoContext.About.ALittleBitAboutMePage.Path); //onClick navigates to appropriate topic page
-									}}
-									variant={"AboutPageDropDownList"}
-								>
-									{infoContext.About.ALittleBitAboutMePage.Title}
-								</Button>
+	const createVariant = (variant: string) => {
+		let motionProps: any = {
+			initial: "initial",
+		};
 
-								<Button
-									clickHandle={() => {
-										navigate(infoContext.About.ALittleBitAboutTheSite.Path);
-									}}
-									variant={"AboutPageDropDownList"}
-								>
-									{infoContext.About.ALittleBitAboutTheSite.Title}
-								</Button>
+		switch (variant) {
+			default:
+				motionProps = {
+					...motionProps,
+					animate: "onPageLoad",
+				};
 
-								<Button
-									clickHandle={() => {
-										navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
-									}}
-									variant={"AboutPageDropDownList"}
-								>
-									{infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
-								</Button>
-							</>
-						)}
-					</Navmenu>
-				</Header>
-				<Content>
-					<Outlet />
-				</Content>
-			</Main>
-		</ThemeProvider>
-	);
+				return (
+					//Overides outer ThemeProvider for a provider using the same theme obj but nested property
+					<ThemeProvider theme={createAboutTheme(currentURL)}>
+						<Main {...motionProps} variants={_MotionVariants().Main}>
+							<Header>
+								<Heading
+									//checks for undefined currentUrl initially and defaults to route index
+									titleProp={
+										infoContext.About[currentURL ? currentURL : "ALittleBitAboutMePage"].Title
+									}
+									variant={"AboutPage"}
+								/>
+								<Navmenu variant={"AboutPage"}>
+									{NavmenuToggleState && ( //Relies on toggle state to hide and show dropdown menu
+										<>
+											<Button
+												clickHandle={() => {
+													dispatch(aboutTopicNavToggle()); //closes dropdown when a topic is selected
+													navigate(infoContext.About.ALittleBitAboutMePage.Path); //onClick navigates to appropriate topic page
+												}}
+												variant={"AboutPageDropDownList"}
+											>
+												{infoContext.About.ALittleBitAboutMePage.Title}
+											</Button>
+
+											<Button
+												clickHandle={() => {
+													dispatch(aboutTopicNavToggle());
+													navigate(infoContext.About.ALittleBitAboutTheSite.Path);
+												}}
+												variant={"AboutPageDropDownList"}
+											>
+												{infoContext.About.ALittleBitAboutTheSite.Title}
+											</Button>
+
+											<Button
+												clickHandle={() => {
+													dispatch(aboutTopicNavToggle());
+													navigate(infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Path);
+												}}
+												variant={"AboutPageDropDownList"}
+											>
+												{infoContext.About.ALittleBitAboutTheSourcesAndInspirations.Title}
+											</Button>
+										</>
+									)}
+								</Navmenu>
+							</Header>
+							<Content>
+								<Outlet />
+							</Content>
+						</Main>
+					</ThemeProvider>
+				);
+		}
+	};
+
+	return <>{createVariant(variant)}</>;
 };
 
+//STYLE
 const Main = styled(motion.section)`
+	//Page Main div
 	background: linear-gradient(
 		to left,
 		var(--About-Cyan-1),
@@ -108,6 +144,7 @@ const Main = styled(motion.section)`
 		padding: 2.5%;
 	}
 `;
+
 const Header = styled(motion.aside)`
 	width: 100%;
 	height: 20%;
@@ -130,5 +167,22 @@ const Content = styled(motion.aside)`
 	@media ${device.tablet} {
 	}
 `;
+
+//MOTION
+const _MotionVariants = (): _MotionVariants => {
+	return {
+		Main: {
+			initial: {
+				opacity: 0,
+			},
+			onPageLoad: {
+				opacity: 1,
+				transition: {
+					duration: 0.5,
+				},
+			},
+		},
+	};
+};
 
 export default About;
