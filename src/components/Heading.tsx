@@ -30,8 +30,7 @@ const Heading = (props: HeadingProps) => {
 					</ProjectsMain>
 				);
 			default:
-				return;
-				<></>;
+				return <></>;
 		}
 	};
 
@@ -69,7 +68,8 @@ const AboutPageContent = styled(motion.div)`
 		padding: 1rem;
 		height: 100%;
 		width: 100%;
-		font-size: 2rem;
+		font-size: clamp(2rem, 5vw, 5rem);
+		font-weight: 700;
 		text-align: center;
 		display: flex;
 		justify-content: center;
