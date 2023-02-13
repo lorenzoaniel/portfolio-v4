@@ -199,10 +199,13 @@ const AboutPage = styled(motion.button)<_ButtonProps>`
 		border: 0.1rem solid ${theme.color2};
 		backdrop-filter: blur(1rem);
 		box-shadow: 0 0 1rem 1rem ${theme.color4} inset;
+		padding: 1rem;
+		border-radius: 0.5rem;
 
 		color: ${theme.color1};
 		text-shadow: 0 0.2rem 0.8rem ${theme.color2};
 		font-size: 2.5rem;
+		font-weight: 700;
 	`}
 `;
 
