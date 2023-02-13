@@ -72,7 +72,7 @@ const Paragraph = (props: Props) => {
 const HomePage = styled(motion.div)`
 	background-image: linear-gradient(to left, rgba(255, 255, 255, 0.2), rgba(230, 230, 230, 0.5));
 	width: 100%;
-	height: 15rem;
+	height: fit-content;
 	display: flex;
 
 	border-radius: 2rem;
