@@ -6,6 +6,7 @@ import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 import { motion } from "framer-motion";
 import { selectToggle } from "../store/slices/appToggleSlice";
 import { device } from "../styles/breakpoints";
+import Decorations from "../components/Decorations";
 
 interface Props {
 	variant?: string;
@@ -35,6 +36,7 @@ const Home = (props: Props) => {
 
 				return (
 					<Main {...motionProps} variants={_MotionVariants().Main}>
+						<Decorations variant={"Astronaut"} />
 						<Paragraph data={infoContext.Home.Main} variant="HomePage" />
 					</Main>
 				);
@@ -50,7 +52,7 @@ const Home = (props: Props) => {
 
 const Main = styled(motion.section)`
 	width: 100%;
-	height: fit-content;
+	height: 100%;
 	color: black;
 	font-size: 3rem;
 	display: flex;
