@@ -134,7 +134,6 @@ const SelectorLeft = styled(motion.div)`
 const SelectorRight = styled(motion.div)`
 	${({ theme }) => `
 		${_CMIXINS(theme).SelectorDefault}
-		// z-index: -1;
 		border-left: none;
 		border-top-right-radius: 1rem;
 		border-bottom-right-radius: 1rem;
