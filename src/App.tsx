@@ -1,10 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { motion } from "framer-motion";
 import { Outlet, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { nanoid } from "nanoid";
 
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { useAppSelector } from "./store/hooks";
 import { selectToggle, toggle } from "./store/slices/appToggleSlice";
 import { selectPagesInfo } from "./store/slices/pagesInfoSlice";
 
@@ -26,8 +25,7 @@ import Navmenu from "./components/Navmenu";
 import TopicSubPage from "./components/TopicSubPage";
 
 interface _MotionVariants {
-	initial: any;
-	animate: any;
+	[key: string]: any;
 }
 
 const App = () => {
@@ -36,7 +34,7 @@ const App = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const currDimensionContext = useCurrentDimension();
+	const currDimension = useCurrentDimension();
 
 	let currentURL = location.pathname.match(/([^\/]+)/);
 	let appThemeKey = currentURL ? currentURL[0] : "home";
@@ -47,7 +45,7 @@ const App = () => {
 		Nav: {
 			path: "/",
 			element:
-				currDimensionContext.width >= 1024 ? (
+				currDimension.width >= 1024 ? (
 					<>
 						<Navmenu>
 							{[
@@ -144,35 +142,48 @@ const App = () => {
 		<ThemeProvider theme={appTheme}>
 			<GlobalStyle />
 			<Main>
-				<ToggledOffMain {..._MotionProps(toggleContext, "ToggledOff")}>
-					<AnimatedBackground disabledState={toggleContext} variant={"Stars"} />
+				{" "}
+				<>
+					{toggleContext ? (
+						<ToggledOnMain
+							initial={"initial"}
+							animate={"animate"}
+							variants={_MotionVariants(toggleContext).ToggledOn}
+						>
+							<AnimatedBackground variant={"Blackhole"} />
 
-					<ToggledOffLanding>
-						<Button variant={"AppToggle"} />
-						<Heading titleProp={infoContext.Landing.Main} variant={"Landing"} />
-					</ToggledOffLanding>
-				</ToggledOffMain>
+							<ToggledOnRoutes>
+								<Routes>
+									<Route {...RouteProps.Nav}>
+										<Route index element={RouteProps.Home.element} />
+										<Route {...RouteProps.Home} />
+										<Route {...RouteProps.About}>
+											<Route index element={RouteProps.AboutTopics.ALittleBitAboutMePage.element} />
+											<Route {...RouteProps.AboutTopics.ALittleBitAboutMePage} />
+											<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSite} />
+											<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSourcesAndInspirations} />
+										</Route>
+										<Route {...RouteProps.Projects} />
+										<Route {...RouteProps.Contact} />
+									</Route>
+								</Routes>
+							</ToggledOnRoutes>
+						</ToggledOnMain>
+					) : (
+						<ToggledOffMain
+							initial={"initial"}
+							animate={"animate"}
+							variants={_MotionVariants(toggleContext).ToggledOff}
+						>
+							<AnimatedBackground variant={"Stars"} />
 
-				<ToggledOnMain {..._MotionProps(toggleContext, "ToggledOn")}>
-					<AnimatedBackground disabledState={toggleContext} variant={"Blackhole"} />
-
-					<ToggledOnRoutes>
-						<Routes>
-							<Route {...RouteProps.Nav}>
-								<Route index element={RouteProps.Home.element} />
-								<Route {...RouteProps.Home} />
-								<Route {...RouteProps.About}>
-									<Route index element={RouteProps.AboutTopics.ALittleBitAboutMePage.element} />
-									<Route {...RouteProps.AboutTopics.ALittleBitAboutMePage} />
-									<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSite} />
-									<Route {...RouteProps.AboutTopics.ALittleBitAboutTheSourcesAndInspirations} />
-								</Route>
-								<Route {...RouteProps.Projects} />
-								<Route {...RouteProps.Contact} />
-							</Route>
-						</Routes>
-					</ToggledOnRoutes>
-				</ToggledOnMain>
+							<ToggledOffLanding>
+								<Button variant={"AppToggle"} />
+								<Heading titleProp={infoContext.Landing.Main} variant={"Landing"} />
+							</ToggledOffLanding>
+						</ToggledOffMain>
+					)}
+				</>
 			</Main>
 		</ThemeProvider>
 	);
@@ -190,8 +201,6 @@ const _AppMixins = {
 		`,
 	},
 };
-
-const _AppVariants = (theme?: any) => {};
 
 const Main = styled(motion.main)`
 	background: black;
@@ -220,6 +229,7 @@ const ToggledOnRoutes = styled(motion.aside)`
 
 	@media ${device.laptop} {
 		padding: 5rem;
+		row-gap: 0%;
 	}
 `;
 
@@ -243,44 +253,37 @@ const OutletContainer = styled(motion.section)`
 	flex-direction: row;
 	border-radius: 1rem;
 	height: 70%;
+	@media ${device.laptop} {
+		padding: 0 5%;
+		height: 80%;
+	}
 `;
 
 //MOTION
 const _MotionVariants = (toggleContext: boolean): _MotionVariants => {
 	return {
-		initial: {
-			ToggledOn: {
-				display: toggleContext ? "flex" : "none",
+		ToggledOn: {
+			initial: {
 				opacity: 0,
 			},
-			ToggledOff: {
-				display: toggleContext ? "none" : "flex",
-				opacity: 0,
-			},
-		},
-		animate: {
-			ToggledOn: {
-				display: toggleContext ? "flex" : "none",
+			animate: {
 				opacity: toggleContext ? 1 : 0,
 				transition: {
 					duration: 0.5,
 				},
 			},
-			ToggledOff: {
-				display: toggleContext ? "none" : "flex",
+		},
+		ToggledOff: {
+			initial: {
+				opacity: 0,
+			},
+			animate: {
 				opacity: toggleContext ? 0 : 1,
 				transition: {
 					duration: 0.5,
 				},
 			},
 		},
-	};
-};
-
-const _MotionProps = (toggleContext: boolean, variant: string) => {
-	return {
-		initial: _MotionVariants(toggleContext).initial[variant as keyof _MotionVariants],
-		animate: _MotionVariants(toggleContext).animate[variant as keyof _MotionVariants],
 	};
 };
 
