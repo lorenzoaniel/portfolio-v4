@@ -1,4 +1,5 @@
-import React from "react";
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -18,119 +19,37 @@ interface _ImageVariants {
 }
 
 const Image = (props: Props) => {
-	const { variant = "default", subComp = "default", source = "" } = props;
+	const { variant = "default", source = "" } = props;
 
-	const createVariant = (variant: string, subComp: string) => {
+	const createVariant = (variant: string) => {
 		switch (variant) {
 			case "Gif":
-				return (
-					<>
-						<_Image.Gif.Main variant={variant} subComp={subComp}>
-							<_Image.Gif.Frame src={source} variant={variant} subComp={subComp} allowFullScreen />
-						</_Image.Gif.Main>
-					</>
-				);
+				return <GifFrame src={source} />;
 			default:
 				return (
-					<>
-						<_Image.default.Main variant={variant} subComp={subComp}>
-							<_Image.default.Frame src={source} variant={variant} subComp={subComp} />
-						</_Image.default.Main>
-					</>
+					<ImgMain>
+						<ImgFrame src={source} />
+					</ImgMain>
 				);
 		}
 	};
 
 	console.log("Image rerendered!");
 	//RENDER
-	return <>{createVariant(variant, subComp)}</>;
+	return <>{createVariant(variant)}</>;
 };
 
 //STYLE
+const ImgMain = styled(motion.div)``;
 
-const _ImageMixins = {
-	Div: {
-		gifResponsive: `
-      width: 100%;
-      height: 0;
-      padding-bottom: 70%;
-      position: relative;
-    `,
-	},
-	Frame: {
-		gifResponsive: `
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      border: none;
-    `,
-	},
-};
+const ImgFrame = styled(motion.img)``;
 
-const _ImageVariants: _ImageVariants = {
-	default: {
-		Main: {
-			default: {
-				default: `
-          ${_ImageMixins.Div.gifResponsive}
-        `,
-			},
-		},
-		Frame: {
-			default: {
-				default: `
-          ${_ImageMixins.Frame.gifResponsive}
-        `,
-			},
-		},
-	},
-
-	Gif: {
-		Main: {
-			default: `
-        ${_ImageMixins.Div.gifResponsive}
-      `,
-			AboutPage: `
-        ${_ImageMixins.Div.gifResponsive}
-        
-      `,
-		},
-		Frame: {
-			default: `
-        ${_ImageMixins.Frame.gifResponsive}
-      `,
-			AboutPage: `
-        ${_ImageMixins.Frame.gifResponsive}
-        border-radius: 1rem;
-      `,
-		},
-	},
-};
-
-const _Image = {
-	default: {
-		Main: styled.div<_Props>`
-			${(p) =>
-				_ImageVariants.default.Main[p.variant as keyof _ImageVariants][
-					p.subComp as keyof _ImageVariants
-				]}
-		`,
-		Frame: styled.img<_Props>`
-			${(p) =>
-				_ImageVariants.default.Frame[p.variant as keyof _ImageVariants][
-					p.subComp as keyof _ImageVariants
-				]}
-		`,
-	},
-
-	Gif: {
-		Main: styled.div<_Props>`
-			${(p) => _ImageVariants.Gif.Main[p.subComp as keyof _ImageVariants]}
-		`,
-		Frame: styled.iframe<_Props>`
-			${(p) => _ImageVariants.Gif.Frame[p.subComp as keyof _ImageVariants]}
-		`,
-	},
-};
+const GifFrame = styled(motion.iframe)`
+	/* background: orange; */
+	pointer-events: none; //removes zoom in/out option
+	height: 100%;
+	width: 100%;
+	border: none;
+`;
 
 export default Image;
