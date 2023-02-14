@@ -6,20 +6,27 @@ import { device } from "../styles/breakpoints";
 interface HeadingProps {
 	titleProp: string;
 	variant: string;
+	source?: string;
 }
 
 const Heading = (props: HeadingProps) => {
-	const { titleProp, variant = "default" } = props;
+	const { titleProp, variant = "default", source = "" } = props;
 
 	const createVariant = (variant: string) => {
 		switch (variant) {
+			case "AboutTopic":
+				return (
+					<AboutTopicMain>
+						<AboutTopicContent href={source} target={"_blank"} as={"a"}>
+							{titleProp}
+						</AboutTopicContent>
+					</AboutTopicMain>
+				);
 			case "AboutPage":
 				return (
-					<>
-						<AboutPageMain>
-							<AboutPageContent>{titleProp}</AboutPageContent>
-						</AboutPageMain>
-					</>
+					<AboutPageMain>
+						<AboutPageContent>{titleProp}</AboutPageContent>
+					</AboutPageMain>
 				);
 			case "Landing":
 				return <Landing>{titleProp}</Landing>;
@@ -78,6 +85,16 @@ const AboutPageContent = styled(motion.div)`
 		-webkit-text-fill-color: transparent;
 	`}
 `;
+
+const AboutTopicMain = styled(AboutPageMain)`
+	${({ theme }) => `
+		background: linear-gradient(${theme.color5}, ${theme.color3});
+		position: static;
+		margin: 0;
+	`}
+`;
+
+const AboutTopicContent = styled(AboutPageContent)``;
 
 const ProjectsMain = styled(motion.div)`
 	background: linear-gradient(var(--Projects-Indigo-1), var(--Projects-Indigo-3));
