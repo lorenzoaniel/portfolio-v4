@@ -2,12 +2,13 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { motion } from "framer-motion";
 import Decorations from "./Decorations";
+import Heading from "./Heading";
+import { useAppSelector } from "../store/hooks";
+import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 
 interface PageProps {
 	variant?: string;
-	dataProp: {
-		Main: any;
-	};
+	dataProp: any;
 }
 
 interface _PageTheme {
@@ -20,6 +21,8 @@ interface _PageTheme {
 
 const TopicSubPage = (props: PageProps) => {
 	const { dataProp, variant = "default" } = props;
+
+	const AboutPageInfo = useAppSelector(selectPagesInfo).About;
 
 	const createVariant = (variant: string) => {
 		switch (variant) {
@@ -53,7 +56,20 @@ const TopicSubPage = (props: PageProps) => {
 			case "AboutSource":
 				return (
 					<>
-						<Main>{dataProp.Main}</Main>
+						<Main>
+							<Decorations variant={"Inspiration"} />
+							<Generic>{dataProp.Main}</Generic>
+							<Heading
+								variant={"AboutTopic"}
+								source={"https://www.figma.com/community/file/1168769362540377344"}
+								titleProp={
+									AboutPageInfo.ALittleBitAboutTheSourcesAndInspirations.FirstInspiration.Title
+								}
+							/>
+							<Generic>{dataProp.FirstInspiration.Main}</Generic>
+							<Decorations variant={"SpaceshipReverse"} />
+							<Generic>{dataProp.ClosingStatement}</Generic>
+						</Main>
 					</>
 				);
 			default:
@@ -61,7 +77,6 @@ const TopicSubPage = (props: PageProps) => {
 		}
 	};
 
-	console.log("TopicSubPage rerendered!");
 	//RENDER
 	return <ThemeProvider theme={_PageTheme(variant)}>{createVariant(variant)}</ThemeProvider>;
 };
