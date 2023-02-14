@@ -141,7 +141,7 @@ const Main = styled(motion.section)`
 	font-size: 3rem;
 
 	@media ${device.tablet} {
-		padding: 2.5%;
+		padding: 1.5% 2.5%;
 	}
 `;
 
