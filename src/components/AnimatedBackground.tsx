@@ -4,22 +4,12 @@ import { motion } from "framer-motion";
 import { nanoid } from "nanoid";
 
 interface ABProps {
-	disabledState: boolean;
 	variant?: string;
-}
-
-interface _ABProps {
-	variant?: string;
-	starId?: number;
-	planetId?: number;
 }
 
 interface _MotionProps {
-	disabledState: boolean;
-	variant: string;
 	numbOfMaterial?: number;
 	materialId?: number;
-	subComp?: string;
 }
 
 interface _ABVariants {
@@ -28,70 +18,85 @@ interface _ABVariants {
 	Blackhole: any;
 }
 
-interface _MotionVariants {
-	initial?: any;
-	animate?: any;
-}
-
 //COMPONENT
 
 const AnimatedBackground = (props: ABProps) => {
-	const { disabledState = true, variant = "default" } = props;
+	const { variant = "default" } = props;
 
 	const createStars = () => {
 		const numbOfStars = 200; //Change here to change value everywhere in component
 		const starArray = Array(numbOfStars).fill(0);
+
 		return starArray.map((curr, index) => {
+			let motionProps = {
+				initial: "initial",
+				animate: "animate",
+			};
+
 			return (
-				<>
-					<_AB.Stars.Star
-						{..._MotionProps({
-							disabledState,
-							variant,
+				<StarsStar
+					{...motionProps}
+					variants={
+						_MotionVariants({
 							numbOfMaterial: numbOfStars,
 							materialId: index,
-							subComp: "Star",
-						})}
+						}).Stars.Star
+					}
+					key={nanoid()}
+				>
+					<StarsTail
+						{...motionProps}
+						{..._MotionVariants({
+							numbOfMaterial: numbOfStars,
+							materialId: index,
+						}).Stars.Tail}
 						key={nanoid()}
-						starId={index}
-					>
-						<_AB.Stars.Tail
-							{..._MotionProps({
-								disabledState,
-								variant,
-								numbOfMaterial: numbOfStars,
-								materialId: index,
-								subComp: "Tail",
-							})}
-							key={nanoid()}
-						/>
-					</_AB.Stars.Star>
-				</>
+					/>
+				</StarsStar>
 			);
 		});
 	};
 
 	const createBlackhole = () => {
+		let motionProps = {
+			initial: "initial",
+			animate: "animate",
+		};
 		const numbOfPlanets = 1;
 		const planetArray = Array(numbOfPlanets).fill(0);
 		return planetArray.map((curr, index) => {
 			return (
-				<>
-					<_AB.Blackhole.Planet
-						key={nanoid()}
-						{..._MotionProps({ disabledState, variant, subComp: "Planet" })}
-					/>
-				</>
+				<BlackholePlanet
+					{...motionProps}
+					//@ts-ignore
+					variants={
+						_MotionVariants({ numbOfMaterial: numbOfPlanets, materialId: index }).Blackhole.Planet
+					}
+					key={nanoid()}
+				/>
 			);
 		});
 	};
 
 	const createVariant = (variant: string) => {
+		let motionProps = {
+			initial: "initial",
+			animate: "animate",
+		};
 		switch (variant) {
 			case "Stars":
-				return <>{createStars()}</>;
+				return <StarsMain key={nanoid()}>{createStars()}</StarsMain>;
 			case "Blackhole":
-				return <>{createBlackhole()}</>;
+				return (
+					<BlackholeMain
+						{...motionProps}
+						//@ts-ignore
+						variants={_MotionVariants({ numbOfMaterial: 0, materialId: 0 }).Blackhole.Main}
+						key={nanoid()}
+					>
+						{createBlackhole()}
+					</BlackholeMain>
+				);
 			default:
 				return <></>;
 		}
@@ -99,11 +104,7 @@ const AnimatedBackground = (props: ABProps) => {
 
 	console.log("AnimateBackground rerendered!");
 	//RENDER
-	return (
-		<_AB.Main key={nanoid()} {..._MotionProps({ disabledState, variant })} variant={variant}>
-			{createVariant(variant)}
-		</_AB.Main>
-	);
+	return <>{createVariant(variant)}</>;
 };
 
 //STYLES
@@ -119,65 +120,40 @@ const _ABMixins = {
 	},
 };
 
-const _ABVariants: _ABVariants = {
-	Main: {
-		default: ``,
-		Stars: `
-			${_ABMixins.Common.defaultPositioning}
-      background: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(10,10,10,0.5) 100%);
-    `,
-		Blackhole: `
-			${_ABMixins.Common.defaultPositioning}
-		`,
-	},
-	Stars: {
-		Star: `
-      position: absolute;
-      content: '';
-      height: 0.2rem;
-      width: 0.2rem;
-      background: rgba(255,255,255,0.5);
-      z-index: -1;
-    `,
-		Tail: `
-      width: 100%;
-      background: rgba(255,255,255,0.5);
-      transform: rotateZ(-135deg);
-      border-radius 80%: 
-    `,
-	},
-	Blackhole: {
-		Planet: `
-			position: absolute;
-			z-index: -1;
-			border-radius: 50%;
-			filter: blur(0.5rem)
-		`,
-	},
-};
+const StarsMain = styled(motion.div)`
+	${_ABMixins.Common.defaultPositioning}
+	background: radial-gradient(circle, rgba(0,0,0,1) 20%, rgba(10,10,10,0.5) 100%);
+`;
 
-const _AB = {
-	Main: styled(motion.div)<_ABProps>`
-		${(p) => _ABVariants.Main[p.variant as keyof _ABVariants]}
-	`,
-	Stars: {
-		Star: styled(motion.div)<_ABProps>`
-			${_ABVariants.Stars.Star}
-		`,
-		Tail: styled(motion.div)<_ABProps>`
-			${_ABVariants.Stars.Tail}
-		`,
-	},
-	Blackhole: {
-		Planet: styled(motion.div)<_ABProps>`
-			${_ABVariants.Blackhole.Planet}
-		`,
-	},
-};
+const StarsStar = styled(motion.div)`
+	position: absolute;
+	content: "";
+	height: 0.2rem;
+	width: 0.2rem;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: -1;
+`;
+
+const StarsTail = styled(motion.div)`
+	width: 100%;
+	background: rgba(255, 255, 255, 0.5);
+	transform: rotateZ(-135deg);
+	border-radius: 50%;
+`;
+
+const BlackholeMain = styled(motion.div)`
+	${_ABMixins.Common.defaultPositioning}
+`;
+
+const BlackholePlanet = styled(motion.div)`
+	position: absolute;
+	z-index: -1;
+	border-radius: 50%;
+	filter: blur(0.5rem);
+`;
 
 // MOTION
-
-const _MotionVariants = (args: _MotionProps): _MotionVariants => {
+const _MotionVariants = (args: _MotionProps) => {
 	const { numbOfMaterial = 0, materialId = 0 } = args;
 
 	const createStarsConfig = () => {
@@ -244,49 +220,27 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 	const planetsConfig = createPlanetsConfig();
 
 	return {
-		initial: {
-			default: {
-				default: {},
-			},
-			Stars: {
-				Star: {
+		Stars: {
+			Star: {
+				initial: {
 					top: `${starsConfig.yValues}%`,
 					right: `${starsConfig.xValues}%`,
 					opacity: 0,
 				},
-				Tail: {
-					boxShadow: `0rem 0rem 0rem 0rem rgba(255,255,255,0)`,
-					height: `0rem`,
-					opacity: 0,
-				},
-			},
-			Blackhole: {
-				Main: {
-					background: `radial-gradient(circle, rgba(0,0,0,0.4) 40%, rgba(10,10,10,0.6) 60%, rgba(20,20,20,0.9) 90%)`,
-				},
-				Planet: {
-					top: `10%`,
-					right: `5%`,
-					height: `${planetsConfig.randomDimension}vw`,
-					width: `${planetsConfig.randomDimension}vw`,
-					opacity: 0,
-					background: `radial-gradient(circle, rgba(240, 240, 240, 1) 20%, rgba(255, 255, 255, 0.5) 100%)`,
-					boxShadow: `0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
-				},
-			},
-		},
-		animate: {
-			default: {
-				default: {},
-			},
-			Stars: {
-				Star: {
+				animate: {
 					translateY: [`${starsConfig.yValues}%`, "100%"],
 					translateX: [`${starsConfig.xValues}%`, "-100%"],
 					opacity: 1,
 					transition: starsConfig.defaultTransition,
 				},
-				Tail: {
+			},
+			Tail: {
+				initial: {
+					boxShadow: `0rem 0rem 0rem 0rem rgba(255,255,255,0)`,
+					height: `0rem`,
+					opacity: 0,
+				},
+				animate: {
 					boxShadow: [
 						`0rem ${starsConfig.yValues}rem 0.1rem 0.1rem rgba(255,255,255,1)`,
 						`0rem 0rem 0rem 0rem rgba(255,255,255,0)`,
@@ -296,15 +250,31 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 					transition: starsConfig.defaultTransition,
 				},
 			},
-			Blackhole: {
-				Main: {
+		},
+		Blackhole: {
+			Main: {
+				initial: {
+					background: `radial-gradient(circle, rgba(0,0,0,0.4) 40%, rgba(10,10,10,0.6) 60%, rgba(20,20,20,0.9) 90%)`,
+				},
+				animate: {
 					background: [
 						`radial-gradient(circle, rgba(0,0,0,0.4) 40%, rgba(10,10,10,0.6) 60%, rgba(20,20,20,0.9) 90%)`,
 						`radial-gradient(circle, rgba(0,0,0,0.4) 5%, rgba(10,10,10,0.6) 30%, rgba(20,20,20,0.9) 90%)`,
 					],
 					transition: planetsConfig.mainTransition,
 				},
-				Planet: {
+			},
+			Planet: {
+				initial: {
+					top: `10%`,
+					right: `5%`,
+					height: `${planetsConfig.randomDimension}vw`,
+					width: `${planetsConfig.randomDimension}vw`,
+					opacity: 0,
+					background: `radial-gradient(circle, rgba(240, 240, 240, 1) 20%, rgba(255, 255, 255, 0.5) 100%)`,
+					boxShadow: `0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
+				},
+				animate: {
 					//value group pattern top-3, right-2, opacity-4 ex: top[20,65,35], right[10,80], opacity[1,1,0,0]
 					top: ["20%", "55%", "35%", "30%", "55%", "45%", "35%", "55%", "20%"],
 					right: ["10%", "80%", "15%", "75%", "15%", "10%"],
@@ -318,46 +288,15 @@ const _MotionVariants = (args: _MotionProps): _MotionVariants => {
 						`0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
 						`0rem 0rem 0.5rem 2rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 2rem rgba(230, 230, 230, 0.8) inset`,
 					],
-					transition: { ...planetsConfig.defaultTransition, ...planetsConfig.glowTransition },
+					transition: {
+						...planetsConfig.defaultTransition,
+						...planetsConfig.glowTransition,
+						delay: 0,
+					},
 				},
 			},
 		},
 	};
-};
-
-const _MotionProps = (args: _MotionProps): _MotionVariants => {
-	const { subComp = "Main" } = args;
-	switch (args.variant) {
-		case "Stars":
-			return {
-				initial:
-					_MotionVariants(args).initial[args.variant as keyof _MotionVariants][
-						subComp as keyof _MotionVariants
-					],
-				animate: args.disabledState
-					? ""
-					: _MotionVariants(args).animate[args.variant as keyof _MotionVariants][
-							subComp as keyof _MotionVariants
-					  ],
-			};
-		case "Blackhole":
-			return {
-				initial:
-					_MotionVariants(args).initial[args.variant as keyof _MotionVariants][
-						subComp as keyof _MotionVariants
-					],
-				animate: args.disabledState
-					? _MotionVariants(args).animate[args.variant as keyof _MotionVariants][
-							subComp as keyof _MotionVariants
-					  ]
-					: "",
-			};
-		default:
-			return {
-				initial: "",
-				animate: args.disabledState ? "" : "",
-			};
-	}
 };
 
 export default React.memo(AnimatedBackground);
