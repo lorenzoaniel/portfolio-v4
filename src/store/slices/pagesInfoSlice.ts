@@ -43,11 +43,15 @@ const initialState = {
 		},
 		ALittleBitAboutTheSourcesAndInspirations: {
 			Title: "A Little Bit About The Sources And Inspirations",
-			Main: "Ok, so you're still reading. In which case, let me tell you about the great UX/UI designers that I looked to for my design inspirations, because it sure took some biblical proportions of sifting through various Portfolio designs before I finally acknowledged the fact that I am not that great at coming up with designs, It might be that I am not a trained designer which helped me to finally make the right choice--still do the majority of the designs anyway. That's right, I figured since it was the same approach I took to building this portfolio that it couldn't possible be any more painful--and that the old adage of tossing oneself into the deep part of the ballpit would be the only consistent way for me to learn the design part of my Front-end journey. So without further adeu let me showcase all of my great inspirations and their credited persons: ",
+			Main: "Ok, so you're still reading. In which case this section is dedicated to the great UX/UI designers that I looked to for my design inspirations: ",
 			Path: "ALittleBitAboutTheSourcesAndInspirations",
 			HeadingDefault: "defaultGreen",
-			FirstInspiration:
-				"Lorrayne or Loids, a UX/UI designer and software developer that developed the wonderful space-themed portfolio design where I borrowed the idea of showcasing a landing page first and having a button to flip through the homepage. Of course this is where similarities end since I incorporated animated backgrounds in place of good graphics, unfortunately I do not have her skillset in graphics design.",
+			FirstInspiration: {
+				Title: "Lorrayne/Loids",
+				Main: "A UX/UI designer and software developer that developed the wonderful space-themed portfolio design where I borrowed the idea of showcasing a landing page first and having a button to flip through the homepage. Of course this is where similarities end since I incorporated animated backgrounds in place of good graphics, unfortunately I do not have their skillset in graphics design.",
+			},
+			ClosingStatement:
+				"Once again big thanks to the mentioned source/s. As they say 'imitation is a form of flattery' I just hope I didn't flatter anyone too much.",
 		},
 	},
 } as infoState;
