@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { motion } from "framer-motion";
+import { LazyMotion, motion } from "framer-motion";
 import { Outlet, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 import { useAppSelector } from "./store/hooks";
@@ -27,6 +27,8 @@ import TopicSubPage from "./components/TopicSubPage";
 interface _MotionVariants {
 	[key: string]: any;
 }
+
+const loadFeatures = () => {};
 
 const App = () => {
 	//logic
@@ -64,16 +66,20 @@ const App = () => {
 								</Button>,
 							]}
 						</Navmenu>
-						<OutletContainer>
-							<Outlet />
-						</OutletContainer>
+						<React.Suspense>
+							<OutletContainer>
+								<Outlet />
+							</OutletContainer>
+						</React.Suspense>
 					</>
 				) : (
 					<>
 						<Button variant={"AppToggle"} />
-						<OutletContainer>
-							<Outlet />
-						</OutletContainer>
+						<React.Suspense>
+							<OutletContainer>
+								<Outlet />
+							</OutletContainer>
+						</React.Suspense>
 						<Carousel variant={"MainNav"}>
 							<Button variant={"NavButton"} clickHandle={() => navigate("/")}>
 								{"Home"}
