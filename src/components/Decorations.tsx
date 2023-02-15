@@ -253,13 +253,14 @@ const AstronautFrame = styled(motion.div)`
 
 const AstronautPoke = styled(motion.div)`
 	//used to trigger poke animation
+	/* background: orange; */
 	position: absolute;
 	height: 1%;
 	width: 1%;
 	top: 50%;
-	left: 50%;
+	left: 15rem;
 	border-radius: 50%;
-	z-index: -1;
+	/* z-index: -1; */
 `;
 
 //only input a variant if there is a <variant>Sequence function created for it
