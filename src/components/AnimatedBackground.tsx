@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, motion, useWillChange } from "framer-motion";
 import { nanoid } from "nanoid";
+import Decorations from "./Decorations";
+import { device } from "../styles/breakpoints";
+import useCurrentDimension from "../helpers/useCurrentDimension";
+import useWindowFocus from "../helpers/useWindowFocus";
 
 interface ABProps {
 	variant?: string;
@@ -16,6 +20,11 @@ interface _ABVariants {
 	Main: any;
 	Stars: any;
 	Blackhole: any;
+}
+
+interface PulseMainProps {
+	randomDimension: number;
+	randomPOS: { x: number; y: number };
 }
 
 //COMPONENT
@@ -78,11 +87,33 @@ const AnimatedBackground = (props: ABProps) => {
 		});
 	};
 
+	const createPulse = () => {
+		const numbOfPulse = 50;
+		return Array(numbOfPulse)
+			.fill(0)
+			.map((curr) => {
+				return (
+					<PulseObject
+						initial={"initial"}
+						animate={"animate"}
+						variants={_MotionVariants({}).Pulse.Object}
+						key={nanoid()}
+						randomDimension={Math.floor(Math.random() * 25) + 1} //min max in rems
+						randomPOS={{
+							x: Math.floor(Math.random() * 100) + 1,
+							y: Math.floor(Math.random() * 100) + 1,
+						}}
+					/>
+				);
+			});
+	};
+
 	const createVariant = (variant: string) => {
 		let motionProps = {
 			initial: "initial",
 			animate: "animate",
 		};
+
 		switch (variant) {
 			case "Stars":
 				return <StarsMain key={nanoid()}>{createStars()}</StarsMain>;
@@ -91,12 +122,21 @@ const AnimatedBackground = (props: ABProps) => {
 					<BlackholeMain
 						{...motionProps}
 						//@ts-ignore
-						variants={_MotionVariants({ numbOfMaterial: 0, materialId: 0 }).Blackhole.Main}
+						variants={_MotionVariants({}).Blackhole.Main}
 						key={nanoid()}
 					>
 						{createBlackhole()}
 					</BlackholeMain>
 				);
+			case "Pulses":
+				const refreshOnResize = useCurrentDimension();
+				const refreshOnFocus = useWindowFocus();
+
+				useEffect(() => {
+					console.log("alt tab");
+				}, [refreshOnResize, refreshOnFocus]); //refresh when window resize or when alt-tabbeed back in
+
+				return <PulseMain key={nanoid()}>{createPulse()}</PulseMain>;
 			default:
 				return <></>;
 		}
@@ -150,6 +190,27 @@ const BlackholePlanet = styled(motion.div)`
 	z-index: -1;
 	border-radius: 50%;
 	filter: blur(0.5rem);
+`;
+
+const PulseMain = styled(motion.div)`
+	${_ABMixins.Common.defaultPositioning}
+	/* background: orange; */
+	height: 250%; // will need to increase depending on how many more social links are placed
+
+	@media ${device.tablet} {
+		height: 180%;
+	}
+`;
+
+const PulseObject = styled(motion.div)<PulseMainProps>`
+	position: absolute;
+	${({ randomDimension, randomPOS }) => `
+		height: ${randomDimension}rem;
+		width: ${randomDimension}rem;
+		top: ${randomPOS.y}%;
+		right: ${randomPOS.x}%;
+	`}
+	border-radius: 50%;
 `;
 
 // MOTION
@@ -216,8 +277,17 @@ const _MotionVariants = (args: _MotionProps) => {
 		};
 	};
 
+	const createPulseConfig = () => {
+		return {
+			duration: Math.floor(Math.random() * 4) + 1,
+			delay: Math.random() * 1,
+			colorNumber: Math.floor(Math.random() * 6) + 1,
+		};
+	};
+
 	const starsConfig = createStarsConfig();
 	const planetsConfig = createPlanetsConfig();
+	const pulseConfig = createPulseConfig();
 
 	return {
 		Stars: {
@@ -275,7 +345,7 @@ const _MotionVariants = (args: _MotionProps) => {
 					boxShadow: `0rem 0rem 0.5rem 1rem rgba(230, 230, 230, 0.8), 0rem 0rem 0.5rem 0rem rgba(230, 230, 230, 0.8) inset`,
 				},
 				animate: {
-					//value group pattern top-3, right-2, opacity-4 ex: top[20,65,35], right[10,80], opacity[1,1,0,0]
+					//value group pattern top-3, right-2, opacity-4, scale-4 ex: top[20,65,35], right[10,80], opacity[1,1,1,0], scale[1, 2, 0.2, 0,]
 					top: ["20%", "55%", "35%", "30%", "55%", "45%", "35%", "55%", "20%"],
 					right: ["10%", "80%", "15%", "75%", "15%", "10%"],
 					opacity: [1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1],
@@ -292,6 +362,25 @@ const _MotionVariants = (args: _MotionProps) => {
 						...planetsConfig.defaultTransition,
 						...planetsConfig.glowTransition,
 						delay: 0,
+					},
+				},
+			},
+		},
+		Pulse: {
+			Main: {},
+			Object: {
+				animate: {
+					scale: [0, 1],
+					opacity: [1, 0],
+					boxShadow: [
+						"0 0 0 0 rgba(0,0,0,0)",
+						`0 0 1rem 0.5rem var(--Contact-DarkBlue-${pulseConfig.colorNumber})`,
+					],
+					transition: {
+						duration: pulseConfig.duration,
+						delay: pulseConfig.delay,
+						repeat: Infinity,
+						ease: "easeInOut",
 					},
 				},
 			},
