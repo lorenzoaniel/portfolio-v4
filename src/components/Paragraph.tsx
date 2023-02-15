@@ -95,7 +95,7 @@ const AboutPage = styled(motion.div)`
 const ContactPageLinksMain = styled(motion.div)`
 	/* background: green; */
 	height: 100%;
-	width: 100%;
+	width: 60%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
