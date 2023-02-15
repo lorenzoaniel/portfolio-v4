@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { SiGithub, SiLinkedin } from "react-icons/Si";
 import { HiBadgeCheck } from "react-icons/Hi";
 import Paragraph from "../components/Paragraph";
+import { device } from "../styles/breakpoints";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 //LinkedIn, creditly badge, Github,
 
@@ -17,6 +19,7 @@ const Contact = () => {
 	//RENDER
 	return (
 		<Main>
+			<AnimatedBackground variant={"Pulses"} />
 			<LinkContainer>
 				<IconContainer>
 					<SiGithub style={tempIconStyle} />
@@ -55,8 +58,8 @@ const Main = styled(motion.section)`
 	background: linear-gradient(
 		to left,
 		var(--Contact-Yellow-1),
-		var(--Contact-Yellow-5),
-		var(--Contact-Yellow-2)
+		var(--Contact-Yellow-2),
+		var(--Contact-Yellow-3)
 	);
 	width: 100%;
 	height: 100%;
@@ -71,7 +74,7 @@ const Main = styled(motion.section)`
 	border-style: solid;
 	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
 
-	padding: 2rem;
+	/* padding: 2rem; */
 	box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-5) inset;
 	backdrop-filter: blur(1rem);
 	overflow-y: scroll; //since it is flex row
@@ -80,16 +83,24 @@ const Main = styled(motion.section)`
 
 	color: black;
 	font-size: 3rem;
+
+	@media ${device.laptop} {
+		flex-direction: row;
+		column-gap: 5%;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 `;
 
 const LinkContainer = styled(motion.div)`
-	width: 100%;
+	width: clamp(30rem, 40%, 50rem);
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	row-gap: 1rem;
+	margin-top: 2rem;
 
 	background: linear-gradient(
 		to left,
@@ -117,7 +128,5 @@ const IconContainer = styled(motion.div)`
 	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
 	padding: 1rem;
 `;
-
-const CenterPiece = styled(motion.div)``;
 
 export default Contact;
