@@ -56,21 +56,17 @@ const Landing = styled(motion.h1)`
 
 const AboutPageMain = styled(motion.div)`
 	${({ theme }) => `
-		background: linear-gradient(${theme.color4}, ${theme.color5});
 		position: absolute;
 		height: 100%;
 		align-self: center;
 		margin-left: 6rem;
 		border-radius: 1rem;
-
-		box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
-			0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
 	`}
 `;
 
 const AboutPageContent = styled(motion.div)`
 	${({ theme }) => `
-		background: linear-gradient(${theme.color1}, ${theme.color2});
+		background: linear-gradient(${theme.color3}, ${theme.color5});
 		text-shadow: 0 0.3rem 0.4rem rgba(0, 0, 0, 0.4);
 		padding: 1rem;
 		height: 100%;
@@ -83,6 +79,7 @@ const AboutPageContent = styled(motion.div)`
 		align-items: center;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+		filter: drop-shadow(0 0.2rem 0.1rem ${theme.color5});
 	`}
 `;
 
