@@ -28,8 +28,6 @@ interface _MotionVariants {
 	[key: string]: any;
 }
 
-const loadFeatures = () => {};
-
 const App = () => {
 	//logic
 	const toggleContext = useAppSelector(selectToggle);
@@ -66,7 +64,7 @@ const App = () => {
 								</Button>,
 							]}
 						</Navmenu>
-						<React.Suspense>
+						<React.Suspense fallback={<p>Loading...</p>}>
 							<OutletContainer>
 								<Outlet />
 							</OutletContainer>
@@ -75,7 +73,7 @@ const App = () => {
 				) : (
 					<>
 						<Button variant={"AppToggle"} />
-						<React.Suspense>
+						<React.Suspense fallback={<p>Loading...</p>}>
 							<OutletContainer>
 								<Outlet />
 							</OutletContainer>
@@ -157,7 +155,7 @@ const App = () => {
 							variants={_MotionVariants(toggleContext).ToggledOn}
 						>
 							<AnimatedBackground variant={"Blackhole"} />
-
+							<AnimatedBackground variant={"Pulses"} />
 							<ToggledOnRoutes>
 								<Routes>
 									<Route {...RouteProps.Nav}>
