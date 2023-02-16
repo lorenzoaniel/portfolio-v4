@@ -12,7 +12,7 @@ const Projects = () => {
 
 	const motionProps = {
 		initial: "initial",
-		animate: currentDimension.width >= 820 ? "animate" : "whileHover",
+		animate: currentDimension.width >= 820 ? "animate" : "whileHover", //activates animations for mobile since users cannot hover
 		whileHover: "whileHover",
 		exit: "exit",
 	};
@@ -20,7 +20,7 @@ const Projects = () => {
 	console.log("Projects rerendered!");
 	//RENDER
 	return (
-		<Main>
+		<Main initial={"initial"} animate={"onPageLoad"} variants={_MotionVariants().Main}>
 			<Headers>
 				<Heading titleProp={"Projects"} variant={"ProjectMainHeading"} />
 			</Headers>
@@ -67,12 +67,6 @@ const Projects = () => {
 };
 
 const Main = styled(motion.section)`
-	/* background: linear-gradient(
-		to left,
-		var(--Projects-Orange-1),
-		var(--Projects-Orange-2),
-		var(--Projects-Orange-3)
-	); */
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -81,14 +75,9 @@ const Main = styled(motion.section)`
 
 	border-radius: 2rem;
 	padding: 3rem;
-
-	box-shadow: 0 0 1rem 0.5rem var(--Projects-Orange-5),
-		0 0 4rem 0.5rem var(--Projects-Orange-5) inset;
-	backdrop-filter: blur(1rem);
 `;
 
 const Headers = styled(motion.div)`
-	/* background: green; */
 	width: 100%;
 	height: 20%;
 	display: flex;
@@ -97,7 +86,6 @@ const Headers = styled(motion.div)`
 `;
 
 const Contents = styled(motion.div)`
-	/* background: yellow; */
 	width: 100%;
 	height: 75%;
 	overflow-y: scroll; //since it is flex row
@@ -107,7 +95,6 @@ const Contents = styled(motion.div)`
 	align-items: center;
 	align-self: flex-end;
 	row-gap: 5rem;
-	/* padding: 5%; */
 
 	color: black;
 	font-size: 3rem;
@@ -130,7 +117,6 @@ const ProjectMain = styled(motion.div)`
 `;
 
 const ProjectCover = styled(motion.div)`
-	/* background: linear-gradient(var(--Projects-Indigo-1), var(--Projects-Indigo-3)); */
 	box-shadow: 0 0 1rem 0.4rem var(--Projects-Indigo-1),
 		0 0 1rem 0.4rem var(--Projects-Indigo-5) inset, 0 0 5rem 0.2rem var(--Projects-Indigo-3) inset;
 	border: 1rem groove var(--Projects-Indigo-5);
@@ -175,6 +161,14 @@ const ProjectSlideDown = styled(motion.div)`
 
 const _MotionVariants = (theme?: any) => {
 	return {
+		Main: {
+			initial: {
+				scale: 0,
+			},
+			onPageLoad: {
+				scale: 1,
+			},
+		},
 		ProjectMain: {
 			initial: {
 				height: "10rem",
