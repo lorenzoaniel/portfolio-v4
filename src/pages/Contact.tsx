@@ -19,7 +19,6 @@ const Contact = () => {
 	//RENDER
 	return (
 		<Main>
-			<AnimatedBackground variant={"Pulses"} />
 			<LinkContainer>
 				<IconContainer>
 					<SiGithub style={tempIconStyle} />
@@ -55,12 +54,12 @@ const Contact = () => {
 };
 
 const Main = styled(motion.section)`
-	background: linear-gradient(
+	/* background: linear-gradient(
 		to left,
 		var(--Contact-Yellow-1),
 		var(--Contact-Yellow-2),
 		var(--Contact-Yellow-3)
-	);
+	); */
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -75,7 +74,7 @@ const Main = styled(motion.section)`
 	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
 
 	/* padding: 2rem; */
-	box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-5) inset;
+	/* box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-5) inset; */
 	backdrop-filter: blur(1rem);
 	overflow-y: scroll; //since it is flex row
 	scrollbar-width: thin;
@@ -102,14 +101,14 @@ const LinkContainer = styled(motion.div)`
 	row-gap: 1rem;
 	margin-top: 2rem;
 
-	background: linear-gradient(
+	/* background: linear-gradient(
 		to left,
 		var(--Contact-DarkBlue-5),
 		var(--Contact-DarkBlue-3),
 		var(--Contact-DarkBlue-2)
-	);
-	box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
-		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
+	); */
+	/* box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
+		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset; */
 	border-radius: 1rem;
 	/* border-width: 1rem;
 	border-style: solid;
