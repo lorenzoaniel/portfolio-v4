@@ -106,40 +106,38 @@ const _PageTheme = (variant: string): _PageTheme => {
 };
 
 const Main = styled(motion.section)`
-	height: 100%;
-	width: 100%;
+	${({ theme }) => `
+		background: linear-gradient(${theme.color3}, ${theme.color5});
+		height: 100%;
+		width: 100%;
 
-	overflow-y: scroll; //reversed since it is flex row overflows x
-	overflow-x: hidden;
-	scrollbar-width: thin;
-	margin-top: 1rem;
-	border-radius: 1rem;
-	padding: 2rem;
-	display: flex;
-	flex-direction: column;
-	row-gap: 1.5rem;
-	align-items: center;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		scrollbar-width: thin;
+		margin-top: 1rem;
+		border-radius: 1rem;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		row-gap: 1.5rem;
+		align-items: center;
 
-	background: ${(p) => p.theme.background};
-	box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
-		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset;
+		line-height: 1.5;
+		font-weight: 700;
+		text-indent: 5%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		filter: drop-shadow(0 0.2rem 0.2rem ${theme.color3});
 
-	text-shadow: 0 0.1rem 0.1rem ${(p) => p.theme.color5};
-	line-height: 1.5;
-	color: rgba(0, 0, 0, 0.8);
-	font-weight: 700;
-
-	text-indent: 5%;
-	filter: blur(0.06rem);
+		svg {
+			fill: rgba(255, 255, 255, 0.7);
+		}
+	`}
 `;
 
 const Generic = styled(motion.div)`
 	height: fit-content;
 	width: fit-content;
 `;
-
-const _MotionVariants = () => {
-	return {};
-};
 
 export default TopicSubPage;
