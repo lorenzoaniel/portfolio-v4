@@ -3,6 +3,7 @@ import { appToggleSlice } from "./slices/appToggleSlice";
 import { carouselSlice } from "./slices/carouselSlice";
 import { pagesInfoSlice } from "./slices/pagesInfoSlice";
 import { aboutToggleSlice } from "./slices/aboutToggleSlice";
+import { ProjectDescriptionModal } from "./slices/modalSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
 		toggle: appToggleSlice.reducer,
 		carouselSlice: carouselSlice.reducer,
 		pagesInfo: pagesInfoSlice.reducer,
+		ProjectDescriptionModal: ProjectDescriptionModal.reducer,
 	},
 });
 
