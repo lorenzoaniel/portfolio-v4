@@ -8,9 +8,9 @@ import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 import { AppPageThemes } from "../styles/themes/AppPageThemes";
 import { device } from "../styles/breakpoints";
 
-import Navmenu from "../components/Navmenu";
-import Button from "../components/Button";
-import Heading from "../components/Heading";
+import Navmenu from "../components/Navmenu/Navmenu";
+import Button from "../components/Button/Button";
+import Heading from "../components/Heading/Heading";
 import { motion } from "framer-motion";
 import { aboutTopicNavToggle, selectAboutToggle } from "../store/slices/aboutToggleSlice";
 
@@ -117,13 +117,6 @@ const About = (props: Props) => {
 
 //STYLE
 const Main = styled(motion.section)`
-	//Page Main div
-	/* background: linear-gradient(
-		to left,
-		var(--About-Cyan-1),
-		var(--About-Cyan-2),
-		var(--About-Cyan-3)
-	); */
 	width: 100%;
 	height: 100%;
 
@@ -137,7 +130,6 @@ const Main = styled(motion.section)`
 
 	color: black;
 	font-size: 3rem;
-	/* margin: 0 auto; */
 
 	@media ${device.tablet} {
 		padding: 1.5% 2.5%;
@@ -161,7 +153,9 @@ const Content = styled(motion.aside)`
 	height: 75%;
 	width: 100%;
 	display: flex;
-	word-wrap: break-word;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scrollbar-width: thin;
 
 	@media ${device.tablet} {
 	}
