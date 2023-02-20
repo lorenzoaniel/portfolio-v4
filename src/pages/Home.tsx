@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../store/hooks";
-import Paragraph from "../components/Paragraph";
+import Paragraph from "../components/Paragraph/Paragraph";
 import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
 import { motion } from "framer-motion";
 import { selectToggle } from "../store/slices/appToggleSlice";
 import { device } from "../styles/breakpoints";
-import Decorations from "../components/Decorations";
+import Decorations from "../components/Decorations/Decorations";
 
 interface Props {
 	variant?: string;
