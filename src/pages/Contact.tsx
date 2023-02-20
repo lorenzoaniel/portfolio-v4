@@ -3,11 +3,18 @@ import React from "react";
 import styled from "styled-components";
 import { SiGithub, SiLinkedin } from "react-icons/Si";
 import { HiBadgeCheck } from "react-icons/Hi";
-import Paragraph from "../components/Paragraph";
 import { device } from "../styles/breakpoints";
-import AnimatedBackground from "../components/AnimatedBackground";
+import Button from "../components/Button/Button";
 
-//LinkedIn, creditly badge, Github,
+/** COMPONENT
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ * */
 
 const Contact = () => {
 	const tempIconStyle = {
@@ -23,43 +30,37 @@ const Contact = () => {
 				<IconContainer>
 					<SiGithub style={tempIconStyle} />
 				</IconContainer>
-				<Paragraph
-					variant={"ContactPageLink"}
-					data={"Github"}
-					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
-				/>
+				<Button variant={"ContactPageLinkButton"} href={"https://github.com/lorenzoaniel"}>
+					{"Github"}
+				</Button>
 			</LinkContainer>
 			<LinkContainer>
 				<IconContainer>
 					<SiLinkedin style={tempIconStyle} />
 				</IconContainer>
-				<Paragraph
-					variant={"ContactPageLink"}
-					data={"LinkedIn"}
+				<Button
+					variant={"ContactPageLinkButton"}
 					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
-				/>
+				>
+					{"LinkedIn"}
+				</Button>
 			</LinkContainer>
 			<LinkContainer>
 				<IconContainer>
 					<HiBadgeCheck style={tempIconStyle} />
 				</IconContainer>
-				<Paragraph
-					variant={"ContactPageLink"}
-					data={"Credly"}
-					href={"https://www.linkedin.com/in/mikhail-lorenzo-aniel-283022127/"}
-				/>
+				<Button
+					variant={"ContactPageLinkButton"}
+					href={"https://www.credly.com/users/mikhail-lorenzo-aniel/badges"}
+				>
+					{"Credly"}
+				</Button>
 			</LinkContainer>
 		</Main>
 	);
 };
 
 const Main = styled(motion.section)`
-	/* background: linear-gradient(
-		to left,
-		var(--Contact-Yellow-1),
-		var(--Contact-Yellow-2),
-		var(--Contact-Yellow-3)
-	); */
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -69,13 +70,6 @@ const Main = styled(motion.section)`
 	align-self: flex-end;
 
 	border-radius: 1rem;
-	/* border-width: 1.5rem;
-	border-style: solid;
-	border-image: linear-gradient(var(--Contact-Yellow-1), var(--Contact-Yellow-2)); */
-
-	/* padding: 2rem; */
-	/* box-shadow: 0 0 1rem 0.5rem var(--Contact-Yellow-5), 0 0 1rem 0.5rem var(--Contact-Yellow-5) inset; */
-	backdrop-filter: blur(1rem);
 	overflow-y: scroll; //since it is flex row
 	scrollbar-width: thin;
 	row-gap: 5rem;
@@ -83,8 +77,11 @@ const Main = styled(motion.section)`
 	color: black;
 	font-size: 3rem;
 
-	@media ${device.laptop} {
+	@media ${device.tablet} {
 		flex-direction: row;
+	}
+
+	@media ${device.laptop} {
 		column-gap: 5%;
 		flex-wrap: wrap;
 		justify-content: center;
@@ -101,18 +98,7 @@ const LinkContainer = styled(motion.div)`
 	row-gap: 1rem;
 	margin-top: 2rem;
 
-	/* background: linear-gradient(
-		to left,
-		var(--Contact-DarkBlue-5),
-		var(--Contact-DarkBlue-3),
-		var(--Contact-DarkBlue-2)
-	); */
-	/* box-shadow: 0 0.3rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5),
-		0 0.1rem 1rem 0.2rem rgba(0, 0, 0, 0.5) inset; */
 	border-radius: 1rem;
-	/* border-width: 1rem;
-	border-style: solid;
-	border-image: linear-gradient(var(--Contact-DarkBlue-1), var(--Contact-DarkBlue-2)); */
 	padding: 2rem;
 `;
 
