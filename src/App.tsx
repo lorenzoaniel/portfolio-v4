@@ -16,13 +16,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
-import Heading from "./components/Heading";
-import Button from "./components/Button";
-import AnimatedBackground from "./components/AnimatedBackground";
-import Carousel from "./components/Carousel";
+import Heading from "./components/Heading/Heading";
+import Button from "./components/Button/Button";
+import AnimatedBackground from "./components/AnimatedBackground/AnimatedBackground";
+import Carousel from "./components/Carousel/Carousel";
 import useCurrentDimension from "./helpers/useCurrentDimension";
-import Navmenu from "./components/Navmenu";
-import TopicSubPage from "./components/TopicSubPage";
+import Navmenu from "./components/Navmenu/Navmenu";
+import TopicSubPage from "./components/TopicSubPage/TopicSubPage";
 
 interface _MotionVariants {
 	[key: string]: any;
