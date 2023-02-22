@@ -1,6 +1,4 @@
-import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
 
 import useCurrentDimension from "../../helpers/useCurrentDimension";
 
