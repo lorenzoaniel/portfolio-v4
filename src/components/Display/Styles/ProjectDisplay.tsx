@@ -52,6 +52,8 @@ export const SlideDown = styled(motion.div)`
 	border-radius: 1rem;
 	z-index: 1;
 	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	padding: 1rem;
 	column-gap: 1rem;
 `;
