@@ -1,6 +1,5 @@
 import React from "react";
-import styled, { useTheme } from "styled-components";
-import { motion } from "framer-motion";
+import { useTheme } from "styled-components";
 import { nanoid } from "nanoid";
 import { RxDropdownMenu } from "react-icons/Rx";
 
