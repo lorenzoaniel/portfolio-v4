@@ -4,9 +4,9 @@ import useCurrentDimension from "../../helpers/useCurrentDimension";
 
 import AstronautGif from "../../assets/images/Gif/astronaut-tumble-astronaut.gif";
 
-import { GiInspiration } from "react-icons/Gi";
-import { FaSpaceShuttle } from "react-icons/Fa";
-import { RiReactjsFill } from "react-icons/Ri";
+import { GiInspiration } from "react-icons/gi";
+import { FaSpaceShuttle } from "react-icons/fa";
+import { RiReactjsFill } from "react-icons/ri";
 import {
 	SiStyledcomponents,
 	SiReactrouter,
@@ -16,7 +16,7 @@ import {
 	SiGithub,
 	SiCloudways,
 	SiFramer,
-} from "react-icons/Si";
+} from "react-icons/si";
 
 import { Vibrate, Travel, Spaceship, IconGroup, Astronaut } from "./decorationsImportCombiner";
 import Image from "../Image/Image";

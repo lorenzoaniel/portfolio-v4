@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "styled-components";
 import { nanoid } from "nanoid";
-import { RxDropdownMenu } from "react-icons/Rx";
+import { RxDropdownMenu } from "react-icons/rx";
 
 import { selectToggle, toggle } from "../../store/slices/appToggleSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";

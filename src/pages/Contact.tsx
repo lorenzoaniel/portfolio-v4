@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
-import { SiGithub, SiLinkedin } from "react-icons/Si";
-import { HiBadgeCheck } from "react-icons/Hi";
+import { SiGithub, SiLinkedin } from "react-icons/si";
+import { HiBadgeCheck } from "react-icons/hi";
 import { device } from "../styles/breakpoints";
 import Button from "../components/Button/Button";
 

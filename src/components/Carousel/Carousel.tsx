@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { MdArrowRight, MdArrowLeft } from "react-icons/Md";
+import { MdArrowRight, MdArrowLeft } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { changeItemDisplay, selectCarouselState } from "../../store/slices/carouselSlice";
 
