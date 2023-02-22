@@ -82,13 +82,13 @@ const initialState = {
 		},
 		SaasifyDemo: {
 			name: "SAASIFY DEMO",
-			desc: "This project was a random design file that I found browsing the Figma community that I challenged myself to build in order to try and emulate real world projects. Unfortunately I stuck purely to the design files and since there was no responsive version dictated by the files it will start to break if browser is not maximized. No animations for this one, jsut wanted to see if I can follow a design file to the 'T'. Built using REACTJS and Styled-JS",
+			desc: "This project was a random design file that I found browsing the Figma community that I challenged myself to build in order to try and emulate real world projects. Unfortunately I stuck purely to the design files and since there was no responsive version dictated by the files it will start to break if browser is not maximized. No animations for this one, just wanted to see if I can follow a design file. Built using REACTJS and Styled-JS",
 			github: "https://github.com/lorenzoaniel/saasify-project",
 			img: "/assets/images/Static/saasifydemoIMG.png",
 		},
 		GPTDemo: {
 			name: "GPT DEMO",
-			desc: "Another Figma file to code project, just like the 'Saasify' project this one is jsut for me to practice following someone else's design files to the 'T', I did take some liberties for instances where graphic design files were used. This project has some responsiveness but in general I jsut stuck to the design files. No Animations, and built using REACTJS and Styled-JS",
+			desc: "Another Figma file to code project, just like the 'Saasify' project this one is just for me to practice following someone else's design files, I did take some liberties for instances where graphic design files were used. This project has some responsiveness but in general I just stuck to the design files. No Animations, and built using REACTJS and Styled-JS",
 			github: "https://github.com/lorenzoaniel/gpt3-project",
 			img: "/assets/images/Static/gpt3demoIMG.png",
 		},
