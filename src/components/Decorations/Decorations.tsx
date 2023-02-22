@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import useCurrentDimension from "../../helpers/useCurrentDimension";
 
-import AstronautGif from "../../assets/images/Gif/astronaut-tumble-astronaut.gif";
+import AstronautGif from "/assets/images/Gif/astronaut-tumble-astronaut.gif";
 
 import { GiInspiration } from "react-icons/gi";
 import { FaSpaceShuttle } from "react-icons/fa";
