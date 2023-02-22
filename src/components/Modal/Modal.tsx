@@ -1,10 +1,9 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { changeModalToggle, selectModalState } from "../../store/slices/modalSlice";
 import { DescriptionModal } from "./modalImportCombiner";
 
 interface Props {
 	variant?: string;
+	handleClick?: () => void;
 	children: React.ReactNode | React.ReactNode[] | string;
 }
 
@@ -13,35 +12,25 @@ interface Props {
 	PROXY ON TRANSFORM ELEMENT AND MODAL OUTSIDE OR IN AN ELEMENT THAT DOES NOT HAVE IT, OTHERWISE JUST USE MODAL.
 */
 const Modal = (props: Props) => {
-	const { variant = "default", children } = props;
-	const dispatch = useAppDispatch();
-	const ProjectDescriptionToggleState = useAppSelector(selectModalState);
+	const {
+		variant = "default",
+		children,
+		handleClick = () => {
+			console.log("No function");
+		},
+	} = props;
 
 	const createVariant = (variant: string) => {
 		switch (variant) {
 			case "ProjectDescriptionModal":
-				return ProjectDescriptionToggleState.modalToggle ? (
-					<DescriptionModal.Modal
-						onClick={() => {
-							dispatch(changeModalToggle());
-						}}
-					>
+				return (
+					<DescriptionModal.Modal onClick={handleClick}>
 						<DescriptionModal.Content>{children}</DescriptionModal.Content>
 					</DescriptionModal.Modal>
-				) : (
-					<></>
 				);
 
 			case "ProjectDescriptionProxy":
-				return (
-					<DescriptionModal.Proxy
-						onClick={() => {
-							dispatch(changeModalToggle());
-						}}
-					>
-						{"?"}
-					</DescriptionModal.Proxy>
-				);
+				return <DescriptionModal.Proxy onClick={handleClick}>{"?"}</DescriptionModal.Proxy>;
 
 			default:
 				return <></>;
