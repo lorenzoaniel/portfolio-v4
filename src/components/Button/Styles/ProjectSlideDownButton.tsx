@@ -12,12 +12,13 @@ export const Main = styled(motion.button)`
 	padding: 0.5rem;
 `;
 
-export const Title = styled(motion.p)`
+export const Title = styled(motion.a)`
 	background: linear-gradient(var(--Projects-Orange-3), var(--Projects-Orange-5));
 	font-size: clamp(3rem, 50%, 5rem);
 	font-weight: 900;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	text-decoration: none;
 `;
 
 export const _MotionVariants = (theme: any) => {
