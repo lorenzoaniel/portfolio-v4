@@ -156,7 +156,9 @@ const Button = (props: ButtonProps) => {
 						{...motionProps}
 						variants={ProjectSlideDownButton._MotionVariants(theme).Main}
 					>
-						<ProjectSlideDownButton.Title key={nanoid()}>{children}</ProjectSlideDownButton.Title>
+						<ProjectSlideDownButton.Title href={href} target={"_blank"} key={nanoid()}>
+							{children}
+						</ProjectSlideDownButton.Title>
 					</ProjectSlideDownButton.Main>
 				);
 
@@ -189,7 +191,11 @@ const Button = (props: ButtonProps) => {
 				);
 
 			case "RoundedButton":
-				return <RoundedButton.Main>{children}</RoundedButton.Main>;
+				return (
+					<RoundedButton.Main {...motionProps} variants={RoundedButton._MotionVariants().Main}>
+						{children}
+					</RoundedButton.Main>
+				);
 
 			default:
 				return <></>;
