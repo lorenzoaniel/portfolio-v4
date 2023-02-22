@@ -29,12 +29,15 @@ export const Content = styled(motion.div)`
 	background: linear-gradient(rgba(170, 93, 30, 1), rgba(255, 147, 59, 1));
 	z-index: 91;
 	height: 60%;
-	width: 60%;
-	overflow-x: scroll;
+	width: 80%;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	scrollbar-width: thin;
 	border-radius: 1rem;
 	padding: 1rem;
 	border: 1rem groove var(--Projects-Orange-3);
+	font-weight: 700;
+	text-shadow: 0 0.1rem 0.1rem var(--Projects-Orange-2);
 
 	&:hover {
 		cursor: pointer;
@@ -42,7 +45,6 @@ export const Content = styled(motion.div)`
 `;
 
 export const Proxy = styled(motion.div)`
-	/* background: orange; */
 	width: fit-content(10px);
 	height: auto;
 	overflow: hidden;
