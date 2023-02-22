@@ -24,7 +24,7 @@ export const Content = styled(motion.div)`
 		align-items: center;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		filter: drop-shadow(0 0.2rem 0.1rem ${theme.color5});
+		filter: drop-shadow(0 0.2rem 0.1rem ${theme.color1});
 	`}
 `;
 
@@ -33,7 +33,10 @@ export const TopicMain = styled(Main)`
 		background: linear-gradient(${theme.color5}, ${theme.color3});
 		position: static;
 		margin: 0;
+		width: 100%;
 	`}
 `;
 
-export const TopicContent = styled(Content)``;
+export const TopicContent = styled(Content)`
+	text-decoration: none;
+`;
