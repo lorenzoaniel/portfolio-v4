@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Gif, Default } from "./imageImportCombiner";
+import { Gif, Default, ProjectThumbnail } from "./imageImportCombiner";
 
 interface Props {
 	variant?: string;
@@ -14,6 +14,12 @@ const Image = (props: Props) => {
 		switch (variant) {
 			case "Gif":
 				return <Gif.Frame src={source} />;
+			case "ProjectThumbnail":
+				return (
+					<ProjectThumbnail.Main>
+						<ProjectThumbnail.Img src={source} />
+					</ProjectThumbnail.Main>
+				);
 			default:
 				return (
 					<Default.Main>
