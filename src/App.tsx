@@ -139,8 +139,6 @@ const App = () => {
 		},
 	};
 
-	console.log("app rerendered!");
-
 	//RENDER
 	return (
 		<ThemeProvider theme={appTheme}>

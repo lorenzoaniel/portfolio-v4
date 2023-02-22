@@ -43,7 +43,6 @@ const Home = (props: Props) => {
 		}
 	};
 
-	console.log("Home rerendered!");
 	//RENDER
 	return <>{createVariant(variant)}</>;
 };

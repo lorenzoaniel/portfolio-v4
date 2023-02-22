@@ -66,3 +66,16 @@ export const Proxy = styled(motion.div)`
 		cursor: pointer;
 	}
 `;
+
+export const _MotionVariants = () => {
+	return {
+		Proxy: {
+			whileHover: {
+				filter: "contrast(150%) grayscale(50%)",
+			},
+			whileTap: {
+				filter: "contrast(0%) grayscale(0%)",
+			},
+		},
+	};
+};

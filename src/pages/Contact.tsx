@@ -22,7 +22,6 @@ const Contact = () => {
 		width: "100%",
 	};
 
-	console.log("Contact rerendered!");
 	//RENDER
 	return (
 		<Main>

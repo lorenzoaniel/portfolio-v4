@@ -40,9 +40,6 @@ const About = (props: Props) => {
 		return aboutTheme;
 	};
 
-	// for testing and debug comment out
-	console.log("About rerendered!");
-
 	const createVariant = (variant: string) => {
 		let motionProps: any = {
 			initial: "initial",

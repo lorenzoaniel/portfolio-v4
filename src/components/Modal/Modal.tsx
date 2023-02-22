@@ -21,6 +21,13 @@ const Modal = (props: Props) => {
 	} = props;
 
 	const createVariant = (variant: string) => {
+		let motionProps = {
+			initial: "initial",
+			animate: "animate",
+			whileHover: "whileHover",
+			whileTap: "whileTap",
+		};
+
 		switch (variant) {
 			case "ProjectDescriptionModal":
 				return (
@@ -30,7 +37,15 @@ const Modal = (props: Props) => {
 				);
 
 			case "ProjectDescriptionProxy":
-				return <DescriptionModal.Proxy onClick={handleClick}>{"?"}</DescriptionModal.Proxy>;
+				return (
+					<DescriptionModal.Proxy
+						{...motionProps}
+						variants={DescriptionModal._MotionVariants().Proxy}
+						onClick={handleClick}
+					>
+						{"?"}
+					</DescriptionModal.Proxy>
+				);
 
 			default:
 				return <></>;

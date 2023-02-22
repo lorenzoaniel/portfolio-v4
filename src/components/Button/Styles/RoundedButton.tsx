@@ -22,11 +22,23 @@ export const _MotionVariants = () => {
 		Main: {
 			initial: {
 				opacity: 0.7,
+				boxShadow: "0 1rem 1rem 0.2rem rgba(0,0,0,0)",
+				transform: "translateY(0rem)",
 			},
 			animate: {},
 			whileHover: {
-				background: "green",
+				background: "radial-gradient(var(--Projects-Orange-1), var(--Projects-Orange-3))",
+				boxShadow: "0 0.5rem 1rem 0.2rem rgba(0,0,0,0.8)",
 				opacity: 1,
+				transform: "translateY(-0.5rem)",
+				transition: {
+					duration: 0.5,
+					ease: "easeInOut",
+				},
+			},
+			whileTap: {
+				boxShadow: "0 1rem 1rem 0.2rem rgba(0,0,0,0)",
+				transform: "translateY(0rem)",
 			},
 		},
 	};
