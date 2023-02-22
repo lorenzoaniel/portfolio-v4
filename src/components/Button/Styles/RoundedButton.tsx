@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 export const Main = styled(motion.button)`
+	position: absolute;
 	background: radial-gradient(var(--Projects-Orange-3), var(--Projects-Orange-5));
 	border: none;
 	height: 5rem;
@@ -13,14 +14,20 @@ export const Main = styled(motion.button)`
 	font-size: 2rem;
 	font-weight: 700;
 	text-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 1);
-	opacity: 0.5; //transfer to motion
+	z-index: 2;
 `;
 
-export const _MotionVariants = (theme: any) => {
+export const _MotionVariants = () => {
 	return {
 		Main: {
-			initial: {},
+			initial: {
+				opacity: 0.7,
+			},
 			animate: {},
+			whileHover: {
+				background: "green",
+				opacity: 1,
+			},
 		},
 	};
 };
