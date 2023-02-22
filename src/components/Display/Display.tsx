@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ProjectDisplay } from "./displayImportCombiner";
 
 import useCurrentDimension from "../../helpers/useCurrentDimension";
@@ -6,6 +6,7 @@ import useCurrentDimension from "../../helpers/useCurrentDimension";
 import Button from "../Button/Button";
 import Paragraph from "../Paragraph/Paragraph";
 import Modal from "../Modal/Modal";
+import Image from "../Image/Image";
 
 interface Props {
 	variant?: string;
@@ -15,6 +16,8 @@ interface Props {
 interface ProjectDisplayProps {
 	projectName: string;
 	projectDesc: string;
+	projectGithub: string;
+	projectImg: string;
 }
 
 const Display = (props: Props) => {
@@ -33,24 +36,38 @@ const Display = (props: Props) => {
 		switch (variant) {
 			case "ProjectDisplay":
 				let childrenProjectDisplay: ProjectDisplayProps = children;
+				const [projectModalToggle, useProjectModalToggle] = useState(false);
+
+				const changeToggle = () => {
+					useProjectModalToggle((curr) => !curr);
+				};
 
 				return (
 					<ProjectDisplay.Main {...motionProps} variants={ProjectDisplay._MotionVariants().Main}>
 						<ProjectDisplay.SlideUp variants={ProjectDisplay._MotionVariants().SlideUp}>
 							<Button variant={"RoundedButton"}>{"Visit Website"}</Button>
+							<Image source={childrenProjectDisplay.projectImg} variant={"ProjectThumbnail"} />
 						</ProjectDisplay.SlideUp>
 						<ProjectDisplay.Cover>
 							<Paragraph data={childrenProjectDisplay.projectName} variant={"ProjectCover"} />
 						</ProjectDisplay.Cover>
 						<ProjectDisplay.SlideDown variants={ProjectDisplay._MotionVariants().SlideDown}>
-							<Modal variant={"ProjectDescriptionProxy"}>
+							<Modal handleClick={() => changeToggle()} variant={"ProjectDescriptionProxy"}>
 								{childrenProjectDisplay.projectDesc}
 							</Modal>
 
-							<Button variant={"ProjectSlideDownButton"}>{"Github"}</Button>
+							<Button
+								href={childrenProjectDisplay.projectGithub}
+								variant={"ProjectSlideDownButton"}
+							>
+								{"Github"}
+							</Button>
 						</ProjectDisplay.SlideDown>
-
-						<Modal variant={"ProjectDescriptionModal"}>{childrenProjectDisplay.projectDesc}</Modal>
+						{projectModalToggle && (
+							<Modal handleClick={() => changeToggle()} variant={"ProjectDescriptionModal"}>
+								{childrenProjectDisplay.projectDesc}
+							</Modal>
+						)}
 					</ProjectDisplay.Main>
 				);
 			default:
