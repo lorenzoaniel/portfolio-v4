@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const Main = styled(motion.div)`
 	height: 100%;
-	width: 60%;
+	width: 70%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
