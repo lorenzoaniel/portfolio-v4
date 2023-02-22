@@ -1,30 +1,42 @@
 import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
-import { device } from "../styles/breakpoints";
-import Heading from "../components/Heading/Heading";
+import { nanoid } from "nanoid";
+
 import { useAppSelector } from "../store/hooks";
 import { selectPagesInfo } from "../store/slices/pagesInfoSlice";
+import { device } from "../styles/breakpoints";
+
+import Heading from "../components/Heading/Heading";
 import Display from "../components/Display/Display";
 
 const Projects = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 
-	console.log("Projects rerendered!");
+	const createProjects = () => {
+		return ["Tenzies", "Portfolio1", "Portfolio2", "Portfolio3", "SaasifyDemo", "GPTDemo"].map(
+			(curr) => {
+				return (
+					<Display key={nanoid()} variant={"ProjectDisplay"}>
+						{{
+							projectName: infoContext.Projects[curr].name,
+							projectDesc: infoContext.Projects[curr].desc,
+							projectGithub: infoContext.Projects[curr].github,
+							projectImg: infoContext.Projects[curr].img,
+						}}
+					</Display>
+				);
+			}
+		);
+	};
+
 	//RENDER
 	return (
 		<Main initial={"initial"} animate={"onPageLoad"} variants={_MotionVariants().Main}>
 			<Headers>
 				<Heading titleProp={"Projects"} variant={"ProjectMainHeading"} />
 			</Headers>
-			<Contents>
-				<Display variant={"ProjectDisplay"}>
-					{{
-						projectName: infoContext.Projects.Tenzies.name,
-						projectDesc: infoContext.Projects.Tenzies.desc,
-					}}
-				</Display>
-			</Contents>
+			<Contents>{createProjects()}</Contents>
 		</Main>
 	);
 };
