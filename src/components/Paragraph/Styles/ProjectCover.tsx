@@ -12,8 +12,9 @@ export const Main = styled(motion.div)`
 export const Paragraph = styled(motion.p)`
 	background: var(--Projects-Indigo-5);
 	text-shadow: 0 0.1rem 0.3rem var(--Projects-Indigo-1);
-	font-size: 5rem;
+	font-size: clamp(3rem, 50%, 5rem);
 	font-weight: 900;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	text-align: center;
 `;
