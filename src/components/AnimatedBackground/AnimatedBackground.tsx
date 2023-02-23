@@ -100,4 +100,4 @@ const AnimatedBackground = (props: ABProps) => {
 	return <>{createVariant(variant)}</>;
 };
 
-export default AnimatedBackground;
+export default React.memo(AnimatedBackground);
