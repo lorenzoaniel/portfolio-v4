@@ -14,7 +14,7 @@ const Projects = () => {
 	const infoContext = useAppSelector(selectPagesInfo);
 
 	const createProjects = () => {
-		return ["Tenzies", "Portfolio1", "Portfolio2", "Portfolio3", "SaasifyDemo", "GPTDemo"].map(
+		return ["Tenzies", "SaasifyDemo", "GPTDemo", "Portfolio1", "Portfolio2", "Portfolio3"].map(
 			(curr) => {
 				return (
 					<Display key={nanoid()} variant={"ProjectDisplay"}>
@@ -23,6 +23,7 @@ const Projects = () => {
 							projectDesc: infoContext.Projects[curr].desc,
 							projectGithub: infoContext.Projects[curr].github,
 							projectImg: infoContext.Projects[curr].img,
+							projectUrl: infoContext.Projects[curr].url,
 						}}
 					</Display>
 				);

@@ -15,6 +15,9 @@ export const Main = styled(motion.button)`
 	font-weight: 700;
 	text-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 1);
 	z-index: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const _MotionVariants = () => {

@@ -192,7 +192,9 @@ const Button = (props: ButtonProps) => {
 			case "RoundedButton":
 				return (
 					<RoundedButton.Main {...motionProps} variants={RoundedButton._MotionVariants().Main}>
-						{children}
+						<a href={href} target={"_blank"} style={{ color: "black", textDecoration: "none" }}>
+							{children}
+						</a>
 					</RoundedButton.Main>
 				);
 

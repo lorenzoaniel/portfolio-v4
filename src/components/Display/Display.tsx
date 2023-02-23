@@ -18,6 +18,7 @@ interface ProjectDisplayProps {
 	projectDesc: string;
 	projectGithub: string;
 	projectImg: string;
+	projectUrl: string;
 }
 
 const Display = (props: Props) => {
@@ -45,7 +46,9 @@ const Display = (props: Props) => {
 				return (
 					<ProjectDisplay.Main {...motionProps} variants={ProjectDisplay._MotionVariants().Main}>
 						<ProjectDisplay.SlideUp variants={ProjectDisplay._MotionVariants().SlideUp}>
-							<Button variant={"RoundedButton"}>{"Visit Website"}</Button>
+							<Button href={childrenProjectDisplay.projectUrl} variant={"RoundedButton"}>
+								{"Visit Website"}
+							</Button>
 							<Image source={childrenProjectDisplay.projectImg} variant={"ProjectThumbnail"} />
 						</ProjectDisplay.SlideUp>
 						<ProjectDisplay.Cover>
