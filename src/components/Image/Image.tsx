@@ -13,7 +13,7 @@ const Image = (props: Props) => {
 	const createVariant = (variant: string) => {
 		switch (variant) {
 			case "Gif":
-				return <Gif.Frame src={source} />;
+				return <Gif.Frame src={source} scrolling={"no"} />;
 			case "ProjectThumbnail":
 				return (
 					<ProjectThumbnail.Main>

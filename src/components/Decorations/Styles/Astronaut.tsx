@@ -8,8 +8,9 @@ export const Main = styled(motion.div)`
 `;
 
 export const Frame = styled(motion.div)`
-	height: 30vh;
-	width: 30vw;
+	height: fit-content;
+	width: fit-content;
+
 	&:hover {
 		cursor: crosshair;
 	}
