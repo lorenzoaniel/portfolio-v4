@@ -63,7 +63,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: var(--defaultFont);
 
-    scrollbar-width: none;
+     -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar{
+      display: none;
+    }
   }
 
   html {
