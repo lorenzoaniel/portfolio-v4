@@ -14,7 +14,7 @@ export const Cover = styled(motion.div)`
 	box-shadow: 0 0 1rem 0.4rem var(--Projects-Indigo-1),
 		0 0 1rem 0.4rem var(--Projects-Indigo-5) inset, 0 0 5rem 0.2rem var(--Projects-Indigo-3) inset;
 	border: 1rem groove var(--Projects-Indigo-5);
-	backdrop-filter: opacity(1) blur(99rem);
+	backdrop-filter: opacity(1) blur(3rem); //was origally 99rem, then 9 rem, but lower value gave the most blur
 
 	min-height: 10rem;
 	width: 100%;
