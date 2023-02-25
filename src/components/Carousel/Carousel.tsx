@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { MdArrowRight, MdArrowLeft } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -6,77 +6,90 @@ import { changeItemDisplay, selectCarouselState } from "../../store/slices/carou
 
 import { MainNav } from "./carouselImportCombiner";
 
-interface CProps {
+interface Props {
 	children: React.ReactNode[]; //multiple children
 	variant?: string;
 }
 
-const Carousel = (props: CProps) => {
-	const { children, variant = "default" } = props;
+enum Variant {
+	MAIN_NAV = "MainNav",
+}
+
+interface CarouselConfigs {
+	changeItemPayload: {
+		Left: {
+			variant: "Left";
+			childLength: number;
+			navMode: boolean;
+			routeIndex: number;
+		};
+		Right: {
+			variant: "Right";
+			childLength: number;
+			navMode: boolean;
+			routeIndex: number;
+		};
+	};
+}
+
+const Carousel: React.FC<Props> = ({ children, variant = "default" }) => {
 	const childLength = children.length - 1;
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	let carouselContext = useAppSelector(selectCarouselState);
+	const carouselContext = useAppSelector(selectCarouselState);
 
 	useEffect(() => {
 		//navigates upon routeState change
 		navigate(carouselContext.routeState);
 	}, [carouselContext.routeState]);
 
-	const createVariant = (variant: string) => {
-		let motionProps: any = {
-			animate: "animate",
-			initial: "initial",
-			exit: "exit",
-		};
-
-		switch (variant) {
-			case "MainNav":
-				const CarouselConfigs = {
-					changeItemPayload: {
-						Left: {
-							variant: "Left",
-							childLength: childLength,
-							navMode: true,
-							routeIndex: carouselContext.childIndex,
-						},
-						Right: {
-							variant: "Right",
-							childLength: childLength,
-							navMode: true,
-							routeIndex: carouselContext.childIndex,
-						},
-					},
-				};
-
-				return (
-					<>
-						<MainNav.Main>
-							<MainNav.Left
-								onClick={() => {
-									dispatch(changeItemDisplay(CarouselConfigs.changeItemPayload.Left));
-								}}
-							>
-								<MdArrowLeft />
-							</MainNav.Left>
-							{children[carouselContext.childIndex]}
-							<MainNav.Right
-								onClick={() => {
-									dispatch(changeItemDisplay(CarouselConfigs.changeItemPayload.Right));
-								}}
-							>
-								<MdArrowRight />
-							</MainNav.Right>
-						</MainNav.Main>
-					</>
-				);
-
-			default:
-				return <></>;
-		}
+	const configs: Record<string, CarouselConfigs> = {
+		MainNav: {
+			changeItemPayload: {
+				Left: {
+					variant: "Left",
+					childLength,
+					navMode: true,
+					routeIndex: carouselContext.childIndex,
+				},
+				Right: {
+					variant: "Right",
+					childLength,
+					navMode: true,
+					routeIndex: carouselContext.childIndex,
+				},
+			},
+		},
 	};
 
-	return <>{createVariant(variant)}</>;
+	const createMapVariant: Map<string, JSX.Element> = new Map([
+		[
+			Variant.MAIN_NAV,
+			<MainNav.Main>
+				<MainNav.Left
+					onClick={() => {
+						dispatch(changeItemDisplay(configs[variant].changeItemPayload.Left));
+					}}
+				>
+					<MdArrowLeft />
+				</MainNav.Left>
+				{children[carouselContext.childIndex]}
+				<MainNav.Right
+					onClick={() => {
+						dispatch(changeItemDisplay(configs[variant].changeItemPayload.Right));
+					}}
+				>
+					<MdArrowRight />
+				</MainNav.Right>
+			</MainNav.Main>,
+		],
+	]);
+
+	const createVariant = useMemo(() => {
+		return createMapVariant.get(variant) ?? <></>;
+	}, [variant, childLength, carouselContext.childIndex, dispatch]);
+
+	return <>{createVariant}</>;
 };
 
-export default Carousel;
+export default React.memo(Carousel);

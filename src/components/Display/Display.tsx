@@ -21,10 +21,8 @@ interface ProjectDisplayProps {
 	projectUrl: string;
 }
 
-const Display = (props: Props) => {
-	const { variant = "default", children } = props;
-
-	let currentDimension = useCurrentDimension();
+const Display: React.FC<Props> = ({ variant = "default", children }) => {
+	const currentDimension = useCurrentDimension();
 
 	const createVariant = (variant: string, children: any) => {
 		let motionProps = {
@@ -34,14 +32,17 @@ const Display = (props: Props) => {
 			exit: "exit",
 		};
 
+		/* 
+			ProjectDisplay
+		*/
+		const [projectModalToggle, useProjectModalToggle] = useState(false);
+		const changeToggle = () => {
+			useProjectModalToggle((curr) => !curr);
+		};
+
 		switch (variant) {
 			case "ProjectDisplay":
 				let childrenProjectDisplay: ProjectDisplayProps = children;
-				const [projectModalToggle, useProjectModalToggle] = useState(false);
-
-				const changeToggle = () => {
-					useProjectModalToggle((curr) => !curr);
-				};
 
 				return (
 					<ProjectDisplay.Main {...motionProps} variants={ProjectDisplay._MotionVariants().Main}>

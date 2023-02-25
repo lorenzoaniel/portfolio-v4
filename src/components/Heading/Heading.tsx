@@ -1,50 +1,45 @@
-import React from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { device } from "../../styles/breakpoints";
+import React, { useMemo } from "react";
 
 import { About, Landing, Projects } from "./headingImportCombiner";
 
-interface HeadingProps {
+interface Props {
 	titleProp: string;
-	variant: string;
+	variant?: string;
 	source?: string;
 }
 
-const Heading = (props: HeadingProps) => {
-	const { titleProp, variant = "default", source = "" } = props;
+interface VariantMap {
+	[variant: string]: JSX.Element;
+}
 
-	const createVariant = (variant: string) => {
-		switch (variant) {
-			case "AboutTopic":
-				return (
-					<About.TopicMain>
-						<About.TopicContent href={source} target={"_blank"} as={"a"}>
-							{titleProp}
-						</About.TopicContent>
-					</About.TopicMain>
-				);
-			case "AboutPage":
-				return (
-					<About.Main>
-						<About.Content>{titleProp}</About.Content>
-					</About.Main>
-				);
-			case "Landing":
-				return <Landing.Main>{titleProp}</Landing.Main>;
-			case "ProjectMainHeading":
-				return (
-					<Projects.Main>
-						<Projects.Content>{titleProp}</Projects.Content>
-					</Projects.Main>
-				);
-			default:
-				return <></>;
-		}
+const Heading: React.FC<Props> = ({ titleProp = "", variant = "default", source = "" }) => {
+	const createVariantMap: VariantMap = {
+		AboutTopic: (
+			<About.TopicMain>
+				<About.TopicContent href={source} target={"_blank"} as={"a"}>
+					{titleProp}
+				</About.TopicContent>
+			</About.TopicMain>
+		),
+		AboutPage: (
+			<About.Main>
+				<About.Content>{titleProp}</About.Content>
+			</About.Main>
+		),
+		Landing: <Landing.Main>{titleProp}</Landing.Main>,
+		ProjectMainHeading: (
+			<Projects.Main>
+				<Projects.Content>{titleProp}</Projects.Content>
+			</Projects.Main>
+		),
 	};
 
+	const createVariant = useMemo(() => {
+		return createVariantMap[variant] ?? <></>;
+	}, [variant]);
+
 	//RENDER
-	return <>{createVariant(variant)}</>;
+	return <>{createVariant}</>;
 };
 
 export default Heading;
